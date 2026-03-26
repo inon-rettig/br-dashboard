@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BR Studio — Mission Control</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', Arial, sans-serif; background: #0a0e1a; color: #e2e8f0; min-height: 100vh; }
+
+.header { background: #0f172a; border-bottom: 1px solid #1e293b; padding: 14px 28px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+.header-left h1 { font-size: 18px; font-weight: 700; color: #f8fafc; }
+.header-left .sub { font-size: 11px; color: #64748b; margin-top: 2px; }
+.header-right { display: flex; gap: 28px; }
+.hstat { text-align: center; }
+.hstat .v { font-size: 17px; font-weight: 700; }
+.hstat .l { font-size: 10px; color: #64748b; }
+
+.tabs-bar { background: #0f172a; border-bottom: 1px solid #1e293b; padding: 0 28px; display: flex; gap: 2px; }
+.tab-btn { padding: 12px 18px; font-size: 13px; font-weight: 500; cursor: pointer; border: none; background: none; color: #64748b; border-bottom: 2px solid transparent; transition: all 0.15s; white-space: nowrap; }
+.tab-btn:hover { color: #94a3b8; }
+.tab-btn.active { color: #60a5fa; border-bottom-color: #3b82f6; }
+
+.pane { display: none; padding: 24px 28px; }
+.pane.active { display: block; }
+
+/* KPIs */
+.kpis { display: grid; gap: 12px; margin-bottom: 20px; }
+.kpis-4 { grid-template-columns: repeat(4,1fr); }
+.kpis-5 { grid-template-columns: repeat(5,1fr); }
+.kpi { background: #1e293b; border-radius: 10px; padding: 14px 16px; border: 1px solid #334155; position: relative; overflow: hidden; }
+.kpi::after { content:''; position:absolute; top:0; left:0; right:0; height:3px; }
+.kpi.g::after{background:#22c55e}.kpi.r::after{background:#ef4444}.kpi.b::after{background:#3b82f6}.kpi.y::after{background:#eab308}.kpi.p::after{background:#a855f7}
+.kpi-l { font-size:10px; color:#64748b; text-transform:uppercase; letter-spacing:.06em; margin-bottom:5px; }
+.kpi-v { font-size:22px; font-weight:700; }
+.kpi-s { font-size:11px; color:#64748b; margin-top:3px; }
+
+/* Panels */
+.panel { background: #1e293b; border-radius: 12px; padding: 18px 20px; border: 1px solid #334155; margin-bottom: 18px; }
+.panel-title { font-size:14px; font-weight:600; color:#f1f5f9; margin-bottom:14px; }
+.g2 { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+.g3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; }
+
+/* Project rows */
+.proj-list { display:flex; flex-direction:column; gap:8px; }
+.proj { background:#0f172a; border-radius:10px; padding:12px 14px; border:1px solid #1e293b; }
+.proj.p-r { border-right:3px solid #ef4444; }
+.proj.p-y { border-right:3px solid #eab308; }
+.proj.p-g { border-right:3px solid #22c55e; }
+.proj.p-b { border-right:3px solid #3b82f6; }
+.proj.p-p { border-right:3px solid #a855f7; }
+.proj-h { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px; }
+.proj-n { font-size:13px; font-weight:600; }
+.proj-wbs { font-size:10px; color:#475569; margin-top:1px; }
+.bdg { font-size:10px; font-weight:600; padding:2px 8px; border-radius:10px; white-space:nowrap; }
+.bdg-r{background:rgba(239,68,68,.15);color:#fca5a5}
+.bdg-y{background:rgba(234,179,8,.15);color:#fde047}
+.bdg-g{background:rgba(34,197,94,.15);color:#86efac}
+.bdg-b{background:rgba(59,130,246,.15);color:#93c5fd}
+.bdg-p{background:rgba(168,85,247,.15);color:#d8b4fe}
+.bdg-gray{background:rgba(100,116,139,.15);color:#94a3b8}
+
+.hrow { display:flex; gap:12px; align-items:flex-end; flex-wrap:wrap; margin-bottom:7px; }
+.hb { text-align:center; min-width:60px; }
+.hl { font-size:9px; color:#475569; text-transform:uppercase; letter-spacing:.05em; margin-bottom:2px; }
+.hv { font-size:16px; font-weight:700; }
+
+.bar-bg { background:#334155; border-radius:3px; height:5px; overflow:hidden; }
+.bar-f { height:100%; border-radius:3px; }
+.bg{background:#22c55e}.by{background:#eab308}.br{background:#ef4444}.bb{background:#3b82f6}
+
+.note { font-size:11px; color:#64748b; margin-top:6px; padding-top:6px; border-top:1px solid #1e293b; }
+.hl-warn { color:#fbbf24; }
+
+/* Users */
+.users-bar { display:flex; gap:3px; flex-wrap:wrap; margin-top:4px; }
+.uchip { font-size:10px; padding:2px 6px; border-radius:8px; background:rgba(59,130,246,.1); color:#93c5fd; border:1px solid rgba(59,130,246,.2); }
+.uchip.lead { background:rgba(34,197,94,.1); color:#86efac; border-color:rgba(34,197,94,.2); }
+
+/* Table */
+table { width:100%; border-collapse:collapse; font-size:12px; }
+th { text-align:right; padding:8px 10px; color:#64748b; font-size:10px; text-transform:uppercase; letter-spacing:.06em; border-bottom:1px solid #334155; }
+td { padding:8px 10px; border-bottom:1px solid #1e293b; vertical-align:middle; }
+tr:last-child td { border:none; }
+tr:hover td { background:rgba(255,255,255,.02); }
+
+/* Finance */
+.cf-row { display:flex; justify-content:space-between; padding:7px 0; border-bottom:1px solid #1e293b; font-size:13px; }
+.cf-row:last-child{border:none}
+.pos{color:#22c55e}.neg{color:#ef4444}.neu{color:#e2e8f0}
+.sec-label{font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:#64748b;margin:10px 0 4px}
+.target-track{background:#334155;border-radius:6px;height:32px;overflow:hidden;display:flex;margin:10px 0 6px}
+.tseg{height:100%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#fff}
+.infobox{padding:10px 12px;border-radius:8px;font-size:12px;line-height:1.7;margin-top:10px}
+.infobox.warn{background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.15);color:#fca5a5}
+.infobox.ok{background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.15);color:#86efac}
+.infobox.info{background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.15);color:#93c5fd}
+
+.hire-box{background:#0f172a;border-radius:10px;padding:14px;border:1px solid #334155}
+.hire-box.go{border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.03)}
+.hire-box.wait{border-color:rgba(234,179,8,.3);background:rgba(234,179,8,.03)}
+.hire-box.watch{border-color:rgba(59,130,246,.3);background:rgba(59,130,246,.03)}
+.hire-title{font-size:13px;font-weight:600;margin-bottom:8px}
+.hire-body{font-size:12px;color:#94a3b8;line-height:1.8}
+.hire-body strong{color:#cbd5e1}
+
+.util-wrap{display:flex;align-items:center;gap:8px}
+.util-track{width:80px;height:7px;background:#334155;border-radius:3px;overflow:hidden;flex-shrink:0}
+.util-fill{height:100%;border-radius:3px}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <h1>🎛️ BR Studio — Mission Control</h1>
+    <div class="sub">עדכון: 25 מרץ 2026 · קלוקיפיי live + דוחות אלביט + Payper</div>
+  </div>
+  <div class="header-right">
+    <div class="hstat"><div class="v" style="color:#22c55e">₪1.19M</div><div class="l">הכנסות מתועדות</div></div>
+    <div class="hstat"><div class="v" style="color:#3b82f6">₪1.01M</div><div class="l">Pipeline מאושר</div></div>
+    <div class="hstat"><div class="v" style="color:#eab308">₪108K</div><div class="l">יתרת בנק</div></div>
+    <div class="hstat"><div class="v" style="color:#f1f5f9">6</div><div class="l">עובדים</div></div>
+  </div>
+</div>
+
+<div class="tabs-bar">
+  <button class="tab-btn active" onclick="sw('finance',this)">💰 פיננסי</button>
+  <button class="tab-btn" onclick="sw('projects',this)">📋 פרויקטים</button>
+  <button class="tab-btn" onclick="sw('workload',this)">⚡ עומסים</button>
+  <button class="tab-btn" onclick="sw('hr',this)">👥 כ"א וגיוס</button>
+  <button class="tab-btn" onclick="sw('crm',this)">🤝 CRM</button>
+</div>
+
+<!-- ===== TAB 1: FINANCE ===== -->
+<div id="pane-finance" class="pane active">
+
+  <div class="kpis kpis-5">
+    <div class="kpi g"><div class="kpi-l">הכנסות מתועדות</div><div class="kpi-v" style="color:#22c55e">₪1,185K</div><div class="kpi-s">חשבוניות ₪675K + עסקאות ₪510K</div></div>
+    <div class="kpi r"><div class="kpi-l">הוצאות Q1</div><div class="kpi-v" style="color:#ef4444">₪1,042K</div><div class="kpi-s">ממוצע ₪347K/חודש</div></div>
+    <div class="kpi b"><div class="kpi-l">Pipeline מאושר</div><div class="kpi-v" style="color:#3b82f6">₪1,010K</div><div class="kpi-s">אלביט ₪990K + Visonic ₪20K</div></div>
+    <div class="kpi y"><div class="kpi-l">יתרת בנק</div><div class="kpi-v" style="color:#eab308">₪108K</div><div class="kpi-s">נכון ל-22.3.2026</div></div>
+    <div class="kpi p"><div class="kpi-l">פוטנציאל שנתי</div><div class="kpi-v" style="color:#a855f7">₪2,349K</div><div class="kpi-s">פער ליעד ₪3.5M: ~₪1.15M</div></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">🎯 התקדמות ליעד ₪3,500,000</div>
+    <div class="target-track">
+      <div class="tseg" style="width:19.3%;background:#22c55e">חשבוניות ₪675K</div>
+      <div class="tseg" style="width:14.6%;background:#0891b2">עסקאות ₪510K</div>
+      <div class="tseg" style="width:33.2%;background:#1d4ed8">Pipeline ₪1.16M</div>
+      <div class="tseg" style="width:32.9%;background:#1e293b;color:#475569">נדרש ₪1.15M+</div>
+    </div>
+    <div style="display:flex;justify-content:space-between;font-size:10px;color:#475569">
+      <span>₪0</span><span>₪875K</span><span>₪1.75M</span><span>₪2.63M</span><span style="color:#eab308">יעד ₪3.5M</span>
+    </div>
+    <div style="margin-top:10px;font-size:12px;color:#64748b">מתועד כולל pipeline: <strong style="color:#e2e8f0">₪2.35M (67%)</strong> · נדרש <strong style="color:#fbbf24">₪1.15M</strong> נוסף בעסקאות חדשות</div>
+  </div>
+
+  <div class="g2" style="align-items:start">
+    <div class="panel" style="margin-bottom:0">
+      <div class="panel-title">💳 תזרים Q1 2026</div>
+      <div class="sec-label">הכנסות</div>
+      <div class="cf-row"><span>חשבוניות מס (נכנסו)</span><span class="pos">+₪675,282</span></div>
+      <div class="cf-row"><span>חשבונות עסקה (בדרך)</span><span class="pos">+₪509,853</span></div>
+      <div class="sec-label">הוצאות Q1</div>
+      <div class="cf-row"><span>שכר (net)</span><span class="neg">-₪756,000</span></div>
+      <div class="cf-row"><span>ספקים / חומרים</span><span class="neg">-₪168,000</span></div>
+      <div class="cf-row"><span>שכירות + כלים</span><span class="neg">-₪118,000</span></div>
+      <div class="sec-label">מאזן</div>
+      <div class="cf-row" style="font-weight:600;font-size:14px"><span>נקי Q1 (מתועד)</span><span class="pos">+₪143K</span></div>
+      <div class="infobox warn" style="margin-top:10px">הוצאות ₪347K/חודש מול הכנסות ~₪132K/חודש צפויות — Pipeline חדש קריטי. יתרת ₪108K = ~10 ימי שכר.</div>
+    </div>
+
+    <div class="panel" style="margin-bottom:0">
+      <div class="panel-title">🔵 Pipeline מאושר — לפי לקוח</div>
+      <div class="cf-row"><span>אלביט — כל הפרויקטים</span><span style="color:#60a5fa">~₪990K</span></div>
+      <!-- LiteBC / Hemoscope 2.0 הוסר — אין פעילות פעילה נכון ל-מרץ 2026 -->
+      <div class="cf-row"><span>Visonic / Outdoor Camera</span><span style="color:#86efac">~₪20K</span></div>
+      <div class="sec-label">פוטנציאל (לא מאושר)</div>
+      <div class="cf-row"><span>Xsight 3.0 (SOW בדרך)</span><span style="color:#fde047">TBD</span></div>
+      <div class="cf-row"><span>2 לקוחות פוטנציאליים</span><span style="color:#fde047">₪80–240K</span></div>
+      <div class="infobox ok" style="margin-top:10px">עם Xsight + לקוחות חדשים: מאזן חיובי ל-2026</div>
+      <div class="infobox info" style="margin-top:8px">עיתוי כניסת לקוחות חדשים = חלק מהמשא ומתן. ספטמבר+ הרבה פחות בעייתי מאפריל.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TAB 2: PROJECTS ===== -->
+<div id="pane-projects" class="pane">
+
+  <div class="kpis kpis-4">
+    <div class="kpi g"><div class="kpi-l">פרויקטים פעילים</div><div class="kpi-v" style="color:#22c55e">11</div><div class="kpi-s">בדוחות + פעיל כעת</div></div>
+    <div class="kpi b"><div class="kpi-l">פייפליין / חדש</div><div class="kpi-v" style="color:#3b82f6">5</div><div class="kpi-s">Helios subs + Xsight</div></div>
+    <div class="kpi r"><div class="kpi-l">חריגות תקציב</div><div class="kpi-v" style="color:#ef4444">3</div><div class="kpi-s">Eitan / Nova Shield / MBN</div></div>
+    <div class="kpi y"><div class="kpi-l">ממתינים ל-WBS</div><div class="kpi-v" style="color:#eab308">2</div><div class="kpi-s">Pulse Solan / Wide FOV</div></div>
+  </div>
+
+  <div class="g2" style="align-items:start">
+
+    <div>
+      <div style="font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">פרויקטים פעילים</div>
+      <div class="proj-list">
+
+        <div class="proj p-g">
+          <div class="proj-h">
+            <div><div class="proj-n">🦅 Iron Hawk 3.0</div><div class="proj-wbs">K950PWP10000</div></div>
+            <span class="bdg bdg-g">75% תקציב</span>
+          </div>
+          <div class="hrow">
+            <div class="hb"><div class="hl">שעות כעת</div><div class="hv" style="color:#60a5fa">1,856h</div></div>
+            <div class="hb"><div class="hl">דווח</div><div class="hv">1,747h</div></div>
+            <div class="hb"><div class="hl">תקציב</div><div class="hv" style="color:#475569">2,340h</div></div>
+            <div class="hb"><div class="hl">נותר</div><div class="hv" style="color:#22c55e">593h</div></div>
+          </div>
+          <div class="bar-bg"><div class="bar-f bg" style="width:75%"></div></div>
+          <div class="users-bar"><span class="uchip lead">ינון 1,730h</span><span class="uchip">סאגי 96h</span><span class="uchip">דן 26h</span></div>
+        </div>
+
+        <div class="proj p-r">
+          <div class="proj-h">
+            <div><div class="proj-n">📡 Eitan Michlol</div><div class="proj-wbs">K960PWP10040</div></div>
+            <span class="bdg bdg-r">⚡ חרג 102%</span>
+          </div>
+          <div class="hrow">
+            <div class="hb"><div class="hl">שעות כעת</div><div class="hv" style="color:#60a5fa">699h</div></div>
+            <div class="hb"><div class="hl">דווח</div><div class="hv">692h</div></div>
+            <div class="hb"><div class="hl">תקציב</div><div class="hv" style="color:#475569">677h</div></div>
+            <div class="hb"><div class="hl">חריגה</div><div class="hv" style="color:#ef4444">+22h</div></div>
+          </div>
+          <div class="bar-bg"><div class="bar-f br" style="width:100%"></div></div>
+          <div class="users-bar"><span class="uchip lead">אורי 232h</span><span class="uchip">אלעד 194h</span><span class="uchip">דן 167h</span></div>
+          <div class="note"><span class="hl-warn">נדרש SOW נוסף</span></div>
+        </div>
+
+        <div class="proj p-y">
+          <div class="proj-h">
+            <div><div class="proj-n">☀️ Helios (ראשי)</div><div class="proj-wbs">K957PCA20020</div></div>
+            <span class="bdg bdg-r">פער גדול vs דוח</span>
+          </div>
+          <div class="hrow">
+            <div class="hb"><div class="hl">שעות כעת</div><div class="hv" style="color:#60a5fa">1,165h</div></div>
+            <div class="hb"><div class="hl">דווח</div><div class="hv">569h</div></div>
+            <div class="hb"><div class="hl">תקציב</div><div class="hv" style="color:#475569">590h</div></div>
+          </div>
+          <div class="bar-bg"><div class="bar-f by" style="width:96%"></div></div>
+          <div class="users-bar"><span class="uchip lead">אורי 461h</span><span class="uchip">ינון 337h</span><span class="uchip">דן 267h</span></div>
+          <div class="note"><span class="hl-warn">596h לא מוסברים</span> — לבדוק מול דוח</div>
+        </div>
+
+        <div class="proj p-r">
+          <div class="proj-h">
+            <div><div class="proj-n">🛡️ Nova Shield</div><div class="proj-wbs">E205PCA20007</div></div>
+            <span class="bdg bdg-r">⚡ חרג 149%</span>
+          </div>
+          <div class="hrow">
+            <div class="hb"><div class="hl">שעות כעת</div><div class="hv" style="color:#60a5fa">288h</div></div>
+            <div class="hb"><div class="hl">דווח</div><div class="hv">174h</div></div>
+            <div class="hb"><div class="hl">תקציב</div><div class="hv" style="color:#475569">180h</div></div>
+            <div class="hb"><div class="hl">חריגה</div><div class="hv" style="color:#ef4444">+108h</div></div>
+          </div>
+          <div class="bar-bg"><div class="bar-f br" style="width:100%"></div></div>
+          <div class="users-bar"><span class="uchip lead">ינון 178h</span><span class="uchip">אורי 84h</span><span class="uchip">סאגי 24h</span></div>
+          <div class="note"><span class="hl-warn">נדרש SOW נוסף מאלביט</span></div>
+        </div>
+
+        <div class="proj p-g">
+          <div class="proj-h">
+            <div><div class="proj-n">⚡ Sting</div><div class="proj-wbs">K952PCA10008</div></div>
+            <span class="bdg bdg-g">49% תקציב</span>
+          </div>
+          <div class="hrow">
+            <div class="hb"><div class="hl">שעות כעת</div><div class="hv" style="color:#60a5fa">593h</div></div>
+            <div class="hb"><div class="hl">דווח</div><div class="hv">479h</div></div>
+            <div class="hb"><div class="hl">תקציב</div><div class="hv" style="color:#475569">970h</div></div>
+            <div class="hb"><div class="hl">נותר</div><div class="hv" style="color:#22c55e">490h</div></div>
+          </div>
+          <div class="bar-bg"><div class="bar-f bg" style="width:49%"></div></div>
+          <div class="users-bar"><span class="uchip lead">נתי 249h</span><span class="uchip">סאגי 121h</span><span class="uchip">אלעד 105h</span></div>
+        </div>
+
+        <div class="proj p-y">
+          <div class="proj-h">
+            <div><div class="proj-n">🔭 Ofek Ogdan</div><div class="proj-wbs">K953PCA10018</div></div>
+            <span class="bdg bdg-y">89% תקציב</span>
+          </div>
+          <div class="hrow">
+            <div class="hb"><div class="hl">שעות כעת</div><div class="hv" style="color:#60a5fa">133h</div></div>
+            <div class="hb"><div class="hl">דווח</div><div class="hv">107h</div></div>
+            <div class="hb"><div class="hl">תקציב</div><div class="hv" style="color:#475569">120h</div></div>
+          </div>
+          <div class="bar-bg"><div class="bar-f by" style="width:100%"></div></div>
+          <div class="users-bar"><span class="uchip lead">דן 73h</span><span class="uchip">אלעד 35h</span><span class="uchip">נתי 18h</span></div>
+          <div class="note">מרץ כבר חרג — נדרש SOW</div>
+        </div>
+
+        <div class="proj p-y">
+          <div class="proj-h">
+            <div><div class="proj-n">🎯 LFD</div><div class="proj-wbs">K957PCA20075</div></div>
+            <span class="bdg bdg-r">⚡ חרג 117%</span>
+          </div>
+          <div class="hrow">
+            <div class="hb"><div class="hl">שעות כעת</div><div class="hv" style="color:#60a5fa">88h</div></div>
+            <div class="hb"><div class="hl">דווח</div><div class="hv">71h</div></div>
+            <div class="hb"><div class="hl">תקציב</div><div class="hv" style="color:#475569">75h</div></div>
+          </div>
+          <div class="bar-bg"><div class="bar-f br" style="width:100%"></div></div>
+          <div class="users-bar"><span class="uchip lead">ינון 50h</span><span class="uchip">דן 33h</span><span class="uchip">סאגי 5h</span></div>
+        </div>
+
+        <div class="proj p-r">
+          <div class="proj-h">
+            <div><div class="proj-n">🌙 MBN / Mini BrightNite</div><div class="proj-wbs">K957PCA20053</div></div>
+            <span class="bdg bdg-r">בעיית מיפוי ❗</span>
+          </div>
+          <div class="hrow">
+            <div class="hb"><div class="hl">דווח</div><div class="hv">425h</div></div>
+            <div class="hb"><div class="hl">תקציב</div><div class="hv" style="color:#475569">240h</div></div>
+            <div class="hb"><div class="hl">חריגה</div><div class="hv" style="color:#ef4444">+185h</div></div>
+          </div>
+          <div class="bar-bg"><div class="bar-f br" style="width:100%"></div></div>
+          <div class="note"><span class="hl-warn">הפרויקט בקלוקיפיי שונה — לאתר ולמפות</span></div>
+        </div>
+
+        <div class="proj p-g">
+          <div class="proj-h">
+            <div><div class="proj-n">💥 Pulse Solan</div><div class="proj-wbs">2026_423_LND_HF_PULS · WBS ממתין לאלביט</div></div>
+            <span class="bdg bdg-g">13% תקציב</span>
+          </div>
+          <div class="hrow">
+            <div class="hb"><div class="hl">שעות כעת</div><div class="hv" style="color:#60a5fa">132h</div></div>
+            <div class="hb"><div class="hl">תקציב</div><div class="hv" style="color:#475569">990h</div></div>
+            <div class="hb"><div class="hl">נותר</div><div class="hv" style="color:#22c55e">858h</div></div>
+          </div>
+          <div class="bar-bg"><div class="bar-f bg" style="width:13%"></div></div>
+          <div class="users-bar"><span class="uchip lead">אורי 71h</span><span class="uchip">דן 34h</span><span class="uchip">סאגי 27h</span></div>
+        </div>
+
+        <div class="proj p-b">
+          <div class="proj-h">
+            <div><div class="proj-n">🧬 Frontier V2</div><div class="proj-wbs">2025_332_ELS_HF</div></div>
+            <span class="bdg bdg-b">פעיל</span>
+          </div>
+          <div class="hrow">
+            <div class="hb"><div class="hl">שעות כעת</div><div class="hv" style="color:#60a5fa">409h</div></div>
+            <div class="hb"><div class="hl">דווח 2025</div><div class="hv">137h</div></div>
+          </div>
+          <div class="users-bar"><span class="uchip lead">אלעד 219h</span><span class="uchip">אורי 105h</span><span class="uchip">דן 76h</span></div>
+        </div>
+
+        <div class="proj p-b">
+          <div class="proj-h">
+            <div><div class="proj-n">📷 Outdoor Camera</div><div class="proj-wbs">Visonic</div></div>
+            <span class="bdg bdg-b">פעיל</span>
+          </div>
+          <div class="hrow">
+            <div class="hb"><div class="hl">שעות כעת</div><div class="hv" style="color:#60a5fa">309h</div></div>
+          </div>
+          <div class="users-bar"><span class="uchip lead">דן 219h</span><span class="uchip">אורי 88h</span></div>
+        </div>
+
+        <div class="proj p-b">
+          <div class="proj-h">
+            <div><div class="proj-n">🩸 Hemoscope Phase 2.0</div><div class="proj-wbs">LiteBC · 272h תקציב · מוקפא</div></div>
+            <span class="bdg bdg-gray">מוקפא</span>
+          </div>
+          <div class="hrow">
+            <div class="hb"><div class="hl">שעות כעת</div><div class="hv" style="color:#60a5fa">507h</div></div>
+            <div class="hb"><div class="hl">תקציב</div><div class="hv" style="color:#475569">272h</div></div>
+            <div class="hb"><div class="hl">חריגה</div><div class="hv" style="color:#ef4444">+235h</div></div>
+          </div>
+          <div class="bar-bg"><div class="bar-f br" style="width:100%"></div></div>
+          <div class="users-bar"><span class="uchip lead">דן 239h</span><span class="uchip">נתי 120h</span><span class="uchip">אורי 80h</span></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div>
+      <div style="font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">פייפליין — פרויקטים חדשים</div>
+      <div class="proj-list">
+
+        <div class="proj p-p">
+          <div class="proj-h">
+            <div><div class="proj-n">☀️ Helios — C</div><div class="proj-wbs">סאב-פרויקט חדש</div></div>
+            <span class="bdg bdg-p">0h — מתחיל</span>
+          </div>
+          <div class="users-bar"><span class="uchip lead">דן</span></div>
+        </div>
+
+        <div class="proj p-p">
+          <div class="proj-h">
+            <div><div class="proj-n">☀️ Helios — Case</div><div class="proj-wbs">סאב-פרויקט חדש</div></div>
+            <span class="bdg bdg-p">18h</span>
+          </div>
+          <div class="users-bar"><span class="uchip lead">סאגי 18h</span></div>
+        </div>
+
+        <div class="proj p-p">
+          <div class="proj-h">
+            <div><div class="proj-n">☀️ Helios — Stow</div><div class="proj-wbs">סאב-פרויקט חדש</div></div>
+            <span class="bdg bdg-p">0h — מתחיל</span>
+          </div>
+          <div class="users-bar"><span class="uchip lead">אורי</span></div>
+        </div>
+
+        <div class="proj p-p">
+          <div class="proj-h">
+            <div><div class="proj-n">☀️ Helios — Test Flight Glasses</div><div class="proj-wbs">סאב-פרויקט חדש</div></div>
+            <span class="bdg bdg-p">15h</span>
+          </div>
+          <div class="users-bar"><span class="uchip lead">אורי 15h</span></div>
+        </div>
+
+        <div class="proj p-y">
+          <div class="proj-h">
+            <div><div class="proj-n">🔬 Xsight 3.0 Helmet</div><div class="proj-wbs">2025_378_ASP_HF</div></div>
+            <span class="bdg bdg-y">9h — SOW ממתין</span>
+          </div>
+          <div class="users-bar"><span class="uchip lead">דן 9h</span></div>
+          <div class="note"><span class="hl-warn">תקציב אושר</span> — SOW בדרך</div>
+        </div>
+
+        <div class="proj" style="border-right:3px solid #334155;opacity:0.6">
+          <div class="proj-h">
+            <div><div class="proj-n">👁️ Wide FOV HMD for Training</div><div class="proj-wbs">WBS ממתין</div></div>
+            <span class="bdg bdg-gray">11h</span>
+          </div>
+          <div class="users-bar"><span class="uchip">ינון 7h</span><span class="uchip">אורי 4h</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TAB 3: WORKLOAD ===== -->
+<div id="pane-workload" class="pane">
+
+  <div class="kpis kpis-4">
+    <div class="kpi b"><div class="kpi-l">שעות כל הפרויקטים (כעת)</div><div class="kpi-v" style="color:#60a5fa">~6,200h</div><div class="kpi-s">כולל מרץ 2026</div></div>
+    <div class="kpi y"><div class="kpi-l">ממוצע לעובד (3 חודשים)</div><div class="kpi-v" style="color:#fbbf24">~117h/חודש</div><div class="kpi-s">קיבולת מקס ~160h</div></div>
+    <div class="kpi r"><div class="kpi-l">עומס כבד</div><div class="kpi-v" style="color:#ef4444">ינון</div><div class="kpi-s">~90% קיבולת</div></div>
+    <div class="kpi g"><div class="kpi-l">זמין לפרויקטים חדשים</div><div class="kpi-v" style="color:#22c55e">אורי, סאגי, אלעד</div><div class="kpi-s">~50–60h/חודש כ"א</div></div>
+  </div>
+
+  <div class="infobox info" style="margin-bottom:14px;font-size:12px">
+    <strong>הערה:</strong> ינון לא מופיע בטבלת העומסים — קלוקיפיי שלו מכיל תשלומים לפרילנסים וספקים, לא שעות עבודה בפועל.
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">⚡ עומס נוכחי — 30 ימים אחרונים (פבר'–מרץ 2026)</div>
+    <table>
+      <thead>
+        <tr><th>עובד</th><th>עומס נוכחי</th><th>פרויקטים פעילים עכשיו</th><th style="text-align:center">שעות/30י</th><th style="text-align:center">פרויקטים</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong style="color:#f1f5f9">דן</strong><br><span style="font-size:10px;color:#64748b">ID Designer</span></td>
+          <td>
+            <div class="util-wrap">
+              <div class="util-track"><div class="util-fill" style="width:100%;background:#ef4444"></div></div>
+              <span style="color:#fca5a5;font-size:11px">כבד</span>
+            </div>
+          </td>
+          <td>
+            <div class="users-bar" style="margin-top:0">
+              <span class="uchip lead">Outdoor Camera 46h</span>
+              <span class="uchip lead">Ofek Ogdan 44h</span>
+              <span class="uchip">Pulse Solan 34h</span>
+              <span class="uchip">LFD 17h</span>
+              <span class="uchip">Hemoscope 10h</span>
+              <span class="uchip">Xsight 9h</span>
+            </div>
+          </td>
+          <td style="text-align:center;font-weight:600;color:#60a5fa">160h</td>
+          <td style="text-align:center;font-weight:600;color:#e2e8f0">6</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#f1f5f9">אורי</strong><br><span style="font-size:10px;color:#64748b">ID Designer</span></td>
+          <td>
+            <div class="util-wrap">
+              <div class="util-track"><div class="util-fill" style="width:70%;background:#eab308"></div></div>
+              <span style="color:#fde047;font-size:11px">גבוה</span>
+            </div>
+          </td>
+          <td>
+            <div class="users-bar" style="margin-top:0">
+              <span class="uchip lead">Pulse Solan 71h</span>
+              <span class="uchip">Helios Test Flight 15h</span>
+              <span class="uchip">Outdoor Camera 15h</span>
+              <span class="uchip">Hemoscope 5h</span>
+              <span class="uchip">Nova Shield 3h</span>
+              <span class="uchip">Sting 2h</span>
+            </div>
+          </td>
+          <td style="text-align:center;font-weight:600;color:#60a5fa">112h</td>
+          <td style="text-align:center;font-weight:600;color:#e2e8f0">6</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#f1f5f9">סאגי</strong><br><span style="font-size:10px;color:#64748b">ID Designer</span></td>
+          <td>
+            <div class="util-wrap">
+              <div class="util-track"><div class="util-fill" style="width:68%;background:#eab308"></div></div>
+              <span style="color:#fde047;font-size:11px">גבוה</span>
+            </div>
+          </td>
+          <td>
+            <div class="users-bar" style="margin-top:0">
+              <span class="uchip lead">Sting 42h</span>
+              <span class="uchip">Pulse Solan 27h</span>
+              <span class="uchip">Helios Case 18h</span>
+              <span class="uchip">Nova Shield 16h</span>
+              <span class="uchip">Ofek 4h</span>
+              <span class="uchip">Outdoor 1h</span>
+            </div>
+          </td>
+          <td style="text-align:center;font-weight:600;color:#60a5fa">108h</td>
+          <td style="text-align:center;font-weight:600;color:#e2e8f0">6</td>
+        </tr>
+        <tr style="opacity:0.5">
+          <td><strong style="color:#f1f5f9">נתי</strong><br><span style="font-size:10px;color:#64748b">ID Designer</span></td>
+          <td><span class="bdg bdg-gray">🪖 מילואים</span></td>
+          <td><span style="font-size:11px;color:#64748b">לא זמין כרגע</span></td>
+          <td style="text-align:center;color:#475569">—</td>
+          <td style="text-align:center;color:#475569">—</td>
+        </tr>
+        <tr style="opacity:0.5">
+          <td><strong style="color:#f1f5f9">אלעד</strong><br><span style="font-size:10px;color:#64748b">Co-CEO · שותף</span></td>
+          <td><span class="bdg bdg-gray">מנהל</span></td>
+          <td><span style="font-size:11px;color:#64748b">לא רושם שעות בקלוקיפיי</span></td>
+          <td style="text-align:center;color:#475569">—</td>
+          <td style="text-align:center;color:#475569">—</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="infobox warn" style="margin-top:12px">דן ב-100% קיבולת — 6 פרויקטים במקביל. נתי ירד לנמוך מאוד. אלעד 0h — לבדוק.</div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">📊 היסטוריה — 3 חודשים (דצמ' 2025 – מרץ 2026)</div>
+    <table>
+      <thead>
+        <tr><th>עובד</th><th>פרויקטים עיקריים (היסטוריה)</th><th style="text-align:center">סה"כ שעות</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong style="color:#f1f5f9">אורי</strong></td>
+          <td><div class="users-bar" style="margin-top:0"><span class="uchip lead">Helios 461h</span><span class="uchip">Eitan 232h</span><span class="uchip">Frontier 105h</span><span class="uchip">Nova 84h</span><span class="uchip">Pulse 71h</span></div></td>
+          <td style="text-align:center;font-weight:600;color:#60a5fa">~1,062h</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#f1f5f9">דן</strong></td>
+          <td><div class="users-bar" style="margin-top:0"><span class="uchip lead">Hemoscope 239h</span><span class="uchip">Outdoor 219h</span><span class="uchip">Eitan 167h</span><span class="uchip">Frontier 76h</span></div></td>
+          <td style="text-align:center;font-weight:600;color:#60a5fa">~959h</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#f1f5f9">אלעד</strong></td>
+          <td><div class="users-bar" style="margin-top:0"><span class="uchip lead">Frontier 219h</span><span class="uchip">Eitan 194h</span><span class="uchip">Sting 105h</span><span class="uchip">Ofek 35h</span></div></td>
+          <td style="text-align:center;font-weight:600;color:#60a5fa">~553h</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#f1f5f9">נתי</strong></td>
+          <td><div class="users-bar" style="margin-top:0"><span class="uchip lead">Sting 249h</span><span class="uchip">Hemoscope 120h</span><span class="uchip">Ofek 18h</span></div></td>
+          <td style="text-align:center;font-weight:600;color:#60a5fa">~387h</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#f1f5f9">סאגי</strong></td>
+          <td><div class="users-bar" style="margin-top:0"><span class="uchip lead">Sting 121h</span><span class="uchip">Iron Hawk 96h</span><span class="uchip">Pulse 27h</span><span class="uchip">Nova 24h</span></div></td>
+          <td style="text-align:center;font-weight:600;color:#60a5fa">~268h</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">📌 פרויקטי פייפליין — שיוך עובד עיקרי</div>
+    <table>
+      <thead><tr><th>פרויקט</th><th>שעות כעת</th><th>עובד כעת</th><th>הערה</th></tr></thead>
+      <tbody>
+        <tr><td>Helios — C</td><td>0h</td><td><span class="bdg bdg-b">דן</span></td><td style="font-size:11px;color:#64748b">נפתח, טרם התחיל</td></tr>
+        <tr><td>Helios — Stow</td><td>0h</td><td><span class="bdg bdg-b">אורי</span></td><td style="font-size:11px;color:#64748b">נפתח, טרם התחיל</td></tr>
+        <tr><td>Helios — Case</td><td>18h</td><td><span class="bdg bdg-g">סאגי</span></td><td style="font-size:11px;color:#64748b">פעיל</td></tr>
+        <tr><td>Helios — Test Flight</td><td>15h</td><td><span class="bdg bdg-g">אורי</span></td><td style="font-size:11px;color:#64748b">פעיל</td></tr>
+        <tr><td>Xsight 3.0 Helmet</td><td>9h</td><td><span class="bdg bdg-g">דן</span></td><td style="font-size:11px;color:#64748b">SOW ממתין</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===== TAB 4: HR ===== -->
+<div id="pane-hr" class="pane">
+
+  <div class="kpis kpis-4">
+    <div class="kpi b"><div class="kpi-l">עובדים פעילים כעת</div><div class="kpi-v" style="color:#60a5fa">4</div><div class="kpi-s">דן, אורי, סאגי + ינון (HF) · נתי במילואים · אלעד מנהל</div></div>
+    <div class="kpi g"><div class="kpi-l">קיבולת חודשית (4 עובדים)</div><div class="kpi-v" style="color:#22c55e">~530h</div><div class="kpi-s">4 × ~133h (100%)</div></div>
+    <div class="kpi y"><div class="kpi-l">עומס נוכחי (30 יום)</div><div class="kpi-v" style="color:#fbbf24">~380h</div><div class="kpi-s">דן 160 + אורי 112 + סאגי 108</div></div>
+    <div class="kpi r"><div class="kpi-l">טריגר גיוס</div><div class="kpi-v" style="color:#ef4444">&gt;450h/חודש</div><div class="kpi-s">= לחץ קיבולת (4 עובדים)</div></div>
+  </div>
+
+  <div class="g2" style="align-items:start">
+    <div class="panel" style="margin-bottom:0">
+      <div class="panel-title">📊 קיבולת vs Pipeline צפוי</div>
+      <div class="cf-row"><span>קיבולת מקסימלית/חודש</span><span class="neu">800h</span></div>
+      <div class="cf-row"><span>עומס ממוצע נוכחי</span><span style="color:#22c55e">~585h (73%)</span></div>
+      <div class="cf-row"><span>Pipeline חדש (Helios subs + Xsight + Pulse)</span><span style="color:#fbbf24">+~150h/חודש</span></div>
+      <div class="cf-row" style="font-weight:600"><span>צפי עומס אפריל–יוני</span><span style="color:#eab308">~735h (92%)</span></div>
+      <div style="margin-top:12px">
+        <div style="font-size:11px;color:#64748b;margin-bottom:4px">נוכחי 73%</div>
+        <div class="bar-bg" style="height:8px"><div class="bar-f bg" style="width:73%"></div></div>
+        <div style="font-size:11px;color:#64748b;margin-top:8px;margin-bottom:4px">עם pipeline אפריל+ 92%</div>
+        <div class="bar-bg" style="height:8px"><div class="bar-f by" style="width:92%"></div></div>
+        <div style="font-size:11px;color:#64748b;margin-top:8px;margin-bottom:4px">טריגר גיוס (81%)</div>
+        <div class="bar-bg" style="height:8px"><div style="width:81%;height:100%;background:linear-gradient(90deg,#22c55e,#ef4444);border-radius:3px"></div></div>
+      </div>
+      <div class="infobox warn" style="margin-top:12px">עם כניסת הפייפליין — מגיעים לגבול קיבולת. טריגר גיוס צפוי <strong>אפריל–מאי 2026</strong>.</div>
+    </div>
+
+    <div>
+      <div class="panel" style="margin-bottom:14px">
+        <div class="panel-title">👤 זמינות לפרויקטים חדשים</div>
+        <table>
+          <thead><tr><th>עובד</th><th>עומס</th><th>פנוי/חודש</th></tr></thead>
+          <tbody>
+            <tr><td><strong>ינון</strong></td><td><span style="color:#ef4444">כבד 90%</span></td><td><span style="color:#ef4444">מוגבל ~15h</span></td></tr>
+            <tr style="opacity:0.4"><td><strong>אלעד</strong></td><td><span style="color:#64748b">Co-CEO · מנהל</span></td><td><span style="color:#64748b">לא רושם שעות</span></td></tr>
+            <tr><td><strong>דן</strong></td><td><span style="color:#eab308">בינוני 75%</span></td><td><span style="color:#fbbf24">~30h</span></td></tr>
+            <tr><td><strong>אורי</strong></td><td><span style="color:#eab308">גבוה 78%</span></td><td><span style="color:#fbbf24">~30h</span></td></tr>
+            <tr style="opacity:0.4"><td><strong>נתי</strong></td><td><span style="color:#64748b">🪖 מילואים</span></td><td><span style="color:#64748b">לא זמין</span></td></tr>
+            <tr><td><strong>סאגי</strong></td><td><span style="color:#22c55e">בינוני 55%</span></td><td><span style="color:#22c55e">~60h</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="infobox info"><strong>צוואר בקבוק:</strong> ינון הוא ה-HF Lead היחיד. עם Helios subs + Pulse + Xsight — עומס HF יחרוג מהר. שקול גיוס HF חלקי.</div>
+    </div>
+  </div>
+
+  <div class="g3">
+    <div class="hire-box go">
+      <div class="hire-title" style="color:#86efac">✅ תנאים לגיוס</div>
+      <div class="hire-body">
+        <strong>מתי לפרסם:</strong><br>
+        · עומס עובר 650h/חודש<br>
+        · Pipeline נסגר מעל 600h<br>
+        · ינון מעל 90% לאורך זמן<br><br>
+        <strong>לפי pipeline נוכחי:</strong><br>
+        טריגר צפוי <span style="color:#fbbf24">אפריל–מאי 2026</span>
+      </div>
+    </div>
+    <div class="hire-box wait">
+      <div class="hire-title" style="color:#fde047">📋 פרופיל מועדף לגיוס</div>
+      <div class="hire-body">
+        <strong>מה הכי חסר:</strong><br>
+        · HF / UX Designer (ינון עמוס)<br>
+        · ID Mid-level — Sting / Helios<br><br>
+        <strong>עיתוי הכשרה:</strong><br>
+        3–4 שבועות לעצמאות<br>
+        → <span style="color:#fbbf24">לפרסם חודש לפני הטריגר</span>
+      </div>
+    </div>
+    <div class="hire-box watch">
+      <div class="hire-title" style="color:#93c5fd">⚠️ סיכוני H2 2026</div>
+      <div class="hire-body">
+        <strong>לצפות:</strong><br>
+        · Xsight + Pulse + Helios subs במקביל<br>
+        · ינון = צוואר בקבוק HF<br>
+        · Hemoscope 2.0 חרג 186% — מה הסטטוס?<br><br>
+        <strong>המלצה:</strong><br>
+        HF part-time לתגבור מיידי
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TAB 5: CRM ===== -->
+<div id="pane-crm" class="pane">
+
+  <div class="kpis kpis-4">
+    <div class="kpi b"><div class="kpi-l">סה"כ לידים</div><div class="kpi-v" style="color:#3b82f6">50</div><div class="kpi-s">ב-Monday CRM</div></div>
+    <div class="kpi r"><div class="kpi-l">דורשים Follow-Up</div><div class="kpi-v" style="color:#ef4444">35</div><div class="kpi-s">חרגו מסף הזמן</div></div>
+    <div class="kpi y"><div class="kpi-l">Process</div><div class="kpi-v" style="color:#eab308">21</div><div class="kpi-s">בתהליך פעיל</div></div>
+    <div class="kpi p"><div class="kpi-l">Qualified</div><div class="kpi-v" style="color:#a855f7">14</div><div class="kpi-s">מוכשרים, ממתינים</div></div>
+  </div>
+
+  <!-- Pipeline Funnel -->
+  <div class="panel">
+    <div class="panel-title">🎯 Funnel — סטטוס לידים</div>
+    <div style="display:flex;gap:8px;margin-bottom:14px">
+      <div style="flex:1;background:#0f172a;border-radius:8px;padding:12px;border:1px solid #1e293b;text-align:center">
+        <div style="font-size:22px;font-weight:700;color:#60a5fa">8</div>
+        <div style="font-size:11px;color:#64748b;margin-top:4px">1st Touch</div>
+      </div>
+      <div style="display:flex;align-items:center;color:#334155;font-size:18px">›</div>
+      <div style="flex:1;background:#0f172a;border-radius:8px;padding:12px;border:1px solid #1e293b;text-align:center">
+        <div style="font-size:22px;font-weight:700;color:#a78bfa">7</div>
+        <div style="font-size:11px;color:#64748b;margin-top:4px">2nd Touch</div>
+      </div>
+      <div style="display:flex;align-items:center;color:#334155;font-size:18px">›</div>
+      <div style="flex:1;background:#0f172a;border-radius:8px;padding:12px;border:1px solid #1e293b;text-align:center">
+        <div style="font-size:22px;font-weight:700;color:#c084fc">14</div>
+        <div style="font-size:11px;color:#64748b;margin-top:4px">Qualified</div>
+      </div>
+      <div style="display:flex;align-items:center;color:#334155;font-size:18px">›</div>
+      <div style="flex:1;background:#0f172a;border-radius:8px;padding:12px;border:1px solid rgba(234,179,8,.3);text-align:center">
+        <div style="font-size:22px;font-weight:700;color:#eab308">21</div>
+        <div style="font-size:11px;color:#64748b;margin-top:4px">Process</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="g2" style="align-items:start">
+
+    <!-- דחוף לטיפול -->
+    <div class="panel" style="margin-bottom:0">
+      <div class="panel-title">🚨 דחוף — Follow-Up נדרש</div>
+      <table>
+        <thead><tr><th>שם</th><th>חברה</th><th>סטטוס</th><th>אחרון</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Michal Mor</strong></td><td>Smart Shooter</td><td><span class="bdg bdg-y">1st touch</span></td><td><span style="color:#ef4444">39d</span></td></tr>
+          <tr><td><strong>Gordon Farrell</strong></td><td>Wix</td><td><span class="bdg bdg-b">2nd touch</span></td><td><span style="color:#ef4444">65d</span></td></tr>
+          <tr><td><strong>Tal Lustig</strong></td><td>Hertzog</td><td><span class="bdg bdg-b">2nd touch</span></td><td><span style="color:#ef4444">78d</span></td></tr>
+          <tr><td><strong>Jacob Hacham</strong></td><td>Brosh Smartech</td><td><span class="bdg bdg-y">Process</span></td><td><span style="color:#ef4444">71d</span></td></tr>
+          <tr><td><strong>Aviv Harpaz</strong></td><td>CPC Solutions</td><td><span class="bdg bdg-y">Process</span></td><td><span style="color:#fbbf24">99d</span></td></tr>
+          <tr><td><strong>Gal Menaged</strong></td><td>PRODAC Systems</td><td><span class="bdg bdg-b">2nd touch</span></td><td><span style="color:#fbbf24">142d</span></td></tr>
+          <tr><td><strong>Guy Maimon</strong></td><td>Blue Bird</td><td><span class="bdg bdg-y">Process</span></td><td><span style="color:#fbbf24">142d</span></td></tr>
+          <tr><td><strong>Roy Elitzur</strong></td><td>RH Group</td><td><span class="bdg bdg-y">Process</span></td><td><span style="color:#fbbf24">142d</span></td></tr>
+          <tr><td><strong>Diethard Fent</strong></td><td>SECO</td><td><span class="bdg bdg-y">Process</span></td><td><span style="color:#fbbf24">142d</span></td></tr>
+          <tr><td><strong>Amit Kaspi</strong></td><td>Human Extensions</td><td><span class="bdg bdg-y">Process</span></td><td><span style="color:#ef4444">407d</span></td></tr>
+        </tbody>
+      </table>
+      <div class="infobox warn" style="margin-top:10px">25 לידים נוספים ב-M&A Nov2024 — חלק גדול ישן מעל שנה. שקול ניקוי/ארכיב.</div>
+    </div>
+
+    <!-- לידים מעניינים + ואדים -->
+    <div>
+      <div class="panel" style="margin-bottom:16px">
+        <div class="panel-title">⭐ לידים מעניינים — UMEX 2026</div>
+        <div class="proj-list">
+          <div class="proj p-p">
+            <div class="proj-h">
+              <div><div class="proj-n">Micha Peric Premk</div><div class="proj-wbs">dat-con · Sales Manager · UMEX</div></div>
+              <span class="bdg bdg-p">Qualified</span>
+            </div>
+            <div class="note">חברה סלובנית, חיבור לתעשייה ביטחונית אירופאית</div>
+          </div>
+          <div class="proj p-p">
+            <div class="proj-h">
+              <div><div class="proj-n">Kim Sevsek</div><div class="proj-wbs">Guardiaris · BD · UMEX</div></div>
+              <span class="bdg bdg-p">Qualified</span>
+            </div>
+            <div class="note">מומחה Counter-UAS, קשרים לצבא ממשלות</div>
+          </div>
+          <div class="proj p-p">
+            <div class="proj-h">
+              <div><div class="proj-n">Ido Gur</div><div class="proj-wbs">Starling Systems · Founder & CEO · UMEX</div></div>
+              <span class="bdg bdg-p">Qualified</span>
+            </div>
+            <div class="note">סטארטאפ אוואציה, מייסד עם חזון — פוטנציאל גבוה</div>
+          </div>
+          <div class="proj p-p">
+            <div class="proj-h">
+              <div><div class="proj-n">Jan Machejek</div><div class="proj-wbs">Defendeye · Sales Manager · UMEX</div></div>
+              <span class="bdg bdg-p">Qualified</span>
+            </div>
+            <div class="note">מכירות גלובליות, מוצרי ביטחון, אירופה/אסיה/ים-תיכון</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-bottom:0">
+        <div class="panel-title">👤 ואדים — מצב שוטף</div>
+        <table>
+          <thead><tr><th>ליד</th><th>סטטוס</th><th>הערה</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Michal Mor</strong></td><td><span class="bdg bdg-y">1st touch</span></td><td style="font-size:11px;color:#94a3b8">Smart Shooter · 39d</td></tr>
+            <tr><td><strong>Gordon Farrell</strong></td><td><span class="bdg bdg-b">2nd touch</span></td><td style="font-size:11px;color:#94a3b8">Wix · 65d</td></tr>
+            <tr><td><strong>ESCbaz</strong></td><td><span class="bdg bdg-gray">1st touch</span></td><td style="font-size:11px;color:#94a3b8">Personal network · אין תאריך</td></tr>
+          </tbody>
+        </table>
+        <div class="infobox info" style="margin-top:10px">ואדים — 3 לידים פעילים. Smart Shooter ו-Wix ממתינים לעדכון. ESCbaz טרם הוזן.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- לידים לפי מקור -->
+  <div class="panel" style="margin-top:18px">
+    <div class="panel-title">📊 לידים לפי מקור</div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <div style="background:#0f172a;border-radius:8px;padding:10px 16px;border:1px solid #1e293b;text-align:center;min-width:110px">
+        <div style="font-size:20px;font-weight:700;color:#60a5fa">15</div>
+        <div style="font-size:11px;color:#64748b">UMEX 2026</div>
+      </div>
+      <div style="background:#0f172a;border-radius:8px;padding:10px 16px;border:1px solid #1e293b;text-align:center;min-width:110px">
+        <div style="font-size:20px;font-weight:700;color:#a78bfa">20</div>
+        <div style="font-size:11px;color:#64748b">M&A Nov 2024</div>
+      </div>
+      <div style="background:#0f172a;border-radius:8px;padding:10px 16px;border:1px solid #1e293b;text-align:center;min-width:110px">
+        <div style="font-size:20px;font-weight:700;color:#fbbf24">10</div>
+        <div style="font-size:11px;color:#64748b">M&A Nov 2025</div>
+      </div>
+      <div style="background:#0f172a;border-radius:8px;padding:10px 16px;border:1px solid #1e293b;text-align:center;min-width:110px">
+        <div style="font-size:20px;font-weight:700;color:#86efac">3</div>
+        <div style="font-size:11px;color:#64748b">LinkedIn</div>
+      </div>
+      <div style="background:#0f172a;border-radius:8px;padding:10px 16px;border:1px solid #1e293b;text-align:center;min-width:110px">
+        <div style="font-size:20px;font-weight:700;color:#f472b6">2</div>
+        <div style="font-size:11px;color:#64748b">Personal Network</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function sw(name, btn) {
+  document.querySelectorAll('.pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('pane-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
