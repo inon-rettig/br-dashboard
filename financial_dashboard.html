@@ -635,9 +635,9 @@
           <div class="sub-rows">
             <div class="sub-row"><span class="sub-label">שכ"ד נוכחי (שוכרים קיימים)</span><span class="sub-amount green">5,350 ₪</span></div>
             <div class="sub-row"><span class="sub-label">שכ"ד שוק אמיתי (מוצקין 5 חד')</span><span class="sub-amount green">~6,200 ₪</span></div>
-            <div class="sub-row"><span class="sub-label">מס שכ"ד (~10% מעל פטור)</span><span class="sub-amount red">~0 ₪ (מתחת לתקרה)</span></div>
+            <div class="sub-row"><span class="sub-label">מס שכ"ד (5,350 מתחת לתקרת פטור)</span><span class="sub-amount green">פטור מלא</span></div>
             <div class="sub-row"><span class="sub-label">הפרש מהשוק</span><span class="sub-amount muted">-850 ₪/חודש</span></div>
-            <div class="sub-row"><span class="sub-label" style="font-style:italic; color:var(--text-muted);">* בשכ"ד שוק: תקרת פטור 5,654 ₪ — מעל זה מס 10%</span><span class="sub-amount muted"></span></div>
+            <div class="sub-row"><span class="sub-label" style="font-style:italic; color:var(--text-muted);">* בשכ"ד שוק (6,200): מס ~338 ₪/חודש (מסלול ניכוי יחסי)</span><span class="sub-amount muted"></span></div>
           </div>
         </li>
         <li>
@@ -686,15 +686,14 @@
         <!-- רכב — expandable -->
         <li class="expandable" onclick="toggleRow(this)">
           <div class="row-main">
-            <span class="label">🚗 רכב <span class="expand-icon">▼</span></span>
-            <span class="amount red">~3,053 ₪</span>
+            <span class="label">🚗 רכב (ביטוח + מימון) <span class="expand-icon">▼</span></span>
+            <span class="amount red">~2,300 ₪</span>
           </div>
           <div class="sub-rows">
             <div class="sub-row"><span class="sub-label">מימון רכב חשמלי (כולל ביטוח הפניקס)</span><span class="sub-amount red">1,800 ₪</span></div>
             <div class="sub-row"><span class="sub-label">ביטוח רכב רגיל (ליברה)</span><span class="sub-amount red">~500 ₪</span></div>
-            <div class="sub-row"><span class="sub-label">דלק / טעינה</span><span class="sub-amount red">~500 ₪</span></div>
-            <div class="sub-row"><span class="sub-label">מוסך / תחזוקה</span><span class="sub-amount red">~253 ₪</span></div>
-            <div class="sub-row"><span class="sub-label" style="font-style:italic; color:var(--text-muted);">* ביטוח ליברה לרכב הרגיל — לאמת מחיר מדויק</span><span class="sub-amount muted"></span></div>
+            <div class="sub-row"><span class="sub-label" style="font-style:italic; color:var(--text-muted);">* דלק / טעינה / חשמל בית — כלולים בכרטיסי אשראי</span><span class="sub-amount muted"></span></div>
+            <div class="sub-row"><span class="sub-label" style="font-style:italic; color:var(--text-muted);">* ביטוח ליברה — לאמת מחיר מדויק</span><span class="sub-amount muted"></span></div>
           </div>
         </li>
 
@@ -745,14 +744,7 @@
           </div>
         </li>
         <li><span class="label">שונות</span><span class="amount red">1,366 ₪</span></li>
-        <li class="expandable" onclick="toggleRow(this)">
-          <div class="row-main"><span class="label">⛽ דלק / חשמל / גז <span class="expand-icon">▼</span></span><span class="amount red">1,253 ₪</span></div>
-          <div class="sub-rows">
-            <div class="sub-row"><span class="sub-label">חשמל בית</span><span class="sub-amount red">~600 ₪</span></div>
-            <div class="sub-row"><span class="sub-label">גז / מים</span><span class="sub-amount red">~300 ₪</span></div>
-            <div class="sub-row"><span class="sub-label">דלק / טעינת רכב</span><span class="sub-amount red">~353 ₪</span></div>
-          </div>
-        </li>
+        <li><span class="label">⛽ דלק / חשמל / גז / מים</span><span class="amount red">1,253 ₪</span></li>
         <li class="expandable" onclick="toggleRow(this)">
           <div class="row-main"><span class="label">🏥 רפואה <span class="expand-icon">▼</span></span><span class="amount red">1,067 ₪</span></div>
           <div class="sub-rows">
@@ -951,9 +943,10 @@
           <li><span class="label">שטח</span><span class="amount">142 מ"ר | קומה 17</span></li>
           <li><span class="label">שכ"ד נוכחי (שוכרים קיימים)</span><span class="amount">5,350 ₪/חודש</span></li>
           <li><span class="label">שכ"ד שוק ריאלי</span><span class="amount gold">~6,200 ₪/חודש</span></li>
-          <li><span class="label">מס שכ"ד (בשכ"ד שוק)</span><span class="amount red">~55 ₪/חודש</span></li>
-          <li><span class="label">שכ"ד שוק נטו (אחרי מס)</span><span class="amount green">~6,145 ₪/חודש</span></li>
+          <li><span class="label">מס שכ"ד — מסלול ניכוי יחסי (~31%)</span><span class="amount red">~338 ₪/חודש</span></li>
+          <li><span class="label">שכ"ד שוק נטו (אחרי מס)</span><span class="amount green">~5,862 ₪/חודש</span></li>
           <li><span class="label">תשואה ברוטו</span><span class="amount">3.1% (שוק) / 2.7% (נוכחי)</span></li>
+          <li><span class="label" style="font-size:0.78rem; color:var(--text-muted);">* מסלול A (10% פשוט) = 620 ₪/חודש. מסלול B (ניכוי יחסי) = ~338 ₪ — עדיף.</span><span class="amount"></span></li>
         </ul>
       </div>
       <div>
@@ -1031,9 +1024,9 @@
       <div class="card-title"><span class="icon">🏠</span> תרחיש שמירה</div>
       <ul class="row-list">
         <li><span class="label">שכ"ד שוק ריאלי</span><span class="amount green">+6,200 ₪</span></li>
-        <li><span class="label">מס שכ"ד (מעל תקרת פטור)</span><span class="amount red">-55 ₪</span></li>
+        <li><span class="label">מס שכ"ד (מסלול ניכוי יחסי)</span><span class="amount red">-338 ₪</span></li>
         <li><span class="label">תשלום משכנתא</span><span class="amount red">-5,714 ₪</span></li>
-        <li><span class="label">הכנסה נטו חודשית (שוק)</span><span class="amount green">+431 ₪</span></li>
+        <li><span class="label">הכנסה נטו חודשית (שוק)</span><span class="amount green">+148 ₪</span></li>
         <li><span class="label">הון תקוע</span><span class="amount red">1,400,000 ₪ לא עובד</span></li>
         <li><span class="label">עלות הזדמנות שנתית</span><span class="amount red">~98,000–140,000 ₪</span></li>
         <li><span class="label" style="font-size:0.8rem; color:var(--text-muted);">* תקרת פטור מס שכ"ד: 5,654 ₪/חודש — מעל זה מס 10% על העודף</span><span class="amount"></span></li>
