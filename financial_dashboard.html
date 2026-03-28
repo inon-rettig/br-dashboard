@@ -687,13 +687,13 @@
         <li class="expandable" onclick="toggleRow(this)">
           <div class="row-main">
             <span class="label">🚗 רכב (ביטוח + מימון) <span class="expand-icon">▼</span></span>
-            <span class="amount red">~2,300 ₪</span>
+            <span class="amount red">~2,300 ₪ *</span>
           </div>
           <div class="sub-rows">
             <div class="sub-row"><span class="sub-label">מימון רכב חשמלי (כולל ביטוח הפניקס)</span><span class="sub-amount red">1,800 ₪</span></div>
-            <div class="sub-row"><span class="sub-label">ביטוח רכב רגיל (ליברה)</span><span class="sub-amount red">~500 ₪</span></div>
-            <div class="sub-row"><span class="sub-label" style="font-style:italic; color:var(--text-muted);">* דלק / טעינה / חשמל בית — כלולים בכרטיסי אשראי</span><span class="sub-amount muted"></span></div>
-            <div class="sub-row"><span class="sub-label" style="font-style:italic; color:var(--text-muted);">* ביטוח ליברה — לאמת מחיר מדויק</span><span class="sub-amount muted"></span></div>
+            <div class="sub-row"><span class="sub-label">ביטוח רכב רגיל (ליברה) *</span><span class="sub-amount red">~500 ₪</span></div>
+            <div class="sub-row"><span class="sub-label" style="font-style:italic; color:var(--text-muted);">* ביטוח ליברה — הערכה בלבד, יש לאמת מחיר מדויק</span><span class="sub-amount muted"></span></div>
+            <div class="sub-row"><span class="sub-label" style="font-style:italic; color:var(--text-muted);">* דלק / טעינה / מוסך — מופיעים בנפרד בכרטיסי אשראי, לא כלולים כאן</span><span class="sub-amount muted"></span></div>
           </div>
         </li>
 
@@ -714,44 +714,13 @@
     <div class="card">
       <div class="card-title"><span class="icon">💳</span> כרטיסי אשראי — ממוצע חודשי</div>
       <ul class="row-list">
-        <li class="expandable" onclick="toggleRow(this)">
-          <div class="row-main"><span class="label">🛒 מזון וצריכה <span class="expand-icon">▼</span></span><span class="amount red">5,752 ₪</span></div>
-          <div class="sub-rows">
-            <div class="sub-row"><span class="sub-label">סופרמרקט</span><span class="sub-amount red">~4,500 ₪</span></div>
-            <div class="sub-row"><span class="sub-label">מוצרי צריכה שוטפת</span><span class="sub-amount red">~1,252 ₪</span></div>
-          </div>
-        </li>
-        <li class="expandable" onclick="toggleRow(this)">
-          <div class="row-main"><span class="label">🍽️ מסעדות וקפה <span class="expand-icon">▼</span></span><span class="amount red">2,233 ₪</span></div>
-          <div class="sub-rows">
-            <div class="sub-row"><span class="sub-label">מסעדות</span><span class="sub-amount red">~1,500 ₪</span></div>
-            <div class="sub-row"><span class="sub-label">קפה / בתי קפה</span><span class="sub-amount red">~733 ₪</span></div>
-          </div>
-        </li>
-        <li class="expandable" onclick="toggleRow(this)">
-          <div class="row-main"><span class="label">🏛️ עירייה / ממשלה <span class="expand-icon">▼</span></span><span class="amount red">2,278 ₪</span></div>
-          <div class="sub-rows">
-            <div class="sub-row"><span class="sub-label">ארנונה</span><span class="sub-amount red">~1,600 ₪</span></div>
-            <div class="sub-row"><span class="sub-label">תשלומי ממשלה / ביטוח לאומי</span><span class="sub-amount red">~678 ₪</span></div>
-          </div>
-        </li>
-        <li class="expandable" onclick="toggleRow(this)">
-          <div class="row-main"><span class="label">🎮 פנאי ובידור <span class="expand-icon">▼</span></span><span class="amount red">1,461 ₪</span></div>
-          <div class="sub-rows">
-            <div class="sub-row"><span class="sub-label">מנויים (נטפליקס, ספוטיפיי וכו')</span><span class="sub-amount red">~400 ₪</span></div>
-            <div class="sub-row"><span class="sub-label">פעילויות / אטרקציות</span><span class="sub-amount red">~700 ₪</span></div>
-            <div class="sub-row"><span class="sub-label">שונות בידור</span><span class="sub-amount red">~361 ₪</span></div>
-          </div>
-        </li>
+        <li><span class="label">🛒 מזון וצריכה</span><span class="amount red">5,752 ₪</span></li>
+        <li><span class="label">🍽️ מסעדות וקפה</span><span class="amount red">2,233 ₪</span></li>
+        <li><span class="label">🏛️ עירייה / ממשלה</span><span class="amount red">2,278 ₪</span></li>
+        <li><span class="label">🎮 פנאי ובידור</span><span class="amount red">1,461 ₪</span></li>
         <li><span class="label">שונות</span><span class="amount red">1,366 ₪</span></li>
-        <li><span class="label">⛽ דלק / חשמל / גז / מים</span><span class="amount red">1,253 ₪</span></li>
-        <li class="expandable" onclick="toggleRow(this)">
-          <div class="row-main"><span class="label">🏥 רפואה <span class="expand-icon">▼</span></span><span class="amount red">1,067 ₪</span></div>
-          <div class="sub-rows">
-            <div class="sub-row"><span class="sub-label">תרופות / ביקורים רופא</span><span class="sub-amount red">~700 ₪</span></div>
-            <div class="sub-row"><span class="sub-label">אופטיקה / שיניים</span><span class="sub-amount red">~367 ₪</span></div>
-          </div>
-        </li>
+        <li><span class="label">⛽ דלק / חשמל / גז / מים *</span><span class="amount red">1,253 ₪</span></li>
+        <li><span class="label">🏥 רפואה</span><span class="amount red">1,067 ₪</span></li>
         <li><span class="label">👗 אופנה</span><span class="amount red">1,046 ₪</span></li>
         <li><span class="label">🚌 תחבורה</span><span class="amount red">749 ₪</span></li>
         <li><span class="label">💻 חשמל / מחשבים</span><span class="amount red">707 ₪</span></li>
@@ -759,6 +728,7 @@
         <li><span class="label">✈️ טיסות / תיירות</span><span class="amount red">588 ₪</span></li>
         <li><span class="label">💄 קוסמטיקה</span><span class="amount red">329 ₪</span></li>
         <li><span class="label">🐾 חיות מחמד</span><span class="amount red">266 ₪</span></li>
+        <li style="padding:8px 0; border-bottom:none; font-size:0.8rem; color:var(--text-muted);">* ⛽ קטגוריה זו כוללת דלק/טעינת רכב + חשמל + גז + מים — פירוט מדויק לא זמין. הביטוח ומימון הרכב נמצאים בהוצאות קבועות.</li>
         <li style="background:#fef2f2; border-radius:8px; padding:11px 8px; border-bottom:none; margin-top:8px;">
           <span class="label" style="font-weight:700; color:var(--red)">סה"כ כרטיסי אשראי</span>
           <span class="amount red" style="font-size:1.1rem">19,545 ₪</span>
@@ -943,10 +913,10 @@
           <li><span class="label">שטח</span><span class="amount">142 מ"ר | קומה 17</span></li>
           <li><span class="label">שכ"ד נוכחי (שוכרים קיימים)</span><span class="amount">5,350 ₪/חודש</span></li>
           <li><span class="label">שכ"ד שוק ריאלי</span><span class="amount gold">~6,200 ₪/חודש</span></li>
-          <li><span class="label">מס שכ"ד — מסלול ניכוי יחסי (~31%)</span><span class="amount red">~338 ₪/חודש</span></li>
-          <li><span class="label">שכ"ד שוק נטו (אחרי מס)</span><span class="amount green">~5,862 ₪/חודש</span></li>
+          <li><span class="label">מס שכ"ד — מסלול פטור יחסי (עדיף) *</span><span class="amount red">~452 ₪/חודש</span></li>
+          <li><span class="label">שכ"ד שוק נטו (אחרי מס)</span><span class="amount green">~5,748 ₪/חודש</span></li>
           <li><span class="label">תשואה ברוטו</span><span class="amount">3.1% (שוק) / 2.7% (נוכחי)</span></li>
-          <li><span class="label" style="font-size:0.78rem; color:var(--text-muted);">* מסלול A (10% פשוט) = 620 ₪/חודש. מסלול B (ניכוי יחסי) = ~338 ₪ — עדיף.</span><span class="amount"></span></li>
+          <li><span class="label" style="font-size:0.78rem; color:var(--text-muted);">* מסלול פטור יחסי ~452 ₪ | מסלול 10% פשוט = 620 ₪ | מדרגות + ניכוי הוצאות — לחישוב עם רו"ח</span><span class="amount"></span></li>
         </ul>
       </div>
       <div>
@@ -1024,9 +994,9 @@
       <div class="card-title"><span class="icon">🏠</span> תרחיש שמירה</div>
       <ul class="row-list">
         <li><span class="label">שכ"ד שוק ריאלי</span><span class="amount green">+6,200 ₪</span></li>
-        <li><span class="label">מס שכ"ד (מסלול ניכוי יחסי)</span><span class="amount red">-338 ₪</span></li>
+        <li><span class="label">מס שכ"ד (מסלול פטור יחסי)</span><span class="amount red">-452 ₪</span></li>
         <li><span class="label">תשלום משכנתא</span><span class="amount red">-5,714 ₪</span></li>
-        <li><span class="label">הכנסה נטו חודשית (שוק)</span><span class="amount green">+148 ₪</span></li>
+        <li><span class="label">הכנסה נטו חודשית (שוק)</span><span class="amount green">+34 ₪</span></li>
         <li><span class="label">הון תקוע</span><span class="amount red">1,400,000 ₪ לא עובד</span></li>
         <li><span class="label">עלות הזדמנות שנתית</span><span class="amount red">~98,000–140,000 ₪</span></li>
         <li><span class="label" style="font-size:0.8rem; color:var(--text-muted);">* תקרת פטור מס שכ"ד: 5,654 ₪/חודש — מעל זה מס 10% על העודף</span><span class="amount"></span></li>
