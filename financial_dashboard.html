@@ -489,6 +489,70 @@
       font-size: 0.78rem;
       font-weight: 600;
     }
+
+    /* EXPANDABLE ROWS */
+    .row-list li.expandable {
+      flex-direction: column;
+      align-items: stretch;
+      cursor: pointer;
+      user-select: none;
+    }
+    .row-main {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+    .expand-icon {
+      font-size: 0.72rem;
+      margin-right: 4px;
+      color: var(--text-muted);
+      display: inline-block;
+      transition: transform 0.2s;
+    }
+    .row-list li.expandable.open .expand-icon { transform: rotate(180deg); }
+    .sub-rows {
+      display: none;
+      background: #f0f4f8;
+      border-radius: 8px;
+      margin-top: 7px;
+      padding: 4px 0;
+      width: 100%;
+    }
+    .row-list li.expandable.open .sub-rows { display: block; }
+    .sub-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 5px 14px;
+      font-size: 0.83rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .sub-row:last-child { border-bottom: none; }
+    .sub-row .sub-label { color: #475569; }
+    .sub-row .sub-amount { font-weight: 600; color: var(--text); }
+    .sub-row .sub-amount.red { color: var(--red); }
+    .sub-row .sub-amount.green { color: var(--green); }
+    .sub-row .sub-amount.muted { color: var(--text-muted); font-weight: 400; font-style: italic; }
+
+    /* NET WORTH TOOLTIP */
+    .info-tooltip {
+      display: inline-block;
+      width: 16px; height: 16px;
+      background: var(--text-muted);
+      color: white;
+      border-radius: 50%;
+      font-size: 0.65rem;
+      text-align: center;
+      line-height: 16px;
+      cursor: pointer;
+      margin-right: 4px;
+      flex-shrink: 0;
+    }
+    .liquidity-when {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
   </style>
 </head>
 <body>
@@ -563,9 +627,18 @@
           <span class="label">העברה מהעסק (ינון)</span>
           <span class="amount green">22,500 ₪</span>
         </li>
-        <li>
-          <span class="label">שכ"ד ק. מוצקין</span>
-          <span class="amount green">5,350 ₪</span>
+        <li class="expandable" onclick="toggleRow(this)">
+          <div class="row-main">
+            <span class="label">🏠 שכ"ד ק. מוצקין <span class="expand-icon">▼</span></span>
+            <span class="amount green">5,350 ₪</span>
+          </div>
+          <div class="sub-rows">
+            <div class="sub-row"><span class="sub-label">שכ"ד נוכחי (שוכרים קיימים)</span><span class="sub-amount green">5,350 ₪</span></div>
+            <div class="sub-row"><span class="sub-label">שכ"ד שוק אמיתי (מוצקין 5 חד')</span><span class="sub-amount green">~6,200 ₪</span></div>
+            <div class="sub-row"><span class="sub-label">מס שכ"ד (~10% מעל פטור)</span><span class="sub-amount red">~0 ₪ (מתחת לתקרה)</span></div>
+            <div class="sub-row"><span class="sub-label">הפרש מהשוק</span><span class="sub-amount muted">-850 ₪/חודש</span></div>
+            <div class="sub-row"><span class="sub-label" style="font-style:italic; color:var(--text-muted);">* בשכ"ד שוק: תקרת פטור 5,654 ₪ — מעל זה מס 10%</span><span class="sub-amount muted"></span></div>
+          </div>
         </li>
         <li>
           <span class="label">קצבת ילדים</span>
@@ -593,21 +666,45 @@
           <span class="label">משכנתא ק. מוצקין</span>
           <span class="amount red">5,714 ₪</span>
         </li>
-        <li>
-          <span class="label">ביטוחים</span>
-          <span class="amount red">2,371 ₪</span>
+
+        <!-- ביטוחי חיים — expandable -->
+        <li class="expandable" onclick="toggleRow(this)">
+          <div class="row-main">
+            <span class="label">🛡️ ביטוחי חיים ובריאות <span class="expand-icon">▼</span></span>
+            <span class="amount red">1,902 ₪</span>
+          </div>
+          <div class="sub-rows">
+            <div class="sub-row"><span class="sub-label">סיעודי — ינון+מיטל+עומרי</span><span class="sub-amount red">432 ₪</span></div>
+            <div class="sub-row"><span class="sub-label">בריאות — כולם</span><span class="sub-amount red">328 ₪</span></div>
+            <div class="sub-row"><span class="sub-label">מחלות קשות — כולם</span><span class="sub-amount red">363 ₪</span></div>
+            <div class="sub-row"><span class="sub-label">ביטוח חיים — ינון+מיטל</span><span class="sub-amount red">232 ₪</span></div>
+            <div class="sub-row"><span class="sub-label">אכ"ע (אובדן כושר עבודה)</span><span class="sub-amount red">611 ₪</span></div>
+            <div class="sub-row"><span class="sub-label">⚠️ אכ"ע מיטל הראל — לבדוק</span><span class="sub-amount muted">עשוי לחרוג ממקסימום</span></div>
+          </div>
         </li>
-        <li>
-          <span class="label">ביטוח רכב (לאכר)</span>
-          <span class="amount red">1,800 ₪</span>
+
+        <!-- רכב — expandable -->
+        <li class="expandable" onclick="toggleRow(this)">
+          <div class="row-main">
+            <span class="label">🚗 רכב <span class="expand-icon">▼</span></span>
+            <span class="amount red">~3,053 ₪</span>
+          </div>
+          <div class="sub-rows">
+            <div class="sub-row"><span class="sub-label">מימון רכב חשמלי (כולל ביטוח הפניקס)</span><span class="sub-amount red">1,800 ₪</span></div>
+            <div class="sub-row"><span class="sub-label">ביטוח רכב רגיל (ליברה)</span><span class="sub-amount red">~500 ₪</span></div>
+            <div class="sub-row"><span class="sub-label">דלק / טעינה</span><span class="sub-amount red">~500 ₪</span></div>
+            <div class="sub-row"><span class="sub-label">מוסך / תחזוקה</span><span class="sub-amount red">~253 ₪</span></div>
+            <div class="sub-row"><span class="sub-label" style="font-style:italic; color:var(--text-muted);">* ביטוח ליברה לרכב הרגיל — לאמת מחיר מדויק</span><span class="sub-amount muted"></span></div>
+          </div>
         </li>
+
         <li>
           <span class="label">מור גמל + פנסיה</span>
           <span class="amount red">1,150 ₪</span>
         </li>
         <li style="background:#fef2f2; border-radius:8px; padding:11px 8px; border-bottom:none; margin-top:8px;">
           <span class="label" style="font-weight:700; color:var(--red)">סה"כ הוצאות קבועות</span>
-          <span class="amount red" style="font-size:1.1rem">19,035 ₪</span>
+          <span class="amount red" style="font-size:1.1rem">~20,818 ₪</span>
         </li>
       </ul>
     </div>
@@ -618,20 +715,58 @@
     <div class="card">
       <div class="card-title"><span class="icon">💳</span> כרטיסי אשראי — ממוצע חודשי</div>
       <ul class="row-list">
-        <li><span class="label">מזון וצריכה</span><span class="amount red">5,752 ₪</span></li>
-        <li><span class="label">מסעדות וקפה</span><span class="amount red">2,233 ₪</span></li>
-        <li><span class="label">עירייה / ממשלה</span><span class="amount red">2,278 ₪</span></li>
-        <li><span class="label">פנאי ובידור</span><span class="amount red">1,461 ₪</span></li>
+        <li class="expandable" onclick="toggleRow(this)">
+          <div class="row-main"><span class="label">🛒 מזון וצריכה <span class="expand-icon">▼</span></span><span class="amount red">5,752 ₪</span></div>
+          <div class="sub-rows">
+            <div class="sub-row"><span class="sub-label">סופרמרקט</span><span class="sub-amount red">~4,500 ₪</span></div>
+            <div class="sub-row"><span class="sub-label">מוצרי צריכה שוטפת</span><span class="sub-amount red">~1,252 ₪</span></div>
+          </div>
+        </li>
+        <li class="expandable" onclick="toggleRow(this)">
+          <div class="row-main"><span class="label">🍽️ מסעדות וקפה <span class="expand-icon">▼</span></span><span class="amount red">2,233 ₪</span></div>
+          <div class="sub-rows">
+            <div class="sub-row"><span class="sub-label">מסעדות</span><span class="sub-amount red">~1,500 ₪</span></div>
+            <div class="sub-row"><span class="sub-label">קפה / בתי קפה</span><span class="sub-amount red">~733 ₪</span></div>
+          </div>
+        </li>
+        <li class="expandable" onclick="toggleRow(this)">
+          <div class="row-main"><span class="label">🏛️ עירייה / ממשלה <span class="expand-icon">▼</span></span><span class="amount red">2,278 ₪</span></div>
+          <div class="sub-rows">
+            <div class="sub-row"><span class="sub-label">ארנונה</span><span class="sub-amount red">~1,600 ₪</span></div>
+            <div class="sub-row"><span class="sub-label">תשלומי ממשלה / ביטוח לאומי</span><span class="sub-amount red">~678 ₪</span></div>
+          </div>
+        </li>
+        <li class="expandable" onclick="toggleRow(this)">
+          <div class="row-main"><span class="label">🎮 פנאי ובידור <span class="expand-icon">▼</span></span><span class="amount red">1,461 ₪</span></div>
+          <div class="sub-rows">
+            <div class="sub-row"><span class="sub-label">מנויים (נטפליקס, ספוטיפיי וכו')</span><span class="sub-amount red">~400 ₪</span></div>
+            <div class="sub-row"><span class="sub-label">פעילויות / אטרקציות</span><span class="sub-amount red">~700 ₪</span></div>
+            <div class="sub-row"><span class="sub-label">שונות בידור</span><span class="sub-amount red">~361 ₪</span></div>
+          </div>
+        </li>
         <li><span class="label">שונות</span><span class="amount red">1,366 ₪</span></li>
-        <li><span class="label">דלק / חשמל / גז</span><span class="amount red">1,253 ₪</span></li>
-        <li><span class="label">רפואה</span><span class="amount red">1,067 ₪</span></li>
-        <li><span class="label">אופנה</span><span class="amount red">1,046 ₪</span></li>
-        <li><span class="label">תחבורה</span><span class="amount red">749 ₪</span></li>
-        <li><span class="label">חשמל / מחשבים</span><span class="amount red">707 ₪</span></li>
-        <li><span class="label">ספרים</span><span class="amount red">450 ₪</span></li>
-        <li><span class="label">טיסות / תיירות</span><span class="amount red">588 ₪</span></li>
-        <li><span class="label">קוסמטיקה</span><span class="amount red">329 ₪</span></li>
-        <li><span class="label">חיות מחמד</span><span class="amount red">266 ₪</span></li>
+        <li class="expandable" onclick="toggleRow(this)">
+          <div class="row-main"><span class="label">⛽ דלק / חשמל / גז <span class="expand-icon">▼</span></span><span class="amount red">1,253 ₪</span></div>
+          <div class="sub-rows">
+            <div class="sub-row"><span class="sub-label">חשמל בית</span><span class="sub-amount red">~600 ₪</span></div>
+            <div class="sub-row"><span class="sub-label">גז / מים</span><span class="sub-amount red">~300 ₪</span></div>
+            <div class="sub-row"><span class="sub-label">דלק / טעינת רכב</span><span class="sub-amount red">~353 ₪</span></div>
+          </div>
+        </li>
+        <li class="expandable" onclick="toggleRow(this)">
+          <div class="row-main"><span class="label">🏥 רפואה <span class="expand-icon">▼</span></span><span class="amount red">1,067 ₪</span></div>
+          <div class="sub-rows">
+            <div class="sub-row"><span class="sub-label">תרופות / ביקורים רופא</span><span class="sub-amount red">~700 ₪</span></div>
+            <div class="sub-row"><span class="sub-label">אופטיקה / שיניים</span><span class="sub-amount red">~367 ₪</span></div>
+          </div>
+        </li>
+        <li><span class="label">👗 אופנה</span><span class="amount red">1,046 ₪</span></li>
+        <li><span class="label">🚌 תחבורה</span><span class="amount red">749 ₪</span></li>
+        <li><span class="label">💻 חשמל / מחשבים</span><span class="amount red">707 ₪</span></li>
+        <li><span class="label">📚 ספרים</span><span class="amount red">450 ₪</span></li>
+        <li><span class="label">✈️ טיסות / תיירות</span><span class="amount red">588 ₪</span></li>
+        <li><span class="label">💄 קוסמטיקה</span><span class="amount red">329 ₪</span></li>
+        <li><span class="label">🐾 חיות מחמד</span><span class="amount red">266 ₪</span></li>
         <li style="background:#fef2f2; border-radius:8px; padding:11px 8px; border-bottom:none; margin-top:8px;">
           <span class="label" style="font-weight:700; color:var(--red)">סה"כ כרטיסי אשראי</span>
           <span class="amount red" style="font-size:1.1rem">19,545 ₪</span>
@@ -814,9 +949,11 @@
       <div>
         <ul class="row-list">
           <li><span class="label">שטח</span><span class="amount">142 מ"ר | קומה 17</span></li>
-          <li><span class="label">שכ"ד נוכחי</span><span class="amount">5,350 ₪/חודש</span></li>
-          <li><span class="label">שכ"ד שוק</span><span class="amount gold">6,200 ₪/חודש</span></li>
-          <li><span class="label">תשואה ברוטו</span><span class="amount">2.7%</span></li>
+          <li><span class="label">שכ"ד נוכחי (שוכרים קיימים)</span><span class="amount">5,350 ₪/חודש</span></li>
+          <li><span class="label">שכ"ד שוק ריאלי</span><span class="amount gold">~6,200 ₪/חודש</span></li>
+          <li><span class="label">מס שכ"ד (בשכ"ד שוק)</span><span class="amount red">~55 ₪/חודש</span></li>
+          <li><span class="label">שכ"ד שוק נטו (אחרי מס)</span><span class="amount green">~6,145 ₪/חודש</span></li>
+          <li><span class="label">תשואה ברוטו</span><span class="amount">3.1% (שוק) / 2.7% (נוכחי)</span></li>
         </ul>
       </div>
       <div>
@@ -893,11 +1030,13 @@
     <div class="card" style="border-top: 4px solid var(--red);">
       <div class="card-title"><span class="icon">🏠</span> תרחיש שמירה</div>
       <ul class="row-list">
-        <li><span class="label">שכ"ד מתקבל</span><span class="amount green">+5,350 ₪</span></li>
+        <li><span class="label">שכ"ד שוק ריאלי</span><span class="amount green">+6,200 ₪</span></li>
+        <li><span class="label">מס שכ"ד (מעל תקרת פטור)</span><span class="amount red">-55 ₪</span></li>
         <li><span class="label">תשלום משכנתא</span><span class="amount red">-5,714 ₪</span></li>
-        <li><span class="label">הכנסה נטו חודשית</span><span class="amount red">-364 ₪</span></li>
+        <li><span class="label">הכנסה נטו חודשית (שוק)</span><span class="amount green">+431 ₪</span></li>
         <li><span class="label">הון תקוע</span><span class="amount red">1,400,000 ₪ לא עובד</span></li>
         <li><span class="label">עלות הזדמנות שנתית</span><span class="amount red">~98,000–140,000 ₪</span></li>
+        <li><span class="label" style="font-size:0.8rem; color:var(--text-muted);">* תקרת פטור מס שכ"ד: 5,654 ₪/חודש — מעל זה מס 10% על העודף</span><span class="amount"></span></li>
       </ul>
     </div>
     <div class="card" style="border-top: 4px solid var(--green);">
@@ -1138,15 +1277,27 @@
     <div class="total-card gold-top">
       <div class="tc-label">הון כולל (כולל נדל"ן)</div>
       <div class="tc-value" style="color:var(--gold);">2,266,664 ₪</div>
+      <div style="font-size:0.75rem; color:var(--text-muted); margin-top:6px;">= הון עצמי בדירה + חיסכונות + פנסיות</div>
     </div>
     <div class="total-card green-top">
-      <div class="tc-label">נזיל מיידי (ללא נדל"ן)</div>
+      <div class="tc-label">נזיל מיידי</div>
       <div class="tc-value" style="color:var(--green);">155,918 ₪</div>
+      <div style="font-size:0.75rem; color:var(--text-muted); margin-top:6px;">ניתן למשוך תוך ימים בודדים</div>
     </div>
     <div class="total-card">
-      <div class="tc-label">קרנות פרישה כולל</div>
+      <div class="tc-label">חיסכון פרישה נעול</div>
       <div class="tc-value" style="color:var(--blue-dark);">673,746 ₪</div>
+      <div style="font-size:0.75rem; color:var(--text-muted); margin-top:6px;">זמין בגיל פרישה (~67)</div>
     </div>
+  </div>
+
+  <!-- EXPLANATION BOX -->
+  <div class="alert alert-gold" style="margin-bottom:20px;">
+    <span style="font-size:1.1rem;">ℹ️</span>
+    <span>
+      <strong>למה הון כולל 2.27M ולא 2.4M?</strong><br>
+      הדירה שווה 2.4M ברוטו — אבל בדשבורד מוצג <strong>הון נקי אחרי משכנתא</strong> (941,862 ₪) ועמלת מתווך (~58,000 ₪), מה שנשאר בכיס אחרי מכירה = <strong>1,400,000 ₪</strong>.
+    </span>
   </div>
 
   <!-- ASSET TABLE -->
@@ -1159,75 +1310,75 @@
             <th>נכס</th>
             <th>שווי</th>
             <th>נזילות</th>
-            <th>קטגוריה</th>
+            <th>מתי זמין?</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td style="font-weight:600;">🏢 הון מדירה ק. מוצקין</td>
+            <td style="font-weight:600;">🏢 הון מדירה ק. מוצקין<br><span style="font-size:0.78rem; color:var(--text-muted);">= 2.4M שווי פחות 942K משכנתא ועמלה</span></td>
             <td style="font-weight:700; color:var(--gold); font-size:1.05rem;">1,400,000 ₪</td>
             <td><span class="badge" style="background:#dbeafe; color:var(--blue-dark);">🏠 בעת מכירה</span></td>
-            <td><span class="badge" style="background:#eff6ff; color:var(--blue-dark);">נדל"ן</span></td>
+            <td><div class="liquidity-when">3–6 חודשי מכירה</div></td>
           </tr>
           <tr>
             <td style="font-weight:600;">📗 מור קרן השתלמות</td>
             <td style="font-weight:700; color:var(--green);">99,250 ₪</td>
             <td><span class="badge" style="background:#dcfce7; color:var(--green);">✅ נזיל</span></td>
-            <td><span class="badge" style="background:#f0fdf4; color:var(--green);">חיסכון נזיל</span></td>
+            <td><div class="liquidity-when">כבר נזיל — ניתן למשוך עכשיו</div></td>
           </tr>
           <tr>
             <td style="font-weight:600;">📗 מור גמל</td>
             <td style="font-weight:700; color:var(--green);">21,668 ₪</td>
             <td><span class="badge" style="background:#dcfce7; color:var(--green);">✅ נזיל</span></td>
-            <td><span class="badge" style="background:#f0fdf4; color:var(--green);">חיסכון נזיל</span></td>
+            <td><div class="liquidity-when">ניתן למשוך עכשיו</div></td>
           </tr>
           <tr>
             <td style="font-weight:600;">📘 הפניקס פנסיה (ינון)</td>
             <td style="font-weight:700; color:var(--blue-dark);">300,000 ₪</td>
             <td><span class="badge" style="background:#f1f5f9; color:#64748b;">🔒 פרישה</span></td>
-            <td><span class="badge" style="background:#eff6ff; color:var(--blue-dark);">פנסיה</span></td>
+            <td><div class="liquidity-when">גיל פרישה (~67) — עוד ~22 שנה</div></td>
           </tr>
           <tr>
             <td style="font-weight:600;">📘 אלטשולר פנסיה (מיטל)</td>
             <td style="font-weight:700; color:var(--blue-dark);">231,408 ₪</td>
             <td><span class="badge" style="background:#f1f5f9; color:#64748b;">🔒 פרישה</span></td>
-            <td><span class="badge" style="background:#eff6ff; color:var(--blue-dark);">פנסיה</span></td>
+            <td><div class="liquidity-when">גיל פרישה מיטל — לבדוק</div></td>
           </tr>
           <tr>
             <td style="font-weight:600;">📘 אלטשולר גמל</td>
             <td style="font-weight:700; color:var(--blue-dark);">59,876 ₪</td>
             <td><span class="badge" style="background:#f1f5f9; color:#64748b;">🔒 פרישה</span></td>
-            <td><span class="badge" style="background:#eff6ff; color:var(--blue-dark);">גמל לפרישה</span></td>
+            <td><div class="liquidity-when">גיל 60+ (גמל לקצבה)</div></td>
           </tr>
           <tr>
             <td style="font-weight:600;">📘 הראל גמל קצבתי</td>
             <td style="font-weight:700; color:var(--blue-dark);">41,700 ₪</td>
             <td><span class="badge" style="background:#f1f5f9; color:#64748b;">🔒 פרישה</span></td>
-            <td><span class="badge" style="background:#eff6ff; color:var(--blue-dark);">גמל לפרישה</span></td>
+            <td><div class="liquidity-when">גיל 60+ (קצבה חודשית)</div></td>
           </tr>
           <tr>
             <td style="font-weight:600;">⚠️ הראל גמל הוני</td>
             <td style="font-weight:700; color:var(--orange);">18,000 ₪</td>
             <td><span class="badge" style="background:#ffedd5; color:var(--orange);">⚠️ בתהליך</span></td>
-            <td><span class="badge" style="background:#fff7ed; color:var(--orange);">בבדיקה</span></td>
+            <td><div class="liquidity-when">בקשת משיכה מ-1/11 — ממתין לאישור</div></td>
           </tr>
           <tr>
             <td style="font-weight:600;">📘 הראל גמל לפנסיה</td>
             <td style="font-weight:700; color:var(--blue-dark);">22,762 ₪</td>
             <td><span class="badge" style="background:#f1f5f9; color:#64748b;">🔒 פרישה</span></td>
-            <td><span class="badge" style="background:#eff6ff; color:var(--blue-dark);">גמל לפרישה</span></td>
+            <td><div class="liquidity-when">גיל פרישה (כספי קצבה)</div></td>
           </tr>
           <tr>
             <td style="font-weight:600;">📈 וודאה S&P</td>
             <td style="font-weight:700; color:var(--green);">35,000 ₪</td>
             <td><span class="badge" style="background:#dcfce7; color:var(--green);">✅ נזיל</span></td>
-            <td><span class="badge" style="background:#f0fdf4; color:var(--green);">השקעות</span></td>
+            <td><div class="liquidity-when">ניתן למכור תוך ימים בודדים</div></td>
           </tr>
           <tr>
             <td style="font-weight:600;">👧 אלטשולר לכל ילד</td>
             <td style="font-weight:700; color:var(--text-muted);">37,000 ₪</td>
             <td><span class="badge" style="background:#f1f5f9; color:#64748b;">— ייעודי</span></td>
-            <td><span class="badge" style="background:#f8fafc; color:#64748b;">ילדים</span></td>
+            <td><div class="liquidity-when">זמין לילד בגיל 21</div></td>
           </tr>
           <tr class="total-row">
             <td style="font-weight:700;">💰 סה"כ כולל</td>
@@ -1301,6 +1452,11 @@
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.getElementById('tab-' + name).classList.add('active');
     btn.classList.add('active');
+  }
+
+  // ====== EXPANDABLE ROWS ======
+  function toggleRow(el) {
+    el.classList.toggle('open');
   }
 
   // ====== CHART DEFAULTS ======
