@@ -1,0 +1,1559 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>דשבורד פיננסי — ינון רטיג</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --blue-dark: #1a3a5c;
+      --blue-mid: #1e4d7b;
+      --blue-light: #2563a8;
+      --gold: #f0a500;
+      --gold-light: #fbbf24;
+      --white: #ffffff;
+      --bg: #f0f4f8;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --green: #16a34a;
+      --red: #dc2626;
+      --orange: #ea580c;
+      --yellow: #ca8a04;
+      --shadow: 0 4px 20px rgba(26,58,92,0.10);
+      --shadow-hover: 0 8px 30px rgba(26,58,92,0.18);
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', 'Arial Hebrew', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      direction: rtl;
+      font-size: 15px;
+      min-height: 100vh;
+    }
+
+    /* HEADER */
+    .header {
+      background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-mid) 60%, var(--blue-light) 100%);
+      color: white;
+      padding: 28px 32px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      box-shadow: 0 4px 24px rgba(26,58,92,0.25);
+      flex-wrap: wrap;
+    }
+    .header-title h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .header-title p {
+      font-size: 0.9rem;
+      opacity: 0.75;
+      margin-top: 4px;
+    }
+    .header-badge {
+      background: rgba(240,165,0,0.18);
+      border: 1.5px solid var(--gold);
+      color: var(--gold-light);
+      padding: 8px 18px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    /* TABS */
+    .tabs-wrapper {
+      background: var(--blue-dark);
+      padding: 0 24px;
+      overflow-x: auto;
+      border-bottom: 2px solid rgba(240,165,0,0.3);
+    }
+    .tabs {
+      display: flex;
+      gap: 2px;
+      min-width: max-content;
+    }
+    .tab-btn {
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.6);
+      padding: 14px 20px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s;
+      white-space: nowrap;
+      font-family: inherit;
+      direction: rtl;
+    }
+    .tab-btn:hover { color: rgba(255,255,255,0.9); }
+    .tab-btn.active {
+      color: var(--gold);
+      border-bottom-color: var(--gold);
+      background: rgba(240,165,0,0.08);
+    }
+    .tab-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.12);
+      font-size: 0.72rem;
+      margin-left: 6px;
+    }
+    .tab-btn.active .tab-number { background: var(--gold); color: var(--blue-dark); }
+
+    /* CONTENT */
+    .tab-content { display: none; padding: 28px 24px; max-width: 1100px; margin: 0 auto; }
+    .tab-content.active { display: block; }
+
+    /* CARDS */
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px 24px;
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+      transition: box-shadow 0.2s;
+    }
+    .card:hover { box-shadow: var(--shadow-hover); }
+    .card-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--blue-dark);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-title .icon { font-size: 1.2rem; }
+
+    /* GRID */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+    @media(max-width: 768px) {
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .header { padding: 18px 16px; }
+      .tab-content { padding: 16px 12px; }
+    }
+
+    /* STAT CARDS */
+    .stat-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+    .stat-label { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 6px; font-weight: 500; }
+    .stat-value { font-size: 1.55rem; font-weight: 700; color: var(--blue-dark); }
+    .stat-value.green { color: var(--green); }
+    .stat-value.red { color: var(--red); }
+    .stat-value.gold { color: var(--gold); }
+
+    /* ALERT */
+    .alert {
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .alert-red { background: #fef2f2; border: 1.5px solid #fca5a5; color: var(--red); }
+    .alert-green { background: #f0fdf4; border: 1.5px solid #86efac; color: var(--green); }
+    .alert-gold { background: #fffbeb; border: 1.5px solid #fcd34d; color: #92400e; }
+
+    /* INCOME/EXPENSE ROWS */
+    .row-list { list-style: none; }
+    .row-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.93rem;
+    }
+    .row-list li:last-child { border-bottom: none; }
+    .row-list .label { color: var(--text); }
+    .row-list .amount { font-weight: 700; color: var(--blue-dark); }
+    .row-list .amount.green { color: var(--green); }
+    .row-list .amount.red { color: var(--red); }
+    .row-list .total-row { font-size: 1rem; font-weight: 700; }
+
+    /* CHART CONTAINER */
+    .chart-container { position: relative; height: 280px; }
+    .chart-container-lg { position: relative; height: 340px; }
+
+    /* SECTION TITLE */
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--blue-dark);
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* SAVINGS CARDS */
+    .savings-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px 20px;
+      border-right: 5px solid var(--blue-light);
+      transition: box-shadow 0.2s, transform 0.2s;
+      cursor: default;
+    }
+    .savings-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+    .savings-card.priority-high { border-right-color: var(--red); }
+    .savings-card.priority-medium { border-right-color: var(--orange); }
+    .savings-card.priority-low { border-right-color: var(--yellow); }
+    .savings-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+    .savings-name { font-size: 1rem; font-weight: 700; color: var(--blue-dark); }
+    .savings-amount { font-size: 1.2rem; font-weight: 700; color: var(--green); white-space: nowrap; margin-right: 10px; }
+    .savings-detail { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; }
+    .priority-badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 50px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .priority-badge.high { background: #fee2e2; color: var(--red); }
+    .priority-badge.medium { background: #ffedd5; color: var(--orange); }
+    .priority-badge.low { background: #fef9c3; color: var(--yellow); }
+    .action-tag {
+      display: inline-block;
+      background: #eff6ff;
+      color: var(--blue-light);
+      font-size: 0.78rem;
+      padding: 3px 10px;
+      border-radius: 4px;
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    /* TABLE */
+    .data-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    .data-table th {
+      background: var(--blue-dark);
+      color: white;
+      padding: 11px 14px;
+      text-align: right;
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+    .data-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      text-align: right;
+    }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:nth-child(even) td { background: #f8fafc; }
+    .data-table .td-green { color: var(--green); font-weight: 600; }
+    .data-table .td-red { color: var(--red); font-weight: 600; }
+    .data-table .td-gold { color: var(--gold); font-weight: 600; }
+    .data-table .td-bold { font-weight: 700; }
+
+    /* COMPARISON TABLE */
+    .compare-table { width: 100%; border-collapse: collapse; }
+    .compare-table th {
+      padding: 12px 16px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-align: right;
+    }
+    .compare-table th.keep { background: #eff6ff; color: var(--blue-dark); }
+    .compare-table th.sell { background: #f0fdf4; color: var(--green); }
+    .compare-table th.label-col { background: var(--blue-dark); color: white; width: 35%; }
+    .compare-table td { padding: 10px 16px; border-bottom: 1px solid var(--border); font-size: 0.88rem; }
+    .compare-table td.keep-col { background: #f8faff; }
+    .compare-table td.sell-col { background: #f0fdf4; }
+
+    /* VERDICT CARD */
+    .verdict-card {
+      background: linear-gradient(135deg, var(--green) 0%, #15803d 100%);
+      color: white;
+      border-radius: var(--radius);
+      padding: 22px 28px;
+      text-align: center;
+      box-shadow: 0 6px 24px rgba(22,163,74,0.3);
+      margin-top: 20px;
+    }
+    .verdict-card h3 { font-size: 1.4rem; margin-bottom: 8px; }
+    .verdict-card p { opacity: 0.9; font-size: 0.9rem; }
+
+    /* MARKET INFO CARD */
+    .info-card {
+      background: linear-gradient(135deg, #eff6ff, #dbeafe);
+      border: 1px solid #bfdbfe;
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin-bottom: 20px;
+    }
+    .info-card .info-title {
+      color: var(--blue-dark);
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .info-point {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+    .info-point::before { content: '◆'; color: var(--blue-light); font-size: 0.6rem; margin-top: 4px; flex-shrink: 0; }
+
+    /* INVESTMENT OPTIONS */
+    .option-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px;
+      border-top: 4px solid var(--blue-light);
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .option-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+    .option-card.recommended { border-top-color: var(--gold); }
+    .option-card .option-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .option-card .option-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--blue-dark);
+      margin-bottom: 12px;
+    }
+    .option-card .option-return {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--green);
+      margin-bottom: 4px;
+    }
+    .option-card .option-monthly {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+    .risk-badge {
+      display: inline-block;
+      padding: 3px 12px;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .risk-high { background: #fee2e2; color: var(--red); }
+    .risk-medium { background: #ffedd5; color: var(--orange); }
+    .risk-low { background: #f0fdf4; color: var(--green); }
+    .recommended-badge {
+      background: var(--gold);
+      color: var(--blue-dark);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 50px;
+      margin-bottom: 8px;
+      display: inline-block;
+    }
+
+    /* BOB RECOMMENDATION */
+    .bob-card {
+      background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-mid) 100%);
+      color: white;
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      box-shadow: 0 6px 24px rgba(26,58,92,0.3);
+      margin-top: 20px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .bob-avatar {
+      width: 48px; height: 48px;
+      background: var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+    .bob-text { flex: 1; }
+    .bob-text h4 { color: var(--gold); font-size: 0.85rem; margin-bottom: 6px; }
+    .bob-text p { font-size: 0.92rem; line-height: 1.6; opacity: 0.95; }
+
+    /* NET WORTH TABLE */
+    .networth-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    .networth-table th {
+      background: var(--blue-dark);
+      color: white;
+      padding: 11px 14px;
+      text-align: right;
+      font-weight: 600;
+    }
+    .networth-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); text-align: right; }
+    .networth-table tr:nth-child(even) td { background: #f8fafc; }
+    .networth-table .total-row td { background: #eff6ff; font-weight: 700; color: var(--blue-dark); }
+    .liquidity-badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    /* SUMMARY TOTALS */
+    .totals-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
+    @media(max-width: 600px) { .totals-grid { grid-template-columns: 1fr; } }
+    .total-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      box-shadow: var(--shadow);
+      border-top: 4px solid var(--blue-light);
+      text-align: center;
+    }
+    .total-card.gold-top { border-top-color: var(--gold); }
+    .total-card.green-top { border-top-color: var(--green); }
+    .total-card .tc-label { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 6px; }
+    .total-card .tc-value { font-size: 1.4rem; font-weight: 700; color: var(--blue-dark); }
+
+    /* FOOTER */
+    .footer {
+      background: var(--blue-dark);
+      color: rgba(255,255,255,0.6);
+      text-align: center;
+      padding: 18px;
+      font-size: 0.8rem;
+      margin-top: 10px;
+    }
+    .footer strong { color: var(--gold); }
+    .disclaimer {
+      margin-top: 6px;
+      font-size: 0.75rem;
+      opacity: 0.7;
+    }
+
+    /* PROGRESS BAR */
+    .progress-bar-wrap { background: #e2e8f0; border-radius: 50px; height: 8px; margin-top: 8px; }
+    .progress-bar { height: 8px; border-radius: 50px; background: linear-gradient(90deg, var(--blue-light), var(--gold)); }
+
+    /* MARKET BULLETS */
+    .market-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    @media(max-width: 700px) { .market-grid { grid-template-columns: 1fr; } }
+
+    /* Simulation table highlight */
+    .sim-highlight { background: #eff6ff; font-weight: 700; }
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: var(--blue-light); border-radius: 4px; }
+
+    /* BADGE */
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-title">
+    <h1>📊 דשבורד פיננסי — ינון רטיג</h1>
+    <p>תמונה פיננסית מלאה ועדכנית | מרץ 2026</p>
+  </div>
+  <div class="header-badge">💰 הון כולל: ~2,266,664 ₪</div>
+</header>
+
+<!-- TABS -->
+<div class="tabs-wrapper">
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('cashflow', this)">
+      <span class="tab-number">1</span> תזרים חודשי
+    </button>
+    <button class="tab-btn" onclick="showTab('savings', this)">
+      <span class="tab-number">2</span> המלצות חיסכון
+    </button>
+    <button class="tab-btn" onclick="showTab('apartment', this)">
+      <span class="tab-number">3</span> כדאיות מכירת הדירה
+    </button>
+    <button class="tab-btn" onclick="showTab('market', this)">
+      <span class="tab-number">4</span> שוק הנדל"ן
+    </button>
+    <button class="tab-btn" onclick="showTab('stocks', this)">
+      <span class="tab-number">5</span> השקעות שוק ההון
+    </button>
+    <button class="tab-btn" onclick="showTab('networth', this)">
+      <span class="tab-number">6</span> תמונת הון כוללת
+    </button>
+  </div>
+</div>
+
+<!-- ===== TAB 1: CASH FLOW ===== -->
+<div id="tab-cashflow" class="tab-content active">
+
+  <div class="alert alert-red">
+    <span style="font-size:1.3rem">⚠️</span>
+    <span>בעיית תזמון — אין כרית חיסכון. המאזן החודשי קרוב לאפס ולעיתים שלילי עקב תזמון חיובים.</span>
+  </div>
+
+  <!-- STAT SUMMARY -->
+  <div class="grid-3" style="margin-bottom:20px;">
+    <div class="stat-card">
+      <div class="stat-label">סה"כ הכנסות</div>
+      <div class="stat-value green">45,688 ₪</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">סה"כ הוצאות</div>
+      <div class="stat-value red">~45,800 ₪</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">מאזן חודשי</div>
+      <div class="stat-value red">≈ 0 ₪</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <!-- INCOME -->
+    <div class="card">
+      <div class="card-title"><span class="icon">💚</span> הכנסות חודשיות</div>
+      <ul class="row-list">
+        <li>
+          <span class="label">משכורת מיטל</span>
+          <span class="amount green">17,562 ₪</span>
+        </li>
+        <li>
+          <span class="label">העברה מהעסק (ינון)</span>
+          <span class="amount green">22,500 ₪</span>
+        </li>
+        <li>
+          <span class="label">שכ"ד ק. מוצקין</span>
+          <span class="amount green">5,350 ₪</span>
+        </li>
+        <li>
+          <span class="label">קצבת ילדים</span>
+          <span class="amount green">276 ₪</span>
+        </li>
+        <li style="background:#f0fdf4; border-radius:8px; padding:11px 8px; border-bottom:none; margin-top:8px;">
+          <span class="label" style="font-weight:700; color:var(--green)">סה"כ הכנסות</span>
+          <span class="amount green" style="font-size:1.1rem">45,688 ₪</span>
+        </li>
+      </ul>
+      <div style="margin-top:12px; font-size:0.8rem; color:var(--text-muted);">
+        * העברה מהעסק נעה בין 20,000–25,000 ₪/חודש
+      </div>
+    </div>
+
+    <!-- FIXED EXPENSES -->
+    <div class="card">
+      <div class="card-title"><span class="icon">🔴</span> הוצאות קבועות</div>
+      <ul class="row-list">
+        <li>
+          <span class="label">שכירות הבונים</span>
+          <span class="amount red">8,000 ₪</span>
+        </li>
+        <li>
+          <span class="label">משכנתא ק. מוצקין</span>
+          <span class="amount red">5,714 ₪</span>
+        </li>
+        <li>
+          <span class="label">ביטוחים</span>
+          <span class="amount red">2,371 ₪</span>
+        </li>
+        <li>
+          <span class="label">ביטוח רכב (לאכר)</span>
+          <span class="amount red">1,800 ₪</span>
+        </li>
+        <li>
+          <span class="label">מור גמל + פנסיה</span>
+          <span class="amount red">1,150 ₪</span>
+        </li>
+        <li style="background:#fef2f2; border-radius:8px; padding:11px 8px; border-bottom:none; margin-top:8px;">
+          <span class="label" style="font-weight:700; color:var(--red)">סה"כ הוצאות קבועות</span>
+          <span class="amount red" style="font-size:1.1rem">19,035 ₪</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CREDIT CARDS + CHART -->
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title"><span class="icon">💳</span> כרטיסי אשראי — ממוצע חודשי</div>
+      <ul class="row-list">
+        <li><span class="label">מזון וצריכה</span><span class="amount red">5,752 ₪</span></li>
+        <li><span class="label">מסעדות וקפה</span><span class="amount red">2,233 ₪</span></li>
+        <li><span class="label">עירייה / ממשלה</span><span class="amount red">2,278 ₪</span></li>
+        <li><span class="label">פנאי ובידור</span><span class="amount red">1,461 ₪</span></li>
+        <li><span class="label">שונות</span><span class="amount red">1,366 ₪</span></li>
+        <li><span class="label">דלק / חשמל / גז</span><span class="amount red">1,253 ₪</span></li>
+        <li><span class="label">רפואה</span><span class="amount red">1,067 ₪</span></li>
+        <li><span class="label">אופנה</span><span class="amount red">1,046 ₪</span></li>
+        <li><span class="label">תחבורה</span><span class="amount red">749 ₪</span></li>
+        <li><span class="label">חשמל / מחשבים</span><span class="amount red">707 ₪</span></li>
+        <li><span class="label">ספרים</span><span class="amount red">450 ₪</span></li>
+        <li><span class="label">טיסות / תיירות</span><span class="amount red">588 ₪</span></li>
+        <li><span class="label">קוסמטיקה</span><span class="amount red">329 ₪</span></li>
+        <li><span class="label">חיות מחמד</span><span class="amount red">266 ₪</span></li>
+        <li style="background:#fef2f2; border-radius:8px; padding:11px 8px; border-bottom:none; margin-top:8px;">
+          <span class="label" style="font-weight:700; color:var(--red)">סה"כ כרטיסי אשראי</span>
+          <span class="amount red" style="font-size:1.1rem">19,545 ₪</span>
+        </li>
+        <li style="background:#fef2f2; border-radius:8px; padding:11px 8px; border-bottom:none; margin-top:4px;">
+          <span class="label" style="font-weight:700; color:var(--red)">סה"כ כל ההוצאות</span>
+          <span class="amount red" style="font-size:1.2rem">~45,800 ₪</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">🥧</span> התפלגות הוצאות לפי קטגוריה</div>
+      <div class="chart-container-lg">
+        <canvas id="expenseChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOW CHART -->
+  <div class="card">
+    <div class="card-title"><span class="icon">📊</span> הכנסות מול הוצאות</div>
+    <div class="chart-container">
+      <canvas id="flowChart"></canvas>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== TAB 2: SAVINGS ===== -->
+<div id="tab-savings" class="tab-content">
+
+  <div class="alert alert-gold">
+    <span style="font-size:1.3rem">💡</span>
+    <span>פוטנציאל חיסכון כולל: <strong>~2,350 ₪/חודש = 28,200 ₪/שנה</strong> — ללא שינוי דרמטי באורח החיים</span>
+  </div>
+
+  <!-- SAVINGS CARDS -->
+  <div class="grid-2">
+
+    <div class="savings-card priority-high">
+      <div class="savings-header">
+        <div>
+          <span class="priority-badge high">🔴 עדיפות גבוהה</span>
+          <div class="savings-name">🍽️ מסעדות וקפה</div>
+        </div>
+        <div class="savings-amount">חיסכון: 1,033 ₪</div>
+      </div>
+      <div class="savings-detail">הוצאה נוכחית: 2,233 ₪/חודש | יעד מוצע: 1,200 ₪/חודש</div>
+      <div class="progress-bar-wrap"><div class="progress-bar" style="width:54%;background:linear-gradient(90deg,var(--red),var(--orange))"></div></div>
+      <div style="margin-top:10px;">
+        <span class="action-tag">🎯 הגבל ל-10 ביקורים במסעדה בחודש</span>
+        <span class="action-tag">☕ קפה בבית > קפה בחוץ</span>
+      </div>
+    </div>
+
+    <div class="savings-card priority-high">
+      <div class="savings-header">
+        <div>
+          <span class="priority-badge high">🔴 עדיפות גבוהה</span>
+          <div class="savings-name">🎮 פנאי ובידור</div>
+        </div>
+        <div class="savings-amount">חיסכון: 561 ₪</div>
+      </div>
+      <div class="savings-detail">הוצאה נוכחית: 1,461 ₪/חודש | יעד מוצע: 900 ₪/חודש</div>
+      <div class="progress-bar-wrap"><div class="progress-bar" style="width:62%;background:linear-gradient(90deg,var(--red),var(--orange))"></div></div>
+      <div style="margin-top:10px;">
+        <span class="action-tag">🎯 עקוב אחר הוצאות בידור בזמן אמת</span>
+        <span class="action-tag">📱 בדוק מינויים שלא בשימוש</span>
+      </div>
+    </div>
+
+    <div class="savings-card priority-medium">
+      <div class="savings-header">
+        <div>
+          <span class="priority-badge medium">🟠 עדיפות בינונית</span>
+          <div class="savings-name">🛒 מזון וצריכה</div>
+        </div>
+        <div class="savings-amount">חיסכון: 500 ₪</div>
+      </div>
+      <div class="savings-detail">הוצאה נוכחית: 5,752 ₪/חודש | חיסכון פוטנציאלי עם תכנון רכישות</div>
+      <div class="progress-bar-wrap"><div class="progress-bar" style="width:45%;background:linear-gradient(90deg,var(--orange),var(--gold))"></div></div>
+      <div style="margin-top:10px;">
+        <span class="action-tag">🛍️ רכישות גדולות פחות פעמים</span>
+        <span class="action-tag">📋 עם רשימה — פחות קניות אימפולסיביות</span>
+      </div>
+    </div>
+
+    <div class="savings-card priority-medium">
+      <div class="savings-header">
+        <div>
+          <span class="priority-badge medium">🟠 עדיפות בינונית</span>
+          <div class="savings-name">🏥 ביטוח מחלות קשות (ינון)</div>
+        </div>
+        <div class="savings-amount">חיסכון: 60–80 ₪</div>
+      </div>
+      <div class="savings-detail">צמצום כיסוי לסרטן בלבד — הסיכון הנפוץ ביותר</div>
+      <div class="progress-bar-wrap"><div class="progress-bar" style="width:35%;background:linear-gradient(90deg,var(--orange),var(--gold))"></div></div>
+      <div style="margin-top:10px;">
+        <span class="action-tag">📞 פנה לסוכן ביטוח לבחינת הפוליסה</span>
+        <span class="action-tag">⚖️ השווה כיסויים</span>
+      </div>
+    </div>
+
+    <div class="savings-card priority-low">
+      <div class="savings-header">
+        <div>
+          <span class="priority-badge low">🟡 עדיפות נמוכה</span>
+          <div class="savings-name">💊 בריאות ינון — מעבר מבטוח</div>
+        </div>
+        <div class="savings-amount">חיסכון: 79 ₪</div>
+      </div>
+      <div class="savings-detail">מנורה 113 ₪ במקום ביטוח נוכחי 192 ₪/חודש</div>
+      <div class="progress-bar-wrap"><div class="progress-bar" style="width:25%;background:linear-gradient(90deg,var(--yellow),var(--gold-light))"></div></div>
+      <div style="margin-top:10px;">
+        <span class="action-tag">📋 בדוק כיסויים לפני מעבר</span>
+        <span class="action-tag">🔄 פנה למנורה לקבלת הצעה</span>
+      </div>
+    </div>
+
+    <div class="savings-card priority-low">
+      <div class="savings-header">
+        <div>
+          <span class="priority-badge low">🟡 עדיפות נמוכה</span>
+          <div class="savings-name">🔒 אכ"ע מנורה מטרייה — מיטל</div>
+        </div>
+        <div class="savings-amount">חיסכון: 77 ₪</div>
+      </div>
+      <div class="savings-detail">לוודא שהביטוח הופסק — אם לא, לעצור מיד</div>
+      <div class="progress-bar-wrap"><div class="progress-bar" style="width:20%;background:linear-gradient(90deg,var(--yellow),var(--gold-light))"></div></div>
+      <div style="margin-top:10px;">
+        <span class="action-tag">✅ בדוק דפי חשבון בנק</span>
+        <span class="action-tag">📞 פנה למנורה לאישור ביטול</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOTAL SAVINGS CARD -->
+  <div class="card" style="border: 2px solid var(--gold); background: linear-gradient(135deg, #fffbeb, #fef3c7);">
+    <div style="text-align:center; padding:10px 0;">
+      <div style="font-size:1rem; color:var(--text-muted); margin-bottom:8px;">סה"כ פוטנציאל חיסכון</div>
+      <div style="font-size:2.2rem; font-weight:700; color:var(--gold); margin-bottom:4px;">~2,350 ₪ / חודש</div>
+      <div style="font-size:1.2rem; color: var(--green); font-weight:600;">= 28,200 ₪ / שנה</div>
+      <div style="margin-top:12px; font-size:0.85rem; color:var(--text-muted);">
+        בהנחה שכל ההמלצות מיושמות — שנה ראשונה
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📊</span> פוטנציאל חיסכון לפי קטגוריה</div>
+    <div class="chart-container">
+      <canvas id="savingsChart"></canvas>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== TAB 3: SELL OR KEEP ===== -->
+<div id="tab-apartment" class="tab-content">
+
+  <!-- APARTMENT INFO -->
+  <div class="card">
+    <div class="card-title"><span class="icon">🏢</span> נתוני הדירה — עופרה חזה 8, קריית מוצקין</div>
+    <div class="grid-3">
+      <div class="stat-card">
+        <div class="stat-label">שווי שוק משוער</div>
+        <div class="stat-value gold">2,400,000 ₪</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">יתרת משכנתא</div>
+        <div class="stat-value red">941,862 ₪</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">הון עצמי נקי</div>
+        <div class="stat-value green">~1,400,000 ₪</div>
+      </div>
+    </div>
+    <div class="grid-2" style="margin-top:16px;">
+      <div>
+        <ul class="row-list">
+          <li><span class="label">שטח</span><span class="amount">142 מ"ר | קומה 17</span></li>
+          <li><span class="label">שכ"ד נוכחי</span><span class="amount">5,350 ₪/חודש</span></li>
+          <li><span class="label">שכ"ד שוק</span><span class="amount gold">6,200 ₪/חודש</span></li>
+          <li><span class="label">תשואה ברוטו</span><span class="amount">2.7%</span></li>
+        </ul>
+      </div>
+      <div>
+        <ul class="row-list">
+          <li><span class="label">פטור מס שבח</span><span class="amount green">✅ כנראה כן (דירה יחידה)</span></li>
+          <li><span class="label">עמלת מתווך (~2%)</span><span class="amount red">~48,000 ₪</span></li>
+          <li><span class="label">הון נקי אחרי עמלה</span><span class="amount green">~1,400,000 ₪</span></li>
+          <li><span class="label">הכנסה נטו מהדירה</span><span class="amount red">-364 ₪/חודש</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPARISON TABLE -->
+  <div class="card">
+    <div class="card-title"><span class="icon">⚖️</span> השוואה: לשמור מול למכור</div>
+    <div style="overflow-x:auto;">
+      <table class="compare-table" style="width:100%; border-collapse:collapse;">
+        <thead>
+          <tr>
+            <th class="label-col" style="background:var(--blue-dark); color:white; padding:12px 16px; text-align:right; width:35%;">קריטריון</th>
+            <th class="keep" style="background:#eff6ff; color:var(--blue-dark); padding:12px 16px; text-align:center; width:32.5%;">🏠 שמירה</th>
+            <th class="sell" style="background:#f0fdf4; color:var(--green); padding:12px 16px; text-align:center; width:32.5%;">💰 מכירה</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-weight:600; padding:10px 16px; border-bottom:1px solid var(--border);">תזרים חודשי מהדירה</td>
+            <td class="keep-col" style="background:#f8faff; text-align:center; color:var(--red); padding:10px 16px; border-bottom:1px solid var(--border);">-364 ₪ (הפסד)</td>
+            <td class="sell-col" style="background:#f0fdf4; text-align:center; color:var(--green); padding:10px 16px; border-bottom:1px solid var(--border);">+364 ₪ + פוטנציאל השקעה</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600; padding:10px 16px; border-bottom:1px solid var(--border);">הון עצמי</td>
+            <td class="keep-col" style="background:#f8faff; text-align:center; color:var(--text-muted); padding:10px 16px; border-bottom:1px solid var(--border);">תקוע — לא עובד</td>
+            <td class="sell-col" style="background:#f0fdf4; text-align:center; color:var(--green); padding:10px 16px; border-bottom:1px solid var(--border);">1,400,000 ₪ נזיל להשקעה</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600; padding:10px 16px; border-bottom:1px solid var(--border);">פטור מס שבח</td>
+            <td class="keep-col" style="background:#f8faff; text-align:center; padding:10px 16px; border-bottom:1px solid var(--border);">לא רלוונטי</td>
+            <td class="sell-col" style="background:#f0fdf4; text-align:center; color:var(--green); padding:10px 16px; border-bottom:1px solid var(--border);">✅ כנראה פטור מלא</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600; padding:10px 16px; border-bottom:1px solid var(--border);">עליית ערך נכס</td>
+            <td class="keep-col" style="background:#f8faff; text-align:center; color:var(--green); padding:10px 16px; border-bottom:1px solid var(--border);">✅ נהנה מעליית מחירים</td>
+            <td class="sell-col" style="background:#f0fdf4; text-align:center; color:var(--text-muted); padding:10px 16px; border-bottom:1px solid var(--border);">לא נהנה מעלייה עתידית</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600; padding:10px 16px; border-bottom:1px solid var(--border);">תשואה על הון</td>
+            <td class="keep-col" style="background:#f8faff; text-align:center; color:var(--red); padding:10px 16px; border-bottom:1px solid var(--border);">2.7% ברוטו (נמוך)</td>
+            <td class="sell-col" style="background:#f0fdf4; text-align:center; color:var(--green); padding:10px 16px; border-bottom:1px solid var(--border);">7–10%+ (שוק ההון)</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600; padding:10px 16px; border-bottom:1px solid var(--border);">סיכון</td>
+            <td class="keep-col" style="background:#f8faff; text-align:center; padding:10px 16px; border-bottom:1px solid var(--border);">נמוך-בינוני</td>
+            <td class="sell-col" style="background:#f0fdf4; text-align:center; padding:10px 16px; border-bottom:1px solid var(--border);">תלוי מה עושים עם הכסף</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600; padding:10px 16px; border-bottom:1px solid var(--border);">התעסקות שוטפת</td>
+            <td class="keep-col" style="background:#f8faff; text-align:center; color:var(--orange); padding:10px 16px; border-bottom:1px solid var(--border);">⚠️ שוכרים, תחזוקה, ביורוקרטיה</td>
+            <td class="sell-col" style="background:#f0fdf4; text-align:center; color:var(--green); padding:10px 16px; border-bottom:1px solid var(--border);">✅ ללא עול ניהול</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600; padding:10px 16px;">נזילות</td>
+            <td class="keep-col" style="background:#f8faff; text-align:center; color:var(--red); padding:10px 16px;">לא נזיל</td>
+            <td class="sell-col" style="background:#f0fdf4; text-align:center; color:var(--green); padding:10px 16px;">✅ גמישות מלאה</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SCENARIO COMPARISON -->
+  <div class="grid-2">
+    <div class="card" style="border-top: 4px solid var(--red);">
+      <div class="card-title"><span class="icon">🏠</span> תרחיש שמירה</div>
+      <ul class="row-list">
+        <li><span class="label">שכ"ד מתקבל</span><span class="amount green">+5,350 ₪</span></li>
+        <li><span class="label">תשלום משכנתא</span><span class="amount red">-5,714 ₪</span></li>
+        <li><span class="label">הכנסה נטו חודשית</span><span class="amount red">-364 ₪</span></li>
+        <li><span class="label">הון תקוע</span><span class="amount red">1,400,000 ₪ לא עובד</span></li>
+        <li><span class="label">עלות הזדמנות שנתית</span><span class="amount red">~98,000–140,000 ₪</span></li>
+      </ul>
+    </div>
+    <div class="card" style="border-top: 4px solid var(--green);">
+      <div class="card-title"><span class="icon">💰</span> תרחיש מכירה</div>
+      <ul class="row-list">
+        <li><span class="label">שחרור הון</span><span class="amount green">1,400,000 ₪</span></li>
+        <li><span class="label">חיסכון (אין משכנתא)</span><span class="amount green">+5,714 ₪/חודש</span></li>
+        <li><span class="label">אובדן שכ"ד</span><span class="amount red">-5,350 ₪/חודש</span></li>
+        <li><span class="label">רווח חודשי ישיר</span><span class="amount green">+364 ₪/חודש</span></li>
+        <li><span class="label">תשואה על 1.4M @ 7%</span><span class="amount green">~8,167 ₪/חודש</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- VERDICT -->
+  <div class="verdict-card">
+    <h3>✅ מסקנה: מכירה מועדפת כלכלית</h3>
+    <p>תשואה של 2.7% על נכס לא נזיל vs. 7–10% בשוק ההון — הפוטנציאל הכלכלי של המכירה גבוה משמעותית.<br>
+    בנוסף: פטור מס שבח (אם תקף) + שוק נוח למוכרים כרגע = חלון הזדמנויות שיש לשקול ברצינות.</p>
+  </div>
+
+</div>
+
+<!-- ===== TAB 4: REAL ESTATE MARKET ===== -->
+<div id="tab-market" class="tab-content">
+
+  <div class="section-title">🏘️ שוק הנדל"ן הישראלי — מרץ 2026</div>
+
+  <div class="grid-2" style="margin-bottom:20px;">
+    <div class="info-card">
+      <div class="info-title">📈 מגמות שוק לאומי</div>
+      <div class="info-point">מחירים ממשיכים לעלות בצפון ובמרכז הארץ, למרות אי-הוודאות הביטחונית</div>
+      <div class="info-point">קריית מוצקין — ביקוש יציב, פרויקטים חדשים באזור מעלים את הערך</div>
+      <div class="info-point">עליית ריבית מאטת קצת את הקצב אבל לא עוצרת את השוק</div>
+      <div class="info-point">שוק נוח למוכרים כרגע — אין סיבה כלכלית להמתין</div>
+    </div>
+    <div class="info-card" style="background:linear-gradient(135deg,#fef3c7,#fffbeb); border-color:#fcd34d;">
+      <div class="info-title" style="color:#92400e;">⚡ חלון הזדמנויות</div>
+      <div class="info-point" style="color:#78350f;">פטור מס שבח לדירה יחידה — חוסך עד מאות אלפי שקלים</div>
+      <div class="info-point" style="color:#78350f;">מחיר נוכחי גבוה — כל חודש שמחכים הוא הזדמנות שנדחית</div>
+      <div class="info-point" style="color:#78350f;">שוכרים יציבים כרגע = יציאה מסודרת אפשרית בתוך 3–6 חודשים</div>
+      <div class="info-point" style="color:#78350f;">תנאי משכנתא ישנה — ייתכן קנסות פירעון מוקדם, בדוק מראש</div>
+    </div>
+  </div>
+
+  <!-- INVESTMENT PROPERTIES -->
+  <div class="section-title">🏠 דירות להשקעה — אזור חיפה וקריות עד 1M ₪</div>
+
+  <div class="card">
+    <div class="card-title"><span class="icon">📍</span> מאפייני הנכסים המתאימים</div>
+    <div class="grid-2">
+      <div>
+        <ul class="row-list">
+          <li><span class="label">סוג נכס</span><span class="amount">דירות 2–3 חדרים</span></li>
+          <li><span class="label">אזורי חיפוש</span><span class="amount">ק. ביאליק, ק. מוצקין, ק. אתא</span></li>
+          <li><span class="label">שכ"ד צפוי</span><span class="amount green">3,500–4,500 ₪/חודש</span></li>
+          <li><span class="label">תשואה ברוטו ממוצעת</span><span class="amount green">4–5%</span></li>
+        </ul>
+      </div>
+      <div>
+        <ul class="row-list">
+          <li><span class="label">יתרון עיקרי</span><span class="amount">ניהול קל, שוכרים יציבים</span></li>
+          <li><span class="label">מגמת מחירים</span><span class="amount green">עלייה עקבית לאורך זמן</span></li>
+          <li><span class="label">מקורות חיפוש</span><span class="amount">יד2, מדלן, סוכנים מקומיים</span></li>
+          <li><span class="label">תקציב כניסה</span><span class="amount gold">700,000–1,000,000 ₪</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPARISON CARD -->
+  <div class="section-title">⚖️ דירה קטנה להשקעה vs. שוק ההון</div>
+
+  <div class="market-grid">
+    <div class="card" style="border-top: 4px solid var(--blue-dark);">
+      <div class="card-title"><span class="icon">🏠</span> דירה קטנה להשקעה</div>
+      <ul class="row-list">
+        <li><span class="label">תשואה שנתית</span><span class="amount green">4–5% ברוטו</span></li>
+        <li><span class="label">הכנסה חודשית</span><span class="amount green">3,500–4,500 ₪</span></li>
+        <li><span class="label">סיכון</span><span class="amount" style="color:var(--green);">נמוך–בינוני</span></li>
+        <li><span class="label">נזילות</span><span class="amount red">נמוכה (חודשים למכירה)</span></li>
+        <li><span class="label">מינוף</span><span class="amount green">✅ אפשרי עם משכנתא</span></li>
+        <li><span class="label">התעסקות</span><span class="amount orange">שוכרים + תחזוקה</span></li>
+        <li><span class="label">עלייה בערך נכס</span><span class="amount green">✅ היסטורית — כן</span></li>
+      </ul>
+      <div style="margin-top:12px; padding:10px; background:#eff6ff; border-radius:8px; font-size:0.85rem; color:var(--blue-dark);">
+        <strong>מתאים ל:</strong> מי שרוצה הכנסה פסיבית יציבה ומינוף נדל"ני. דורש זמן וניהול.
+      </div>
+    </div>
+
+    <div class="card" style="border-top: 4px solid var(--gold);">
+      <div class="card-title"><span class="icon">📈</span> שוק ההון (S&P / מפוזר)</div>
+      <ul class="row-list">
+        <li><span class="label">תשואה שנתית</span><span class="amount green">7–10% היסטורי</span></li>
+        <li><span class="label">הכנסה חודשית (700K@10%)</span><span class="amount green">~5,833 ₪</span></li>
+        <li><span class="label">סיכון</span><span class="amount" style="color:var(--orange);">בינוני–גבוה (תנודתי)</span></li>
+        <li><span class="label">נזילות</span><span class="amount green">✅ גבוהה (ימים בודדים)</span></li>
+        <li><span class="label">מינוף</span><span class="amount red">לא מומלץ</span></li>
+        <li><span class="label">התעסקות</span><span class="amount green">✅ מינימלית</span></li>
+        <li><span class="label">פיזור אוטומטי</span><span class="amount green">✅ קל ופשוט</span></li>
+      </ul>
+      <div style="margin-top:12px; padding:10px; background:#fffbeb; border-radius:8px; font-size:0.85rem; color:#78350f;">
+        <strong>מתאים ל:</strong> מי שרוצה תשואה גבוהה, גמישות ופחות ניהול. דורש עמידה בתנודות.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== TAB 5: STOCK MARKET ===== -->
+<div id="tab-stocks" class="tab-content">
+
+  <div class="section-title">📈 אפשרויות השקעה על 1,400,000 ₪</div>
+
+  <div class="grid-3" style="margin-bottom:24px;">
+    <!-- Option A -->
+    <div class="option-card">
+      <div class="option-label">אפשרות A</div>
+      <div class="option-name">🚀 הכל S&P 500</div>
+      <div class="option-return">~10% / שנה</div>
+      <div class="option-monthly">~11,667 ₪ / חודש</div>
+      <span class="risk-badge risk-high">סיכון גבוה</span>
+      <ul class="row-list" style="margin-top:12px; font-size:0.85rem;">
+        <li><span class="label">תשואה שנתית</span><span class="amount">~140,000 ₪</span></li>
+        <li><span class="label">אופק מומלץ</span><span class="amount">10+ שנה</span></li>
+        <li><span class="label">תנודתיות</span><span class="amount red">גבוהה</span></li>
+        <li><span class="label">פיזור</span><span class="amount red">מוגבל (US בלבד)</span></li>
+      </ul>
+    </div>
+
+    <!-- Option B - Recommended -->
+    <div class="option-card recommended" style="border:2px solid var(--gold);">
+      <div class="recommended-badge">⭐ מומלץ</div>
+      <div class="option-label">אפשרות B</div>
+      <div class="option-name">⚖️ מפוזר (60/30/10)</div>
+      <div class="option-return">~7% / שנה</div>
+      <div class="option-monthly">~8,167 ₪ / חודש</div>
+      <span class="risk-badge risk-medium">סיכון בינוני</span>
+      <ul class="row-list" style="margin-top:12px; font-size:0.85rem;">
+        <li><span class="label">60% S&P 500</span><span class="amount">840,000 ₪</span></li>
+        <li><span class="label">30% אג"ח</span><span class="amount">420,000 ₪</span></li>
+        <li><span class="label">10% זהב</span><span class="amount">140,000 ₪</span></li>
+        <li><span class="label">יציבות</span><span class="amount green">גבוהה</span></li>
+      </ul>
+    </div>
+
+    <!-- Option C - Recommended -->
+    <div class="option-card recommended" style="border:2px solid var(--gold);">
+      <div class="recommended-badge">⭐ מומלץ</div>
+      <div class="option-label">אפשרות C</div>
+      <div class="option-name">🏠📈 חצי-חצי</div>
+      <div class="option-return">~9,333 ₪ / חודש</div>
+      <div class="option-monthly">דירה + שוק ההון</div>
+      <span class="risk-badge risk-medium">סיכון בינוני</span>
+      <ul class="row-list" style="margin-top:12px; font-size:0.85rem;">
+        <li><span class="label">700K — דירה קטנה</span><span class="amount green">~3,500 ₪/חודש</span></li>
+        <li><span class="label">700K — שוק @ 10%</span><span class="amount green">~5,833 ₪/חודש</span></li>
+        <li><span class="label">סה"כ חודשי</span><span class="amount green">~9,333 ₪</span></li>
+        <li><span class="label">פיזור נכסים</span><span class="amount green">✅ מעולה</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SIMULATION TABLE -->
+  <div class="card">
+    <div class="card-title"><span class="icon">🔮</span> סימולציית צמיחה — 1,400,000 ₪</div>
+    <div style="overflow-x:auto;">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>שנים</th>
+            <th>7% / שנה (B)</th>
+            <th>10% / שנה (A)</th>
+            <th>הפרש</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="td-bold">כיום</td>
+            <td>1,400,000 ₪</td>
+            <td>1,400,000 ₪</td>
+            <td>—</td>
+          </tr>
+          <tr class="sim-highlight">
+            <td class="td-bold">5 שנים</td>
+            <td class="td-green">1,963,289 ₪</td>
+            <td class="td-green">2,253,694 ₪</td>
+            <td class="td-gold">+290,405 ₪</td>
+          </tr>
+          <tr>
+            <td class="td-bold">10 שנים</td>
+            <td class="td-green">2,754,278 ₪</td>
+            <td class="td-green">3,631,123 ₪</td>
+            <td class="td-gold">+876,845 ₪</td>
+          </tr>
+          <tr class="sim-highlight">
+            <td class="td-bold">15 שנים</td>
+            <td class="td-green">3,863,006 ₪</td>
+            <td class="td-green">5,848,987 ₪</td>
+            <td class="td-gold">+1,985,981 ₪</td>
+          </tr>
+          <tr>
+            <td class="td-bold">20 שנים</td>
+            <td class="td-green">5,419,193 ₪</td>
+            <td class="td-green">9,418,000 ₪</td>
+            <td class="td-gold">+3,998,807 ₪</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="font-size:0.8rem; color:var(--text-muted); margin-top:10px;">* הסימולציה מניחה ריבית דריבית ללא משיכות. אין ערובה לתשואות עתידיות.</div>
+  </div>
+
+  <!-- GROWTH CHART -->
+  <div class="card">
+    <div class="card-title"><span class="icon">📊</span> גרף צמיחה השוואתי</div>
+    <div class="chart-container-lg">
+      <canvas id="growthChart"></canvas>
+    </div>
+  </div>
+
+  <!-- BOB RECOMMENDATION -->
+  <div class="bob-card">
+    <div class="bob-avatar">🤖</div>
+    <div class="bob-text">
+      <h4>המלצת Bob</h4>
+      <p>לאור גיל 45 ואופק השקעה של 10–15 שנה, האפשרות המומלצת היא <strong>B או C</strong> — פיזור מושכל שמאזן בין צמיחה ליציבות. S&P בלבד אפשרי אבל דורש עמידה נפשית בתנודות של ±30% בשנה גרועה. אפשרות C מוסיפה נכס מוחשי שנותן ביטחון פסיכולוגי בנוסף לפיזור כלכלי.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== TAB 6: NET WORTH ===== -->
+<div id="tab-networth" class="tab-content">
+
+  <!-- TOTAL CARDS -->
+  <div class="totals-grid">
+    <div class="total-card gold-top">
+      <div class="tc-label">הון כולל (כולל נדל"ן)</div>
+      <div class="tc-value" style="color:var(--gold);">2,266,664 ₪</div>
+    </div>
+    <div class="total-card green-top">
+      <div class="tc-label">נזיל מיידי (ללא נדל"ן)</div>
+      <div class="tc-value" style="color:var(--green);">155,918 ₪</div>
+    </div>
+    <div class="total-card">
+      <div class="tc-label">קרנות פרישה כולל</div>
+      <div class="tc-value" style="color:var(--blue-dark);">673,746 ₪</div>
+    </div>
+  </div>
+
+  <!-- ASSET TABLE -->
+  <div class="card">
+    <div class="card-title"><span class="icon">📋</span> פירוט נכסים</div>
+    <div style="overflow-x:auto;">
+      <table class="networth-table">
+        <thead>
+          <tr>
+            <th>נכס</th>
+            <th>שווי</th>
+            <th>נזילות</th>
+            <th>קטגוריה</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-weight:600;">🏢 הון מדירה ק. מוצקין</td>
+            <td style="font-weight:700; color:var(--gold); font-size:1.05rem;">1,400,000 ₪</td>
+            <td><span class="badge" style="background:#dbeafe; color:var(--blue-dark);">🏠 בעת מכירה</span></td>
+            <td><span class="badge" style="background:#eff6ff; color:var(--blue-dark);">נדל"ן</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">📗 מור קרן השתלמות</td>
+            <td style="font-weight:700; color:var(--green);">99,250 ₪</td>
+            <td><span class="badge" style="background:#dcfce7; color:var(--green);">✅ נזיל</span></td>
+            <td><span class="badge" style="background:#f0fdf4; color:var(--green);">חיסכון נזיל</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">📗 מור גמל</td>
+            <td style="font-weight:700; color:var(--green);">21,668 ₪</td>
+            <td><span class="badge" style="background:#dcfce7; color:var(--green);">✅ נזיל</span></td>
+            <td><span class="badge" style="background:#f0fdf4; color:var(--green);">חיסכון נזיל</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">📘 הפניקס פנסיה (ינון)</td>
+            <td style="font-weight:700; color:var(--blue-dark);">300,000 ₪</td>
+            <td><span class="badge" style="background:#f1f5f9; color:#64748b;">🔒 פרישה</span></td>
+            <td><span class="badge" style="background:#eff6ff; color:var(--blue-dark);">פנסיה</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">📘 אלטשולר פנסיה (מיטל)</td>
+            <td style="font-weight:700; color:var(--blue-dark);">231,408 ₪</td>
+            <td><span class="badge" style="background:#f1f5f9; color:#64748b;">🔒 פרישה</span></td>
+            <td><span class="badge" style="background:#eff6ff; color:var(--blue-dark);">פנסיה</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">📘 אלטשולר גמל</td>
+            <td style="font-weight:700; color:var(--blue-dark);">59,876 ₪</td>
+            <td><span class="badge" style="background:#f1f5f9; color:#64748b;">🔒 פרישה</span></td>
+            <td><span class="badge" style="background:#eff6ff; color:var(--blue-dark);">גמל לפרישה</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">📘 הראל גמל קצבתי</td>
+            <td style="font-weight:700; color:var(--blue-dark);">41,700 ₪</td>
+            <td><span class="badge" style="background:#f1f5f9; color:#64748b;">🔒 פרישה</span></td>
+            <td><span class="badge" style="background:#eff6ff; color:var(--blue-dark);">גמל לפרישה</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">⚠️ הראל גמל הוני</td>
+            <td style="font-weight:700; color:var(--orange);">18,000 ₪</td>
+            <td><span class="badge" style="background:#ffedd5; color:var(--orange);">⚠️ בתהליך</span></td>
+            <td><span class="badge" style="background:#fff7ed; color:var(--orange);">בבדיקה</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">📘 הראל גמל לפנסיה</td>
+            <td style="font-weight:700; color:var(--blue-dark);">22,762 ₪</td>
+            <td><span class="badge" style="background:#f1f5f9; color:#64748b;">🔒 פרישה</span></td>
+            <td><span class="badge" style="background:#eff6ff; color:var(--blue-dark);">גמל לפרישה</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">📈 וודאה S&P</td>
+            <td style="font-weight:700; color:var(--green);">35,000 ₪</td>
+            <td><span class="badge" style="background:#dcfce7; color:var(--green);">✅ נזיל</span></td>
+            <td><span class="badge" style="background:#f0fdf4; color:var(--green);">השקעות</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">👧 אלטשולר לכל ילד</td>
+            <td style="font-weight:700; color:var(--text-muted);">37,000 ₪</td>
+            <td><span class="badge" style="background:#f1f5f9; color:#64748b;">— ייעודי</span></td>
+            <td><span class="badge" style="background:#f8fafc; color:#64748b;">ילדים</span></td>
+          </tr>
+          <tr class="total-row">
+            <td style="font-weight:700;">💰 סה"כ כולל</td>
+            <td style="font-weight:700; color:var(--gold); font-size:1.1rem;">2,266,664 ₪</td>
+            <td colspan="2"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CHARTS -->
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title"><span class="icon">🥧</span> התפלגות הון לפי קטגוריה</div>
+      <div class="chart-container-lg">
+        <canvas id="networthChart"></canvas>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">💧</span> פירוט נזילות</div>
+      <div class="chart-container-lg">
+        <canvas id="liquidityChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUMMARY BOXES -->
+  <div class="grid-3">
+    <div class="card" style="text-align:center; border-top:4px solid var(--green);">
+      <div style="font-size:1.5rem; margin-bottom:8px;">💚</div>
+      <div style="font-size:0.85rem; color:var(--text-muted); margin-bottom:6px;">נזיל מיד</div>
+      <div style="font-size:1.3rem; font-weight:700; color:var(--green);">155,918 ₪</div>
+      <div style="font-size:0.78rem; color:var(--text-muted); margin-top:4px;">קרן השתלמות + גמל + S&P</div>
+    </div>
+    <div class="card" style="text-align:center; border-top:4px solid var(--blue-dark);">
+      <div style="font-size:1.5rem; margin-bottom:8px;">🔒</div>
+      <div style="font-size:0.85rem; color:var(--text-muted); margin-bottom:6px;">חיסכון פרישה</div>
+      <div style="font-size:1.3rem; font-weight:700; color:var(--blue-dark);">673,746 ₪</div>
+      <div style="font-size:0.78rem; color:var(--text-muted); margin-top:4px;">פנסיות + גמל נעול</div>
+    </div>
+    <div class="card" style="text-align:center; border-top:4px solid var(--gold);">
+      <div style="font-size:1.5rem; margin-bottom:8px;">🏢</div>
+      <div style="font-size:0.85rem; color:var(--text-muted); margin-bottom:6px;">נדל"ן</div>
+      <div style="font-size:1.3rem; font-weight:700; color:var(--gold);">1,400,000 ₪</div>
+      <div style="font-size:0.78rem; color:var(--text-muted); margin-top:4px;">הון עצמי אחרי משכנתא</div>
+    </div>
+  </div>
+
+  <div class="bob-card" style="margin-top:20px;">
+    <div class="bob-avatar">🤖</div>
+    <div class="bob-text">
+      <h4>תמונת מצב — Bob</h4>
+      <p>הון כולל של <strong>~2.27 מיליון ₪</strong> עם מבנה בריא. הבעיה המרכזית היא <strong>ריכוז יתר בנדל"ן (62%)</strong> ותזרים חודשי בלי כרית בטחון. מכירת הדירה + השקעה מפוזרת תשפר תשואה, נזילות ושקט נפשי כאחד.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div>נוצר על ידי <strong>Bob</strong> | עדכון אחרון: <strong>מרץ 2026</strong></div>
+  <div class="disclaimer">⚠️ המידע מבוסס על נתונים שסופקו ואינו מהווה ייעוץ פיננסי מוסמך. יש להתייעץ עם יועץ פיננסי מורשה לפני קבלת החלטות.</div>
+</footer>
+
+<script>
+  // ====== TAB NAVIGATION ======
+  function showTab(name, btn) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  // ====== CHART DEFAULTS ======
+  Chart.defaults.font.family = "'Segoe UI', 'Arial Hebrew', Arial, sans-serif";
+  Chart.defaults.plugins.legend.rtl = true;
+
+  const COLORS = {
+    blue: '#1a3a5c',
+    blueMid: '#1e4d7b',
+    blueLight: '#2563a8',
+    gold: '#f0a500',
+    green: '#16a34a',
+    red: '#dc2626',
+    orange: '#ea580c',
+    purple: '#7c3aed',
+    teal: '#0d9488',
+    pink: '#db2777',
+    indigo: '#4338ca',
+    lime: '#65a30d',
+    cyan: '#0891b2',
+    rose: '#e11d48',
+  };
+
+  // ====== TAB 1: EXPENSE PIE CHART ======
+  const expenseCtx = document.getElementById('expenseChart').getContext('2d');
+  new Chart(expenseCtx, {
+    type: 'doughnut',
+    data: {
+      labels: ['מזון וצריכה', 'מסעדות וקפה', 'עירייה/ממשלה', 'פנאי ובידור', 'שונות', 'דלק/חשמל/גז', 'רפואה', 'אופנה', 'תחבורה', 'חשמל/מחשבים', 'ספרים', 'טיסות', 'קוסמטיקה', 'חיות מחמד'],
+      datasets: [{
+        data: [5752, 2233, 2278, 1461, 1366, 1253, 1067, 1046, 749, 707, 450, 588, 329, 266],
+        backgroundColor: [
+          '#1a3a5c','#2563a8','#f0a500','#dc2626','#7c3aed','#0d9488',
+          '#db2777','#ea580c','#65a30d','#0891b2','#e11d48','#4338ca','#ca8a04','#16a34a'
+        ],
+        borderWidth: 2,
+        borderColor: '#fff',
+        hoverOffset: 8
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'right', rtl: true, labels: { font: { size: 11 }, padding: 8 } },
+        tooltip: {
+          callbacks: {
+            label: function(ctx) {
+              return ' ' + ctx.label + ': ' + ctx.parsed.toLocaleString('he-IL') + ' ₪';
+            }
+          }
+        }
+      }
+    }
+  });
+
+  // ====== TAB 1: FLOW BAR CHART ======
+  const flowCtx = document.getElementById('flowChart').getContext('2d');
+  new Chart(flowCtx, {
+    type: 'bar',
+    data: {
+      labels: ['הכנסות', 'הוצאות קבועות', 'כרטיסי אשראי', 'סה"כ הוצאות'],
+      datasets: [{
+        label: 'סכום (₪)',
+        data: [45688, 19035, 19545, 38580],
+        backgroundColor: [COLORS.green, COLORS.orange, COLORS.red, COLORS.blueMid],
+        borderRadius: 8,
+        borderSkipped: false,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: function(ctx) {
+              return ' ' + ctx.parsed.y.toLocaleString('he-IL') + ' ₪';
+            }
+          }
+        }
+      },
+      scales: {
+        y: {
+          ticks: {
+            callback: v => v.toLocaleString('he-IL') + ' ₪'
+          },
+          grid: { color: '#e2e8f0' }
+        },
+        x: { grid: { display: false } }
+      }
+    }
+  });
+
+  // ====== TAB 2: SAVINGS BAR ======
+  const savingsCtx = document.getElementById('savingsChart').getContext('2d');
+  new Chart(savingsCtx, {
+    type: 'bar',
+    data: {
+      labels: ['מסעדות וקפה', 'פנאי ובידור', 'מזון וצריכה', 'בריאות ינון', 'אכ"ע מיטל', 'ביטוח מחלות'],
+      datasets: [{
+        label: 'חיסכון חודשי (₪)',
+        data: [1033, 561, 500, 79, 77, 70],
+        backgroundColor: [COLORS.red, COLORS.orange, COLORS.gold, COLORS.blue, COLORS.teal, COLORS.purple],
+        borderRadius: 8,
+        borderSkipped: false,
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: function(ctx) {
+              return ' חיסכון: ' + ctx.parsed.x.toLocaleString('he-IL') + ' ₪/חודש';
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: { callback: v => v.toLocaleString('he-IL') + ' ₪' },
+          grid: { color: '#e2e8f0' }
+        },
+        y: { grid: { display: false } }
+      }
+    }
+  });
+
+  // ====== TAB 5: GROWTH LINE CHART ======
+  const growthCtx = document.getElementById('growthChart').getContext('2d');
+  new Chart(growthCtx, {
+    type: 'line',
+    data: {
+      labels: ['כיום', '5 שנים', '10 שנים', '15 שנים', '20 שנים'],
+      datasets: [
+        {
+          label: '10% / שנה (S&P)',
+          data: [1400000, 2253694, 3631123, 5848987, 9418000],
+          borderColor: COLORS.gold,
+          backgroundColor: 'rgba(240,165,0,0.08)',
+          borderWidth: 3,
+          pointRadius: 6,
+          pointBackgroundColor: COLORS.gold,
+          tension: 0.3,
+          fill: true
+        },
+        {
+          label: '7% / שנה (מפוזר)',
+          data: [1400000, 1963289, 2754278, 3863006, 5419193],
+          borderColor: COLORS.blueLight,
+          backgroundColor: 'rgba(37,99,168,0.08)',
+          borderWidth: 3,
+          pointRadius: 6,
+          pointBackgroundColor: COLORS.blueLight,
+          tension: 0.3,
+          fill: true
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { position: 'top', rtl: true },
+        tooltip: {
+          rtl: true,
+          callbacks: {
+            label: function(ctx) {
+              return ' ' + ctx.dataset.label + ': ' + ctx.parsed.y.toLocaleString('he-IL') + ' ₪';
+            }
+          }
+        }
+      },
+      scales: {
+        y: {
+          ticks: {
+            callback: v => (v/1000000).toFixed(1) + 'M ₪'
+          },
+          grid: { color: '#e2e8f0' }
+        },
+        x: { grid: { display: false } }
+      }
+    }
+  });
+
+  // ====== TAB 6: NET WORTH DONUT ======
+  const networthCtx = document.getElementById('networthChart').getContext('2d');
+  new Chart(networthCtx, {
+    type: 'doughnut',
+    data: {
+      labels: ['נדל"ן (הון דירה)', 'פנסיות', 'קרן השתלמות', 'גמל נזיל', 'השקעות שוק', 'לכל ילד', 'בתהליך'],
+      datasets: [{
+        data: [1400000, 595870, 99250, 21668, 35000, 37000, 18000],
+        backgroundColor: [COLORS.gold, COLORS.blue, COLORS.green, COLORS.teal, COLORS.blueLight, COLORS.purple, COLORS.orange],
+        borderWidth: 3,
+        borderColor: '#fff',
+        hoverOffset: 10
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'right', rtl: true, labels: { font: { size: 11 }, padding: 10 } },
+        tooltip: {
+          callbacks: {
+            label: function(ctx) {
+              const pct = ((ctx.parsed / 2206788) * 100).toFixed(1);
+              return ' ' + ctx.label + ': ' + ctx.parsed.toLocaleString('he-IL') + ' ₪ (' + pct + '%)';
+            }
+          }
+        }
+      }
+    }
+  });
+
+  // ====== TAB 6: LIQUIDITY PIE ======
+  const liquidityCtx = document.getElementById('liquidityChart').getContext('2d');
+  new Chart(liquidityCtx, {
+    type: 'doughnut',
+    data: {
+      labels: ['נדל"ן (בעת מכירה)', 'קרנות פרישה (נעול)', 'נזיל מיידי', 'בתהליך', 'ייעודי ילדים'],
+      datasets: [{
+        data: [1400000, 655746, 155918, 18000, 37000],
+        backgroundColor: [COLORS.gold, '#64748b', COLORS.green, COLORS.orange, COLORS.purple],
+        borderWidth: 3,
+        borderColor: '#fff',
+        hoverOffset: 10
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'right', rtl: true, labels: { font: { size: 11 }, padding: 10 } },
+        tooltip: {
+          callbacks: {
+            label: function(ctx) {
+              const pct = ((ctx.parsed / 2266664) * 100).toFixed(1);
+              return ' ' + ctx.label + ': ' + ctx.parsed.toLocaleString('he-IL') + ' ₪ (' + pct + '%)';
+            }
+          }
+        }
+      }
+    }
+  });
+
+</script>
+</body>
+</html>
