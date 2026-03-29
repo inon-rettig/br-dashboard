@@ -385,38 +385,117 @@ function toggleCard(el, bizName) {
     el.classList.add('expanded');
     // trigger google search for similar vendors
     const query = el.dataset.query;
-    searchGoogle(query, bizName);
+    // מצא את האובייקט המלא
+    const vObj = vendors.find(x => x.biz_name === bizName) || {biz_name: bizName, category: 'ספקים אחרים', domain: ''};
+    searchGoogle(vObj);
   }
 }
 
+// ===== CATEGORY → SEARCH TERMS =====
+const CAT_SEARCH = {
+  'ייצור מודלים / אב-טיפוס': {
+    he: 'ייצור מודלים אב טיפוס',
+    en: 'prototype manufacturing model making',
+    terms: ['prototype manufacturer Israel', 'model making supplier', 'rapid prototyping company',
+            'CNC prototype supplier', 'physical model manufacturer'],
+  },
+  'הדפסה תלת-מימד (3D)': {
+    he: 'הדפסה תלת מימד',
+    en: '3D printing service',
+    terms: ['3D printing service Israel', '3D printing bureau FDM SLA', 'additive manufacturing service',
+            '3D scanning service Israel', '3D printing company industrial'],
+  },
+  'דפוס / הדפסה 2D': {
+    he: 'דפוס הדפסה',
+    en: 'print shop offset digital',
+    terms: ['print shop Israel industrial', 'offset printing supplier', 'digital printing service',
+            'large format printing', 'packaging printing supplier'],
+  },
+  'CNC / לייזר / מתכת': {
+    he: 'עיבוד שבבי לייזר מתכת',
+    en: 'CNC machining laser cutting metal',
+    terms: ['CNC machining Israel', 'laser cutting service Israel', 'sheet metal fabrication',
+            'precision machining supplier', 'metal parts manufacturer'],
+  },
+  'פלסטיק / הזרקה / עיבוד': {
+    he: 'הזרקת פלסטיק עיבוד',
+    en: 'plastic injection molding',
+    terms: ['plastic injection molding Israel', 'plastic parts manufacturer', 'injection mold supplier',
+            'plastic fabrication service', 'thermoforming supplier'],
+  },
+  'שילוח / לוגיסטיקה': {
+    he: 'שילוח לוגיסטיקה',
+    en: 'freight forwarding logistics',
+    terms: ['freight forwarder Israel China', 'air cargo Israel', 'sea freight Israel importer',
+            'customs clearance Israel', 'logistics company Israel'],
+  },
+  'ספק PCB / אלקטרוניקה': {
+    he: 'רכיבי אלקטרוניקה PCB',
+    en: 'electronics components PCB supplier',
+    terms: ['electronics components distributor Israel', 'PCB manufacturer Israel', 'EMS electronics manufacturing service',
+            'SMT assembly Israel', 'electronic parts supplier'],
+  },
+  'ייעוץ / הנדסה חיצוני': {
+    he: 'ייעוץ הנדסי',
+    en: 'engineering consulting',
+    terms: ['engineering consulting Israel', 'product design engineering firm', 'mechanical engineering consultant',
+            'industrial design studio Israel', 'R&D engineering service'],
+  },
+  'ציוד / חומרים / ריהוט': {
+    he: 'ציוד חומרים',
+    en: 'equipment materials supplier',
+    terms: ['industrial equipment supplier Israel', 'studio equipment supplier', 'materials supplier Israel',
+            'tools & equipment B2B', 'office equipment supplier'],
+  },
+  'ספקים אחרים': {
+    he: 'ספק שירותים',
+    en: 'B2B supplier service',
+    terms: ['B2B supplier Israel', 'business service provider', 'professional services Israel',
+            'vendor directory Israel', 'supplier network Israel'],
+  },
+};
+
 // ===== GOOGLE SEARCH PANEL =====
-function searchGoogle(query, bizName) {
+function searchGoogle(vendor) {
   const resultsEl = document.getElementById('google-results');
   const queryEl = document.getElementById('google-query');
-  queryEl.innerHTML = `חיפוש: <span>${bizName}</span>`;
+  const cat = vendor.category;
+  const catData = CAT_SEARCH[cat] || CAT_SEARCH['ספקים אחרים'];
+
+  queryEl.innerHTML = `ספקים דומים ל: <span>${vendor.biz_name}</span><br><small style="color:var(--text2)">${cat}</small>`;
   resultsEl.innerHTML = '<div class="google-loading">⏳ מחפש...</div>';
 
-  // Use Google Custom Search API or fallback to links
-  const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(query + ' ספק ישראל OR supplier')}`;
+  // בנה חיפושים ממוקדים לספקים דומים (לא לספק עצמו)
+  const searches = catData.terms.map(t => ({
+    q: t,
+    label: t,
+  }));
 
-  // Build suggested search links (since direct Google API needs key)
-  const searches = [
-    { label: bizName + ' — אתר רשמי', q: bizName + ' official site' },
-    { label: 'ספקים דומים — ' + query.split(' ').slice(0,3).join(' '), q: query + ' suppliers alternatives' },
-    { label: query + ' ישראל', q: query + ' Israel ספקים' },
-    { label: query + ' reviews', q: query + ' reviews rating' },
-    { label: query + ' B2B', q: query + ' B2B manufacturer' },
-  ];
+  // הוסף חיפוש בעברית
+  searches.unshift({
+    q: catData.he + ' ישראל',
+    label: catData.he + ' — ספקים בישראל',
+  });
 
-  resultsEl.innerHTML = searches.map(s => `
+  // הוסף חיפוש Alibaba/Global Sources לספקים סינים
+  const isChina = vendor.domain.endsWith('.cn') || ['mastars','junhuamodel','rtprototype','rjxhobby'].some(k => vendor.domain.includes(k));
+  if (isChina) {
+    searches.push({ q: 'site:alibaba.com ' + catData.en, label: '🛒 Alibaba — ' + catData.en });
+    searches.push({ q: 'site:made-in-china.com ' + catData.en, label: '🇨🇳 Made-in-China — ' + catData.en });
+  }
+
+  // הצג 6 תוצאות
+  const shown = searches.slice(0, 6);
+
+  resultsEl.innerHTML = shown.map(s => `
     <a class="google-result" href="https://www.google.com/search?q=${encodeURIComponent(s.q)}" target="_blank">
       <div class="gr-title">${s.label}</div>
-      <div class="gr-url">google.com/search?q=${encodeURIComponent(s.q).substring(0,40)}...</div>
-      <div class="gr-snippet">לחץ לחיפוש בגוגל ↗</div>
+      <div class="gr-url">🔍 google.com → ${s.q.substring(0, 45)}${s.q.length > 45 ? '...' : ''}</div>
+      <div class="gr-snippet" style="color:var(--accent);font-size:11px">לחץ לפתיחה בגוגל ↗</div>
     </a>
   `).join('') + `
-    <button class="google-search-btn" onclick="window.open('${searchUrl}','_blank')">
-      🔍 פתח חיפוש מלא בגוגל
+    <button class="google-search-btn" onclick="window.open('https://www.google.com/search?q=${encodeURIComponent(catData.he + ' ספקים ישראל')}','_blank')">
+      🔍 חיפוש כללי — ${cat}
     </button>
   `;
 }
