@@ -131,6 +131,7 @@ tr:hover td { background:rgba(255,255,255,.02); }
   <button class="tab-btn" onclick="sw('hr',this)">👥 כ"א וגיוס</button>
   <button class="tab-btn" onclick="sw('crm',this)">🤝 CRM</button>
   <button class="tab-btn" onclick="sw('linkedin',this)">💼 LinkedIn</button>
+  <button class="tab-btn" onclick="sw('elbit',this)">🛡️ אלביט</button>
 </div>
 
 <!-- ===== TAB 1: FINANCE ===== -->
@@ -901,6 +902,297 @@ tr:hover td { background:rgba(255,255,255,.02); }
 
     </div>
   </div>
+
+</div>
+
+<!-- ===== TAB: ELBIT ===== -->
+<div id="pane-elbit" class="pane">
+
+  <style>
+    .elb-kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:20px; }
+    .elb-proj { background:#0f172a; border-radius:10px; padding:14px 16px; border:1px solid #1e293b; margin-bottom:10px; }
+    .elb-proj-head { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px; }
+    .elb-proj-name { font-size:14px; font-weight:600; color:#f1f5f9; }
+    .elb-proj-wbs { font-size:10px; color:#475569; margin-top:2px; }
+    .elb-proj-nums { text-align:left; }
+    .elb-hours { font-size:20px; font-weight:700; color:#60a5fa; text-align:left; }
+    .elb-money { font-size:12px; color:#94a3b8; margin-bottom:8px; }
+    .elb-money-lbl { color:#475569; }
+    .elb-money-val { color:#cbd5e1; font-weight:600; }
+    .elb-vat { color:#a3e635; }
+    .elb-money-sep { color:#334155; margin:0 6px; }
+    .elb-descs { margin-top:8px; padding-top:8px; border-top:1px solid #1e293b; }
+    .elb-descs-title { font-size:10px; color:#64748b; text-transform:uppercase; letter-spacing:.05em; margin-bottom:5px; }
+    .elb-desc-list { list-style:none; padding:0; margin:0; }
+    .elb-desc-list li { font-size:12px; color:#94a3b8; padding:2px 0; border-bottom:1px dotted #1e293b; line-height:1.5; }
+    .elb-desc-list li:last-child { border-bottom:none; }
+    .elb-desc-list li::before { content:"·"; color:#334155; margin-left:0; margin-right:6px; }
+    .elb-prev-note { font-size:11px; color:#475569; margin-top:4px; font-style:italic; }
+    .elb-section-label { font-size:11px; font-weight:600; color:#475569; text-transform:uppercase; letter-spacing:.07em; margin:18px 0 10px; padding-bottom:6px; border-bottom:1px solid #1e293b; }
+    .elb-totals-bar { background:#1e293b; border-radius:12px; padding:16px 20px; margin-bottom:18px; border:1px solid #334155; }
+    .elb-totals-row { display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px solid #1e293b; font-size:13px; }
+    .elb-totals-row:last-child { border:none; font-weight:700; font-size:15px; }
+    .elb-tot-lbl { color:#94a3b8; }
+    .elb-tot-val { color:#f1f5f9; font-weight:600; }
+  </style>
+
+  <div class="elb-kpis">
+    <div class="kpi b">
+      <div class="kpi-l">סה"כ שעות — מרץ 2026</div>
+      <div class="kpi-v" style="color:#60a5fa">238h</div>
+      <div class="kpi-s">תעריף ₪211/שעה</div>
+    </div>
+    <div class="kpi g">
+      <div class="kpi-l">סכום ללא מעמ</div>
+      <div class="kpi-v" style="color:#22c55e">₪50,218</div>
+      <div class="kpi-s">לפני מע"מ 18%</div>
+    </div>
+    <div class="kpi p">
+      <div class="kpi-l">כולל מעמ</div>
+      <div class="kpi-v" style="color:#a3e635">₪59,257</div>
+      <div class="kpi-s">חשבונית סופית</div>
+    </div>
+    <div class="kpi y">
+      <div class="kpi-l">פרויקטים פעילים</div>
+      <div class="kpi-v" style="color:#eab308">6</div>
+      <div class="kpi-s">4 ללא שעות החודש</div>
+    </div>
+  </div>
+
+  <div class="elb-totals-bar">
+    <div class="panel-title" style="margin-bottom:12px">&#x1F4B0; סיכום חיוב — מרץ 2026</div>
+    <div class="elb-totals-row">
+      <span class="elb-tot-lbl">שעות כולל</span>
+      <span class="elb-tot-val">238.0 שעות × ₪211</span>
+    </div>
+    <div class="elb-totals-row">
+      <span class="elb-tot-lbl">סכום ללא מע"מ</span>
+      <span class="elb-tot-val" style="color:#22c55e">₪50,218</span>
+    </div>
+    <div class="elb-totals-row">
+      <span class="elb-tot-lbl">מע"מ (18%)</span>
+      <span class="elb-tot-val" style="color:#64748b">₪9,039</span>
+    </div>
+    <div class="elb-totals-row">
+      <span class="elb-tot-lbl">סה"כ לחיוב</span>
+      <span class="elb-tot-val" style="color:#a3e635;font-size:18px">₪59,257</span>
+    </div>
+  </div>
+
+  <div class="elb-section-label">&#x1F4CB; פרויקטים פעילים — מרץ 2026</div>
+
+    <div class="elb-proj" style="border-right: 3px solid #3b82f6;">
+      <div class="elb-proj-head">
+        <div>
+          <div class="elb-proj-name">Pulse Solan</div>
+          <div class="elb-proj-wbs">TBD &nbsp;·&nbsp; &#x26A0;&#xFE0F; WBS ממתין</div>
+        </div>
+        <div class="elb-proj-nums">
+          <div class="elb-hours">135.5h</div>
+        </div>
+      </div>
+      <div class="elb-money">
+        <span class="elb-money-lbl">ללא מעמ</span> <span class="elb-money-val">₪28,590</span>
+        <span class="elb-money-sep">·</span>
+        <span class="elb-money-lbl">כולל מעמ</span> <span class="elb-money-val elb-vat">₪33,737</span>
+      </div>
+      <div class="elb-descs">
+        <div class="elb-descs-title">מה בוצע החודש:</div>
+        <ul class="elb-desc-list">
+          <li>סקירת הנא</li>
+          <li>הכנת חומרים למצגת</li>
+          <li>חיפוש אחר דגם רובה מתאים וזום ערב</li>
+          <li>הכנת חומרים למצגת + ביקור בתעש</li>
+          <li>הכנת חומרים + ביקור בתעש</li>
+          <li>תיקון של החלקים ללייזר, הצבה סופית על הפלטה ושליחת בקשה להצעת מחיר מ-LASERCUT4</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="elb-proj" style="border-right: 3px solid #22c55e;">
+      <div class="elb-proj-head">
+        <div>
+          <div class="elb-proj-name">Sting</div>
+          <div class="elb-proj-wbs">2026_422_ELO_ID_STING &nbsp;·&nbsp; K952PCA10008</div>
+        </div>
+        <div class="elb-proj-nums">
+          <div class="elb-hours">38.5h</div>
+          <span style="color:#475569;font-size:11px">· פבר' 379.5h</span>
+        </div>
+      </div>
+      <div class="elb-money">
+        <span class="elb-money-lbl">ללא מעמ</span> <span class="elb-money-val">₪8,124</span>
+        <span class="elb-money-sep">·</span>
+        <span class="elb-money-lbl">כולל מעמ</span> <span class="elb-money-val elb-vat">₪9,586</span>
+      </div>
+      <div class="elb-descs">
+        <div class="elb-descs-title">מה בוצע החודש:</div>
+        <ul class="elb-desc-list">
+          <li>הוראות הרכבה והתאמת הטולרנסים להדפסת DLP</li>
+          <li>דיוק פרטי חיבור אחרונים, התאמה לתקן V-0 — בקשות להצעות מחיר</li>
+          <li>המשך פיתוח קפיץ + הדפסות תיקון</li>
+          <li>ניסיונות מחבר קפיץ + הדפסות</li>
+          <li>פיתוח קפיץ</li>
+          <li>תיקון פרטים, הערכת מסה, המשך מצגת</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="elb-proj" style="border-right: 3px solid #64748b;">
+      <div class="elb-proj-head">
+        <div>
+          <div class="elb-proj-name">Ofek Ogdan</div>
+          <div class="elb-proj-wbs">2025_411_ELS_UX_OFEK OGDAN &nbsp;·&nbsp; K953PCA10018</div>
+        </div>
+        <div class="elb-proj-nums">
+          <div class="elb-hours">26.0h</div>
+          <span style="color:#475569;font-size:11px">· פבר' 107.0h</span>
+        </div>
+      </div>
+      <div class="elb-money">
+        <span class="elb-money-lbl">ללא מעמ</span> <span class="elb-money-val">₪5,486</span>
+        <span class="elb-money-sep">·</span>
+        <span class="elb-money-lbl">כולל מעמ</span> <span class="elb-money-val elb-vat">₪6,473</span>
+      </div>
+      <div class="elb-descs">
+        <div class="elb-descs-title">מה בוצע החודש:</div>
+        <ul class="elb-desc-list">
+          <li>פגישה</li>
+          <li>הדמיות</li>
+          <li>השלמות מידול</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="elb-proj" style="border-right: 3px solid #64748b;">
+      <div class="elb-proj-head">
+        <div>
+          <div class="elb-proj-name">Nova Shield</div>
+          <div class="elb-proj-wbs">2025_402_LND_HF_NOVA SHIELD &nbsp;·&nbsp; K950PWP10001</div>
+        </div>
+        <div class="elb-proj-nums">
+          <div class="elb-hours">19.0h</div>
+          <span style="color:#475569;font-size:11px">· פבר' 76.0h</span>
+        </div>
+      </div>
+      <div class="elb-money">
+        <span class="elb-money-lbl">ללא מעמ</span> <span class="elb-money-val">₪4,009</span>
+        <span class="elb-money-sep">·</span>
+        <span class="elb-money-lbl">כולל מעמ</span> <span class="elb-money-val elb-vat">₪4,731</span>
+      </div>
+      <div class="elb-descs">
+        <div class="elb-descs-title">מה בוצע החודש:</div>
+        <ul class="elb-desc-list">
+          <li>המשך מחקר פלטפורמות</li>
+          <li>פגישת מחקר פלטפורמות</li>
+          <li>המשך מחקר פלטפורמות — דגב על HUMVEE + Eitan</li>
+          <li>מידול מוקאפ ללייזר — JLTV FMTV המשך מחקר פלטפורמות</li>
+          <li>המשך פיתוח נוטבוק</li>
+          <li>מחקר פלטפורמות</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="elb-proj" style="border-right: 3px solid #64748b;">
+      <div class="elb-proj-head">
+        <div>
+          <div class="elb-proj-name">LFD</div>
+          <div class="elb-proj-wbs">2025_397_ASP_HF_LFD_HFE &nbsp;·&nbsp; K957PCA20075</div>
+        </div>
+        <div class="elb-proj-nums">
+          <div class="elb-hours">17.0h</div>
+          <span style="color:#475569;font-size:11px">· פבר' 7.0h</span>
+        </div>
+      </div>
+      <div class="elb-money">
+        <span class="elb-money-lbl">ללא מעמ</span> <span class="elb-money-val">₪3,587</span>
+        <span class="elb-money-sep">·</span>
+        <span class="elb-money-lbl">כולל מעמ</span> <span class="elb-money-val elb-vat">₪4,233</span>
+      </div>
+      <div class="elb-descs">
+        <div class="elb-descs-title">מה בוצע החודש:</div>
+        <ul class="elb-desc-list">
+          <li>מידול צג לתכן חדש</li>
+          <li>מעבר על פקדים ובדיקה בקובץ</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="elb-proj" style="border-right: 3px solid #64748b;">
+      <div class="elb-proj-head">
+        <div>
+          <div class="elb-proj-name">MBN 2.0 MOCKUP</div>
+          <div class="elb-proj-wbs">2023_106_ASP_ID_Mini_Brightnight &nbsp;·&nbsp; K957PCA20053</div>
+        </div>
+        <div class="elb-proj-nums">
+          <div class="elb-hours">2.0h</div>
+          <span style="color:#475569;font-size:11px">· פבר' 188.0h</span>
+        </div>
+      </div>
+      <div class="elb-money">
+        <span class="elb-money-lbl">ללא מעמ</span> <span class="elb-money-val">₪422</span>
+        <span class="elb-money-sep">·</span>
+        <span class="elb-money-lbl">כולל מעמ</span> <span class="elb-money-val elb-vat">₪498</span>
+      </div>
+      <div class="elb-descs">
+        <div class="elb-descs-title">מה בוצע החודש:</div>
+        <ul class="elb-desc-list">
+          <li>עדכוני תכן לייצור</li>
+        </ul>
+      </div>
+    </div>
+
+  <div class="elb-section-label">&#x23F8; ללא פעילות החודש</div>
+
+    <div class="elb-proj" style="border-right: 3px solid #334155;opacity:0.55">
+      <div class="elb-proj-head">
+        <div>
+          <div class="elb-proj-name">Iron Hawk 3.0</div>
+          <div class="elb-proj-wbs">2025_366_LND_UX_IRON HAWK STAGE 3 &nbsp;·&nbsp; K950PWP10000</div>
+        </div>
+        <div class="elb-proj-nums">
+          <div class="elb-hours" style="color:#475569">0h</div>
+          <div class="elb-prev-note">לא פעיל החודש · 120h בפברואר</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="elb-proj" style="border-right: 3px solid #334155;opacity:0.55">
+      <div class="elb-proj-head">
+        <div>
+          <div class="elb-proj-name">Eitan Michlol</div>
+          <div class="elb-proj-wbs">2024_280_C4I_Eitan miclol &nbsp;·&nbsp; K960PWP10040</div>
+        </div>
+        <div class="elb-proj-nums">
+          <div class="elb-hours" style="color:#475569">0h</div>
+          <div class="elb-prev-note">לא פעיל החודש · 90h בפברואר</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="elb-proj" style="border-right: 3px solid #334155;opacity:0.55">
+      <div class="elb-proj-head">
+        <div>
+          <div class="elb-proj-name">Helios</div>
+          <div class="elb-proj-wbs">2022_109_ASP_HF_helios &nbsp;·&nbsp; K957PCA20020</div>
+        </div>
+        <div class="elb-proj-nums">
+          <div class="elb-hours" style="color:#475569">0h</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="elb-proj" style="border-right: 3px solid #334155;opacity:0.55">
+      <div class="elb-proj-head">
+        <div>
+          <div class="elb-proj-name">Wide FOV HMD for Training</div>
+          <div class="elb-proj-wbs">2025_364_ASP_HF_Wide FOV HMD for Training &nbsp;·&nbsp; &#x26A0;&#xFE0F; WBS ממתין</div>
+        </div>
+        <div class="elb-proj-nums">
+          <div class="elb-hours" style="color:#475569">0h</div>
+        </div>
+      </div>
+    </div>
 
 </div>
 
