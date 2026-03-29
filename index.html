@@ -141,197 +141,172 @@ tr:hover td { background:rgba(255,255,255,.02); }
 <!-- ===== TAB 1: FINANCE ===== -->
 <div id="pane-finance" class="pane active">
 
-  <!-- ── KPI Row ── -->
+  <!-- ══ 5 KPI Cards ══ -->
   <div class="kpis kpis-5" style="margin-bottom:20px">
-    <div class="kpi y">
-      <div class="kpi-l">יתרת בנק נוכחית</div>
-      <div class="kpi-v" style="color:#eab308">₪72K</div>
+
+    <div class="kpi g">
+      <div class="kpi-l">יתרת בנק</div>
+      <div class="kpi-v" style="color:#22c55e">₪72,090</div>
       <div class="kpi-s">נכון ל-29.3.2026</div>
     </div>
-    <div class="kpi g">
-      <div class="kpi-l">הכנסות מרץ (בפועל)</div>
-      <div class="kpi-v" style="color:#22c55e">₪212K</div>
-      <div class="kpi-s">גביית ספקים + לקוחות</div>
-    </div>
+
     <div class="kpi r">
-      <div class="kpi-l">הוצאות מרץ (בפועל)</div>
-      <div class="kpi-v" style="color:#ef4444">₪241K</div>
-      <div class="kpi-s">כולל קבלני משנה גדולים</div>
+      <div class="kpi-l">הוצאות מרץ</div>
+      <div class="kpi-v" style="color:#ef4444">-₪241,210</div>
+      <div class="kpi-s">✅ בפועל</div>
     </div>
+
+    <div class="kpi g">
+      <div class="kpi-l">הכנסות מרץ</div>
+      <div class="kpi-v" style="color:#22c55e">₪212,628</div>
+      <div class="kpi-s">✅ בפועל</div>
+    </div>
+
     <div class="kpi b">
       <div class="kpi-l">הכנסות צפויות — אפריל</div>
-      <div class="kpi-v" style="color:#3b82f6">₪264K</div>
-      <div class="kpi-s">Visonic + אלביט גבייה</div>
+      <div class="kpi-v" style="color:#60a5fa">₪264,028</div>
+      <div class="kpi-s">🔵 תחזית | Line 5 + AMAN + Visonic</div>
     </div>
+
     <div class="kpi g">
       <div class="kpi-l">יתרה צפויה — סוף אפריל</div>
-      <div class="kpi-v" style="color:#22c55e">₪75K</div>
-      <div class="kpi-s">על בסיס תזרים מהאקסל</div>
+      <div class="kpi-v" style="color:#22c55e">₪75,777</div>
+      <div class="kpi-s">🔵 תחזית מהמודל</div>
     </div>
+
   </div>
 
-  <!-- ── Bar chart: 6 months ── -->
+  <!-- ══ גרף 6 חודשים ══ -->
   <div class="panel" style="margin-bottom:18px">
-    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px">
-      <div class="panel-title" style="margin-bottom:0">📊 תזרים — 3 חודשים אחורה + 3 קדימה</div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <div class="panel-title" style="margin:0">📊 תזרים — 3 חודשים אחורה · 3 חודשים קדימה</div>
       <div style="display:flex;gap:14px;font-size:11px;color:#64748b">
-        <span><span style="display:inline-block;width:10px;height:10px;background:#22c55e;border-radius:2px;opacity:.8;margin-left:4px"></span>הכנסות</span>
-        <span><span style="display:inline-block;width:10px;height:10px;background:#ef4444;border-radius:2px;opacity:.8;margin-left:4px"></span>הוצאות</span>
-        <span style="color:#475569">✅ בפועל · 🔵 תחזית</span>
+        <span><span style="display:inline-block;width:9px;height:9px;background:#22c55e;border-radius:2px;opacity:.75;margin-left:4px"></span>הכנסות</span>
+        <span><span style="display:inline-block;width:9px;height:9px;background:#ef4444;border-radius:2px;opacity:.75;margin-left:4px"></span>הוצאות</span>
+        <span>יתרה = סוף חודש</span>
+        <span>✅ בפועל &nbsp;🔵 תחזית</span>
       </div>
     </div>
-    <div style="display:flex;gap:8px;align-items:flex-end;padding:0 4px">
+    <div style="display:flex;gap:10px;padding:0 4px">
       
-    <div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1">
-      <div style="font-size:9px;color:#64748b">✅</div>
-      <div style="width:100%;display:flex;gap:2px;align-items:flex-end;height:60px">
-        <div style="width:50%;background:#22c55e;opacity:.8;height:100%;border-radius:2px 2px 0 0;transition:height .3s" title="הכנסות ₪437,371"></div>
-        <div style="width:50%;background:#ef4444;opacity:.8;height:93%;border-radius:2px 2px 0 0;transition:height .3s" title="הוצאות ₪408,125"></div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;border-radius:6px;padding:4px 2px">
+      <div style="font-size:10px;color:#64748b;line-height:1">✅</div>
+      <div style="width:100%;display:flex;gap:2px;align-items:flex-end;height:70px">
+        <div style="flex:1;background:#22c55e;opacity:.75;height:100%;border-radius:2px 2px 0 0" title="הכנסות ₪437,371"></div>
+        <div style="flex:1;background:#ef4444;opacity:.75;height:93%;border-radius:2px 2px 0 0" title="הוצאות ₪408,125"></div>
       </div>
-      <div style="font-size:10px;color:#94a3b8;font-weight:600">ינו</div>
-      <div style="font-size:9px;color:#64748b">₪235K</div>
+      <div style="font-size:11px;font-weight:600;color:#94a3b8">ינו</div>
+      <div style="font-size:10px;font-weight:700;color:#22c55e">₪235K</div>
     </div>
-    <div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1">
-      <div style="font-size:9px;color:#64748b">✅</div>
-      <div style="width:100%;display:flex;gap:2px;align-items:flex-end;height:60px">
-        <div style="width:50%;background:#22c55e;opacity:.8;height:59%;border-radius:2px 2px 0 0;transition:height .3s" title="הכנסות ₪258,853"></div>
-        <div style="width:50%;background:#ef4444;opacity:.8;height:83%;border-radius:2px 2px 0 0;transition:height .3s" title="הוצאות ₪367,120"></div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;border-radius:6px;padding:4px 2px">
+      <div style="font-size:10px;color:#64748b;line-height:1">✅</div>
+      <div style="width:100%;display:flex;gap:2px;align-items:flex-end;height:70px">
+        <div style="flex:1;background:#22c55e;opacity:.75;height:59%;border-radius:2px 2px 0 0" title="הכנסות ₪258,853"></div>
+        <div style="flex:1;background:#ef4444;opacity:.75;height:83%;border-radius:2px 2px 0 0" title="הוצאות ₪367,120"></div>
       </div>
-      <div style="font-size:10px;color:#94a3b8;font-weight:600">פבר</div>
-      <div style="font-size:9px;color:#64748b">₪137K</div>
+      <div style="font-size:11px;font-weight:600;color:#94a3b8">פבר</div>
+      <div style="font-size:10px;font-weight:700;color:#22c55e">₪137K</div>
     </div>
-    <div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1">
-      <div style="font-size:9px;color:#64748b">✅</div>
-      <div style="width:100%;display:flex;gap:2px;align-items:flex-end;height:60px">
-        <div style="width:50%;background:#22c55e;opacity:.8;height:48%;border-radius:2px 2px 0 0;transition:height .3s" title="הכנסות ₪212,628"></div>
-        <div style="width:50%;background:#ef4444;opacity:.8;height:55%;border-radius:2px 2px 0 0;transition:height .3s" title="הוצאות ₪241,210"></div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;box-shadow:0 0 0 2px #60a5fa;border-radius:6px;padding:4px 2px">
+      <div style="font-size:10px;color:#64748b;line-height:1">✅</div>
+      <div style="width:100%;display:flex;gap:2px;align-items:flex-end;height:70px">
+        <div style="flex:1;background:#22c55e;opacity:.75;height:48%;border-radius:2px 2px 0 0" title="הכנסות ₪212,628"></div>
+        <div style="flex:1;background:#ef4444;opacity:.75;height:55%;border-radius:2px 2px 0 0" title="הוצאות ₪241,210"></div>
       </div>
-      <div style="font-size:10px;color:#94a3b8;font-weight:600">מרץ</div>
-      <div style="font-size:9px;color:#64748b">₪72K</div>
+      <div style="font-size:11px;font-weight:600;color:#94a3b8">מרץ</div>
+      <div style="font-size:10px;font-weight:700;color:#22c55e">₪72K</div>
     </div>
-    <div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1">
-      <div style="font-size:9px;color:#64748b">🔵</div>
-      <div style="width:100%;display:flex;gap:2px;align-items:flex-end;height:60px">
-        <div style="width:50%;background:#22c55e;opacity:.8;height:60%;border-radius:2px 2px 0 0;transition:height .3s" title="הכנסות ₪264,028"></div>
-        <div style="width:50%;background:#ef4444;opacity:.8;height:59%;border-radius:2px 2px 0 0;transition:height .3s" title="הוצאות ₪260,341"></div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;border-radius:6px;padding:4px 2px">
+      <div style="font-size:10px;color:#64748b;line-height:1">🔵</div>
+      <div style="width:100%;display:flex;gap:2px;align-items:flex-end;height:70px">
+        <div style="flex:1;background:#22c55e;opacity:.75;height:60%;border-radius:2px 2px 0 0" title="הכנסות ₪264,028"></div>
+        <div style="flex:1;background:#ef4444;opacity:.75;height:59%;border-radius:2px 2px 0 0" title="הוצאות ₪260,341"></div>
       </div>
-      <div style="font-size:10px;color:#94a3b8;font-weight:600">אפר</div>
-      <div style="font-size:9px;color:#64748b">₪75K</div>
+      <div style="font-size:11px;font-weight:600;color:#94a3b8">אפר</div>
+      <div style="font-size:10px;font-weight:700;color:#22c55e">₪75K</div>
     </div>
-    <div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1">
-      <div style="font-size:9px;color:#64748b">🔵</div>
-      <div style="width:100%;display:flex;gap:2px;align-items:flex-end;height:60px">
-        <div style="width:50%;background:#22c55e;opacity:.8;height:28%;border-radius:2px 2px 0 0;transition:height .3s" title="הכנסות ₪124,490"></div>
-        <div style="width:50%;background:#ef4444;opacity:.8;height:55%;border-radius:2px 2px 0 0;transition:height .3s" title="הוצאות ₪243,867"></div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;border-radius:6px;padding:4px 2px">
+      <div style="font-size:10px;color:#64748b;line-height:1">🔵</div>
+      <div style="width:100%;display:flex;gap:2px;align-items:flex-end;height:70px">
+        <div style="flex:1;background:#22c55e;opacity:.75;height:28%;border-radius:2px 2px 0 0" title="הכנסות ₪124,490"></div>
+        <div style="flex:1;background:#ef4444;opacity:.75;height:55%;border-radius:2px 2px 0 0" title="הוצאות ₪243,867"></div>
       </div>
-      <div style="font-size:10px;color:#94a3b8;font-weight:600">מאי</div>
-      <div style="font-size:9px;color:#64748b">-₪44K</div>
+      <div style="font-size:11px;font-weight:600;color:#94a3b8">מאי</div>
+      <div style="font-size:10px;font-weight:700;color:#ef4444">-₪43K</div>
     </div>
-    <div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1">
-      <div style="font-size:9px;color:#64748b">🔵</div>
-      <div style="width:100%;display:flex;gap:2px;align-items:flex-end;height:60px">
-        <div style="width:50%;background:#22c55e;opacity:.8;height:59%;border-radius:2px 2px 0 0;transition:height .3s" title="הכנסות ₪262,190"></div>
-        <div style="width:50%;background:#ef4444;opacity:.8;height:54%;border-radius:2px 2px 0 0;transition:height .3s" title="הוצאות ₪237,177"></div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;border-radius:6px;padding:4px 2px">
+      <div style="font-size:10px;color:#64748b;line-height:1">🔵</div>
+      <div style="width:100%;display:flex;gap:2px;align-items:flex-end;height:70px">
+        <div style="flex:1;background:#22c55e;opacity:.75;height:59%;border-radius:2px 2px 0 0" title="הכנסות ₪262,190"></div>
+        <div style="flex:1;background:#ef4444;opacity:.75;height:54%;border-radius:2px 2px 0 0" title="הוצאות ₪237,177"></div>
       </div>
-      <div style="font-size:10px;color:#94a3b8;font-weight:600">יונ</div>
-      <div style="font-size:9px;color:#64748b">-₪19K</div>
+      <div style="font-size:11px;font-weight:600;color:#94a3b8">יונ</div>
+      <div style="font-size:10px;font-weight:700;color:#ef4444">-₪18K</div>
     </div>
     </div>
   </div>
 
-  <!-- ── Cashflow table ── -->
+  <!-- ══ טבלת תזרים מפורטת ══ -->
   <div class="panel" style="margin-bottom:18px">
-    <div class="panel-title">💳 תזרים מפורט — ינואר עד יוני 2026</div>
+    <div class="panel-title">💳 תזרים מפורט</div>
     <table>
       <thead>
         <tr>
-          <th>חודש</th>
-          <th>הכנסות</th>
-          <th>הוצאות</th>
-          <th>נטו</th>
-          <th>יתרת בנק (סוף חודש)</th>
+          <th style="text-align:right">חודש</th>
+          <th style="text-align:left">הכנסות</th>
+          <th style="text-align:left">הוצאות</th>
+          <th style="text-align:left">נטו</th>
+          <th style="text-align:left">יתרת בנק</th>
         </tr>
       </thead>
       <tbody>
-        
     <tr>
-      <td style="font-weight:600;color:#e2e8f0">✅ ינואר</td>
-      <td class="pos">₪437,371</td>
-      <td class="neg">-₪408,125</td>
-      <td class="pos">+₪29,246</td>
-      <td class="pos" style="font-weight:600">₪235,691</td>
-    </tr>
-    <tr>
-      <td style="font-weight:600;color:#e2e8f0">✅ פברואר</td>
-      <td class="pos">₪258,853</td>
-      <td class="neg">-₪367,120</td>
-      <td class="neg">-₪108,267</td>
-      <td class="pos" style="font-weight:600">₪137,623</td>
-    </tr>
-    <tr style="background:rgba(255,255,255,.04)">
-      <td style="font-weight:600;color:#e2e8f0">✅ מרץ</td>
-      <td class="pos">₪212,628</td>
-      <td class="neg">-₪241,210</td>
-      <td class="neg">-₪28,582</td>
-      <td class="pos" style="font-weight:600">₪72,090</td>
+      <td style="font-weight:600;white-space:nowrap">✅ ינואר</td>
+      <td style="color:#22c55e;text-align:left">₪437,371</td>
+      <td style="color:#ef4444;text-align:left">-₪408,125</td>
+      <td style="color:#22c55e;text-align:left;font-weight:600">+₪29,246</td>
+      <td style="color:#22c55e;text-align:left;font-weight:700">₪235,691</td>
     </tr>
     <tr>
-      <td style="font-weight:600;color:#e2e8f0">🔵 אפריל</td>
-      <td class="pos">₪264,028</td>
-      <td class="neg">-₪260,341</td>
-      <td class="pos">+₪3,687</td>
-      <td class="pos" style="font-weight:600">₪75,777</td>
+      <td style="font-weight:600;white-space:nowrap">✅ פברואר</td>
+      <td style="color:#22c55e;text-align:left">₪258,853</td>
+      <td style="color:#ef4444;text-align:left">-₪367,120</td>
+      <td style="color:#ef4444;text-align:left;font-weight:600">-₪108,267</td>
+      <td style="color:#22c55e;text-align:left;font-weight:700">₪137,623</td>
+    </tr>
+    <tr style="background:rgba(96,165,250,.06)">
+      <td style="font-weight:600;white-space:nowrap">✅ מרץ</td>
+      <td style="color:#22c55e;text-align:left">₪212,628</td>
+      <td style="color:#ef4444;text-align:left">-₪241,210</td>
+      <td style="color:#ef4444;text-align:left;font-weight:600">-₪28,582</td>
+      <td style="color:#22c55e;text-align:left;font-weight:700">₪72,090</td>
     </tr>
     <tr>
-      <td style="font-weight:600;color:#e2e8f0">🔵 מאי</td>
-      <td class="pos">₪124,490</td>
-      <td class="neg">-₪243,867</td>
-      <td class="neg">-₪119,377</td>
-      <td class="neg" style="font-weight:600">-₪43,600</td>
+      <td style="font-weight:600;white-space:nowrap">🔵 אפריל</td>
+      <td style="color:#22c55e;text-align:left">₪264,028</td>
+      <td style="color:#ef4444;text-align:left">-₪260,341</td>
+      <td style="color:#22c55e;text-align:left;font-weight:600">+₪3,687</td>
+      <td style="color:#22c55e;text-align:left;font-weight:700">₪75,777</td>
     </tr>
     <tr>
-      <td style="font-weight:600;color:#e2e8f0">🔵 יוני</td>
-      <td class="pos">₪262,190</td>
-      <td class="neg">-₪237,177</td>
-      <td class="pos">+₪25,013</td>
-      <td class="neg" style="font-weight:600">-₪18,587</td>
+      <td style="font-weight:600;white-space:nowrap">🔵 מאי</td>
+      <td style="color:#22c55e;text-align:left">₪124,490</td>
+      <td style="color:#ef4444;text-align:left">-₪243,867</td>
+      <td style="color:#ef4444;text-align:left;font-weight:600">-₪119,377</td>
+      <td style="color:#ef4444;text-align:left;font-weight:700">-₪43,600</td>
     </tr>
-      </tbody>
+    <tr>
+      <td style="font-weight:600;white-space:nowrap">🔵 יוני</td>
+      <td style="color:#22c55e;text-align:left">₪262,190</td>
+      <td style="color:#ef4444;text-align:left">-₪237,177</td>
+      <td style="color:#22c55e;text-align:left;font-weight:600">+₪25,013</td>
+      <td style="color:#ef4444;text-align:left;font-weight:700">-₪18,587</td>
+    </tr></tbody>
     </table>
-    <div style="margin-top:12px;font-size:11px;color:#64748b;display:flex;gap:16px">
-      <span>✅ = בפועל מדפי חשבון בנק</span>
-      <span>🔵 = תחזית מהאקסל הפיננסי</span>
-      <span style="color:#fbbf24">⚠️ מאי-יוני שלילי = עיכוב גביית אלביט 90 יום</span>
-    </div>
-  </div>
-
-  <!-- ── Income breakdown row ── -->
-  <div class="g2" style="align-items:start">
-    <div class="panel" style="margin-bottom:0">
-      <div class="panel-title">📥 הכנסות לפי לקוח — Q1 בפועל</div>
-      <div class="cf-row"><span>אלביט (גבייה 90 יום)</span><span class="pos">+₪370,480</span></div>
-      <div class="cf-row"><span>Line 5</span><span class="pos">+₪250,771</span></div>
-      <div class="cf-row"><span>LiteBC</span><span class="pos">+₪164,044</span></div>
-      <div class="cf-row"><span>Rafael</span><span class="pos">+₪109,740</span></div>
-      <div class="cf-row"><span>Visonic</span><span class="pos">+₪28,320</span></div>
-      <div class="cf-row"><span>AMAN (ישיר)</span><span class="pos">+₪47,588</span></div>
-      <div class="cf-row" style="font-weight:600;border-top:1px solid #334155;padding-top:8px;margin-top:4px">
-        <span>סה"כ Q1</span><span class="pos">+₪970,781</span>
-      </div>
-    </div>
-
-    <div class="panel" style="margin-bottom:0">
-      <div class="panel-title">📤 הוצאות לפי קטגוריה — Q1</div>
-      <div class="cf-row"><span>משיכות שותפים (ינון + אלעד)</span><span class="neg">-₪240,000</span></div>
-      <div class="cf-row"><span>שכר עובדים נטו (4 עובדים)</span><span class="neg">-₪132,494</span></div>
-      <div class="cf-row"><span>קבלני משנה (AMAN + אחרים)</span><span class="neg">-₪418,544</span></div>
-      <div class="cf-row"><span>מע"מ</span><span class="neg">-₪78,848</span></div>
-      <div class="cf-row"><span>כרטיס אשראי</span><span class="neg">-₪78,984</span></div>
-      <div class="cf-row"><span>שכ"ד + שונות</span><span class="neg">-₪35,000</span></div>
-      <div class="cf-row" style="font-weight:600;border-top:1px solid #334155;padding-top:8px;margin-top:4px">
-        <span>סה"כ Q1</span><span class="neg">-₪1,041,870</span>
-      </div>
-      <div class="infobox warn" style="margin-top:10px">נטו Q1: <strong>-₪71,089</strong> — מרץ כבד בגלל תשלומי קבלני משנה גדולים</div>
+    <div style="margin-top:10px;font-size:11px;color:#64748b;display:flex;gap:18px;flex-wrap:wrap">
+      <span>✅ ינואר–מרץ = בפועל מדפי חשבון</span>
+      <span>🔵 אפריל–יוני = תחזית מהמודל הפיננסי</span>
+      <span style="color:#fbbf24">⚠️ מאי שלילי = lag גביית אלביט 90 יום</span>
     </div>
   </div>
 
