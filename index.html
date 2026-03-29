@@ -141,55 +141,200 @@ tr:hover td { background:rgba(255,255,255,.02); }
 <!-- ===== TAB 1: FINANCE ===== -->
 <div id="pane-finance" class="pane active">
 
-  <div class="kpis kpis-5">
-    <div class="kpi g"><div class="kpi-l">הכנסות מתועדות</div><div class="kpi-v" style="color:#22c55e">₪1,185K</div><div class="kpi-s">חשבוניות ₪675K + עסקאות ₪510K</div></div>
-    <div class="kpi r"><div class="kpi-l">הוצאות Q1</div><div class="kpi-v" style="color:#ef4444">₪1,042K</div><div class="kpi-s">ממוצע ₪347K/חודש</div></div>
-    <div class="kpi b"><div class="kpi-l">Pipeline מאושר</div><div class="kpi-v" style="color:#3b82f6">₪1,010K</div><div class="kpi-s">אלביט ₪990K + Visonic ₪20K</div></div>
-    <div class="kpi y"><div class="kpi-l">יתרת בנק</div><div class="kpi-v" style="color:#eab308">₪108K</div><div class="kpi-s">נכון ל-22.3.2026</div></div>
-    <div class="kpi p"><div class="kpi-l">פוטנציאל שנתי</div><div class="kpi-v" style="color:#a855f7">₪2,349K</div><div class="kpi-s">פער ליעד ₪3.5M: ~₪1.15M</div></div>
+  <!-- ── KPI Row ── -->
+  <div class="kpis kpis-5" style="margin-bottom:20px">
+    <div class="kpi y">
+      <div class="kpi-l">יתרת בנק נוכחית</div>
+      <div class="kpi-v" style="color:#eab308">₪93K</div>
+      <div class="kpi-s">נכון ל-29.3.2026</div>
+    </div>
+    <div class="kpi g">
+      <div class="kpi-l">הכנסות מרץ (בפועל)</div>
+      <div class="kpi-v" style="color:#22c55e">₪213K</div>
+      <div class="kpi-s">גביית ספקים + לקוחות</div>
+    </div>
+    <div class="kpi r">
+      <div class="kpi-l">הוצאות מרץ (בפועל)</div>
+      <div class="kpi-v" style="color:#ef4444">₪473K</div>
+      <div class="kpi-s">כולל קבלני משנה גדולים</div>
+    </div>
+    <div class="kpi b">
+      <div class="kpi-l">הכנסות צפויות — אפריל</div>
+      <div class="kpi-v" style="color:#3b82f6">₪135K</div>
+      <div class="kpi-s">Visonic + אלביט גבייה</div>
+    </div>
+    <div class="kpi y">
+      <div class="kpi-l">יתרה צפויה — סוף אפריל</div>
+      <div class="kpi-v" style="color:#eab308">₪23K</div>
+      <div class="kpi-s">על בסיס תזרים מהאקסל</div>
+    </div>
   </div>
 
-  <div class="panel">
-    <div class="panel-title">🎯 התקדמות ליעד ₪3,500,000</div>
-    <div class="target-track">
-      <div class="tseg" style="width:19.3%;background:#22c55e">חשבוניות ₪675K</div>
-      <div class="tseg" style="width:14.6%;background:#0891b2">עסקאות ₪510K</div>
-      <div class="tseg" style="width:33.2%;background:#1d4ed8">Pipeline ₪1.16M</div>
-      <div class="tseg" style="width:32.9%;background:#1e293b;color:#475569">נדרש ₪1.15M+</div>
+  <!-- ── Bar chart: 6 months ── -->
+  <div class="panel" style="margin-bottom:18px">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px">
+      <div class="panel-title" style="margin-bottom:0">📊 תזרים — 3 חודשים אחורה + 3 קדימה</div>
+      <div style="display:flex;gap:14px;font-size:11px;color:#64748b">
+        <span><span style="display:inline-block;width:10px;height:10px;background:#22c55e;border-radius:2px;opacity:.8;margin-left:4px"></span>הכנסות</span>
+        <span><span style="display:inline-block;width:10px;height:10px;background:#ef4444;border-radius:2px;opacity:.8;margin-left:4px"></span>הוצאות</span>
+        <span style="color:#475569">✅ בפועל · 🔵 תחזית</span>
+      </div>
     </div>
-    <div style="display:flex;justify-content:space-between;font-size:10px;color:#475569">
-      <span>₪0</span><span>₪875K</span><span>₪1.75M</span><span>₪2.63M</span><span style="color:#eab308">יעד ₪3.5M</span>
+    <div style="display:flex;gap:8px;align-items:flex-end;padding:0 4px">
+      
+    <div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1">
+      <div style="font-size:9px;color:#64748b">✅</div>
+      <div style="width:100%;display:flex;gap:2px;align-items:flex-end;height:60px">
+        <div style="width:50%;background:#22c55e;opacity:.8;height:92%;border-radius:2px 2px 0 0;transition:height .3s" title="הכנסות ₪437,371"></div>
+        <div style="width:50%;background:#ef4444;opacity:.8;height:86%;border-radius:2px 2px 0 0;transition:height .3s" title="הוצאות ₪408,125"></div>
+      </div>
+      <div style="font-size:10px;color:#94a3b8;font-weight:600">ינו</div>
+      <div style="font-size:9px;color:#64748b">₪235K</div>
     </div>
-    <div style="margin-top:10px;font-size:12px;color:#64748b">מתועד כולל pipeline: <strong style="color:#e2e8f0">₪2.35M (67%)</strong> · נדרש <strong style="color:#fbbf24">₪1.15M</strong> נוסף בעסקאות חדשות</div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1">
+      <div style="font-size:9px;color:#64748b">✅</div>
+      <div style="width:100%;display:flex;gap:2px;align-items:flex-end;height:60px">
+        <div style="width:50%;background:#22c55e;opacity:.8;height:54%;border-radius:2px 2px 0 0;transition:height .3s" title="הכנסות ₪258,853"></div>
+        <div style="width:50%;background:#ef4444;opacity:.8;height:77%;border-radius:2px 2px 0 0;transition:height .3s" title="הוצאות ₪367,120"></div>
+      </div>
+      <div style="font-size:10px;color:#94a3b8;font-weight:600">פבר</div>
+      <div style="font-size:9px;color:#64748b">₪137K</div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1">
+      <div style="font-size:9px;color:#64748b">✅</div>
+      <div style="width:100%;display:flex;gap:2px;align-items:flex-end;height:60px">
+        <div style="width:50%;background:#22c55e;opacity:.8;height:45%;border-radius:2px 2px 0 0;transition:height .3s" title="הכנסות ₪213,557"></div>
+        <div style="width:50%;background:#ef4444;opacity:.8;height:100%;border-radius:2px 2px 0 0;transition:height .3s" title="הוצאות ₪473,263"></div>
+      </div>
+      <div style="font-size:10px;color:#94a3b8;font-weight:600">מרץ</div>
+      <div style="font-size:9px;color:#64748b">₪93K</div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1">
+      <div style="font-size:9px;color:#64748b">🔵</div>
+      <div style="width:100%;display:flex;gap:2px;align-items:flex-end;height:60px">
+        <div style="width:50%;background:#22c55e;opacity:.8;height:28%;border-radius:2px 2px 0 0;transition:height .3s" title="הכנסות ₪135,857"></div>
+        <div style="width:50%;background:#ef4444;opacity:.8;height:43%;border-radius:2px 2px 0 0;transition:height .3s" title="הוצאות ₪205,335"></div>
+      </div>
+      <div style="font-size:10px;color:#94a3b8;font-weight:600">אפר</div>
+      <div style="font-size:9px;color:#64748b">₪23K</div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1">
+      <div style="font-size:9px;color:#64748b">🔵</div>
+      <div style="width:100%;display:flex;gap:2px;align-items:flex-end;height:60px">
+        <div style="width:50%;background:#22c55e;opacity:.8;height:29%;border-radius:2px 2px 0 0;transition:height .3s" title="הכנסות ₪138,945"></div>
+        <div style="width:50%;background:#ef4444;opacity:.8;height:51%;border-radius:2px 2px 0 0;transition:height .3s" title="הוצאות ₪243,867"></div>
+      </div>
+      <div style="font-size:10px;color:#94a3b8;font-weight:600">מאי</div>
+      <div style="font-size:9px;color:#64748b">-₪81K</div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1">
+      <div style="font-size:9px;color:#64748b">🔵</div>
+      <div style="width:100%;display:flex;gap:2px;align-items:flex-end;height:60px">
+        <div style="width:50%;background:#22c55e;opacity:.8;height:52%;border-radius:2px 2px 0 0;transition:height .3s" title="הכנסות ₪247,735"></div>
+        <div style="width:50%;background:#ef4444;opacity:.8;height:50%;border-radius:2px 2px 0 0;transition:height .3s" title="הוצאות ₪237,177"></div>
+      </div>
+      <div style="font-size:10px;color:#94a3b8;font-weight:600">יונ</div>
+      <div style="font-size:9px;color:#64748b">-₪71K</div>
+    </div>
+    </div>
   </div>
 
+  <!-- ── Cashflow table ── -->
+  <div class="panel" style="margin-bottom:18px">
+    <div class="panel-title">💳 תזרים מפורט — ינואר עד יוני 2026</div>
+    <table>
+      <thead>
+        <tr>
+          <th>חודש</th>
+          <th>הכנסות</th>
+          <th>הוצאות</th>
+          <th>נטו</th>
+          <th>יתרת בנק (סוף חודש)</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+    <tr>
+      <td style="font-weight:600;color:#e2e8f0">✅ ינואר</td>
+      <td class="pos">₪437,371</td>
+      <td class="neg">-₪408,125</td>
+      <td class="pos">+₪29,246</td>
+      <td class="pos" style="font-weight:600">₪235,691</td>
+    </tr>
+    <tr>
+      <td style="font-weight:600;color:#e2e8f0">✅ פברואר</td>
+      <td class="pos">₪258,853</td>
+      <td class="neg">-₪367,120</td>
+      <td class="neg">-₪108,267</td>
+      <td class="pos" style="font-weight:600">₪137,623</td>
+    </tr>
+    <tr style="background:rgba(255,255,255,.04)">
+      <td style="font-weight:600;color:#e2e8f0">✅ מרץ</td>
+      <td class="pos">₪213,557</td>
+      <td class="neg">-₪473,263</td>
+      <td class="neg">-₪259,706</td>
+      <td class="pos" style="font-weight:600">₪93,403</td>
+    </tr>
+    <tr>
+      <td style="font-weight:600;color:#e2e8f0">🔵 אפריל</td>
+      <td class="pos">₪135,857</td>
+      <td class="neg">-₪205,335</td>
+      <td class="neg">-₪69,478</td>
+      <td class="pos" style="font-weight:600">₪23,925</td>
+    </tr>
+    <tr>
+      <td style="font-weight:600;color:#e2e8f0">🔵 מאי</td>
+      <td class="pos">₪138,945</td>
+      <td class="neg">-₪243,867</td>
+      <td class="neg">-₪104,922</td>
+      <td class="neg" style="font-weight:600">-₪80,997</td>
+    </tr>
+    <tr>
+      <td style="font-weight:600;color:#e2e8f0">🔵 יוני</td>
+      <td class="pos">₪247,735</td>
+      <td class="neg">-₪237,177</td>
+      <td class="pos">+₪10,558</td>
+      <td class="neg" style="font-weight:600">-₪70,439</td>
+    </tr>
+      </tbody>
+    </table>
+    <div style="margin-top:12px;font-size:11px;color:#64748b;display:flex;gap:16px">
+      <span>✅ = בפועל מדפי חשבון בנק</span>
+      <span>🔵 = תחזית מהאקסל הפיננסי</span>
+      <span style="color:#fbbf24">⚠️ מאי-יוני שלילי = עיכוב גביית אלביט 90 יום</span>
+    </div>
+  </div>
+
+  <!-- ── Income breakdown row ── -->
   <div class="g2" style="align-items:start">
     <div class="panel" style="margin-bottom:0">
-      <div class="panel-title">💳 תזרים Q1 2026</div>
-      <div class="sec-label">הכנסות</div>
-      <div class="cf-row"><span>חשבוניות מס (נכנסו)</span><span class="pos">+₪675,282</span></div>
-      <div class="cf-row"><span>חשבונות עסקה (בדרך)</span><span class="pos">+₪509,853</span></div>
-      <div class="sec-label">הוצאות Q1</div>
-      <div class="cf-row"><span>שכר (net)</span><span class="neg">-₪756,000</span></div>
-      <div class="cf-row"><span>ספקים / חומרים</span><span class="neg">-₪168,000</span></div>
-      <div class="cf-row"><span>שכירות + כלים</span><span class="neg">-₪118,000</span></div>
-      <div class="sec-label">מאזן</div>
-      <div class="cf-row" style="font-weight:600;font-size:14px"><span>נקי Q1 (מתועד)</span><span class="pos">+₪143K</span></div>
-      <div class="infobox warn" style="margin-top:10px">הוצאות ₪347K/חודש מול הכנסות ~₪132K/חודש צפויות — Pipeline חדש קריטי. יתרת ₪108K = ~10 ימי שכר.</div>
+      <div class="panel-title">📥 הכנסות לפי לקוח — Q1 בפועל</div>
+      <div class="cf-row"><span>אלביט (גבייה 90 יום)</span><span class="pos">+₪370,480</span></div>
+      <div class="cf-row"><span>Line 5</span><span class="pos">+₪250,771</span></div>
+      <div class="cf-row"><span>LiteBC</span><span class="pos">+₪164,044</span></div>
+      <div class="cf-row"><span>Rafael</span><span class="pos">+₪109,740</span></div>
+      <div class="cf-row"><span>Visonic</span><span class="pos">+₪28,320</span></div>
+      <div class="cf-row"><span>AMAN (ישיר)</span><span class="pos">+₪47,588</span></div>
+      <div class="cf-row" style="font-weight:600;border-top:1px solid #334155;padding-top:8px;margin-top:4px">
+        <span>סה"כ Q1</span><span class="pos">+₪970,781</span>
+      </div>
     </div>
 
     <div class="panel" style="margin-bottom:0">
-      <div class="panel-title">🔵 Pipeline מאושר — לפי לקוח</div>
-      <div class="cf-row"><span>אלביט — כל הפרויקטים</span><span style="color:#60a5fa">~₪990K</span></div>
-      <!-- LiteBC / Hemoscope 2.0 הוסר — אין פעילות פעילה נכון ל-מרץ 2026 -->
-      <div class="cf-row"><span>Visonic / Outdoor Camera</span><span style="color:#86efac">~₪20K</span></div>
-      <div class="sec-label">פוטנציאל (לא מאושר)</div>
-      <div class="cf-row"><span>Xsight 3.0 (SOW בדרך)</span><span style="color:#fde047">TBD</span></div>
-      <div class="cf-row"><span>2 לקוחות פוטנציאליים</span><span style="color:#fde047">₪80–240K</span></div>
-      <div class="infobox ok" style="margin-top:10px">עם Xsight + לקוחות חדשים: מאזן חיובי ל-2026</div>
-      <div class="infobox info" style="margin-top:8px">עיתוי כניסת לקוחות חדשים = חלק מהמשא ומתן. ספטמבר+ הרבה פחות בעייתי מאפריל.</div>
+      <div class="panel-title">📤 הוצאות לפי קטגוריה — Q1</div>
+      <div class="cf-row"><span>משיכות שותפים (ינון + אלעד)</span><span class="neg">-₪240,000</span></div>
+      <div class="cf-row"><span>שכר עובדים נטו (4 עובדים)</span><span class="neg">-₪132,494</span></div>
+      <div class="cf-row"><span>קבלני משנה (AMAN + אחרים)</span><span class="neg">-₪418,544</span></div>
+      <div class="cf-row"><span>מע"מ</span><span class="neg">-₪78,848</span></div>
+      <div class="cf-row"><span>כרטיס אשראי</span><span class="neg">-₪78,984</span></div>
+      <div class="cf-row"><span>שכ"ד + שונות</span><span class="neg">-₪35,000</span></div>
+      <div class="cf-row" style="font-weight:600;border-top:1px solid #334155;padding-top:8px;margin-top:4px">
+        <span>סה"כ Q1</span><span class="neg">-₪1,041,870</span>
+      </div>
+      <div class="infobox warn" style="margin-top:10px">נטו Q1: <strong>-₪71,089</strong> — מרץ כבד בגלל תשלומי קבלני משנה גדולים</div>
     </div>
   </div>
+
 </div>
 
 <!-- ===== TAB 2: PROJECTS ===== -->
