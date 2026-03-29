@@ -116,13 +116,13 @@ tr:hover td { background:rgba(255,255,255,.02); }
     <img src="br_logo.png" alt="BR Studio" style="height:51px;opacity:0.88">
     <div>
       <h1 style="font-size:17px">BR Studio — Mission Control</h1>
-      <div class="sub">עדכון: 29 מרץ 2026 · קלוקיפיי live + דוחות אלביט + Payper</div>
+      <div class="sub">עדכון: 29 מרץ 2026 · קלוקיפיי live + דוחות אלביט + Payper + תזרים בנק</div>
     </div>
   </div>
   <div class="header-right">
     <div class="hstat"><div class="v" style="color:#22c55e">₪1.19M</div><div class="l">הכנסות מתועדות</div></div>
     <div class="hstat"><div class="v" style="color:#3b82f6">₪1.01M</div><div class="l">Pipeline מאושר</div></div>
-    <div class="hstat"><div class="v" style="color:#eab308">₪108K</div><div class="l">יתרת בנק</div></div>
+    <div class="hstat"><div class="v" style="color:#eab308">₪93K</div><div class="l">יתרת בנק (27.3)</div></div>
     <div class="hstat"><div class="v" style="color:#f1f5f9">6</div><div class="l">עובדים</div></div>
   </div>
 </div>
@@ -135,6 +135,7 @@ tr:hover td { background:rgba(255,255,255,.02); }
   <button class="tab-btn" onclick="sw('crm',this)">🤝 CRM</button>
   <button class="tab-btn" onclick="sw('linkedin',this)">💼 LinkedIn</button>
   <button class="tab-btn" onclick="sw('elbit',this)">🛡️ אלביט</button>
+  <button class="tab-btn" onclick="sw('cashflow',this)">💵 תזרים</button>
 </div>
 
 <!-- ===== TAB 1: FINANCE ===== -->
@@ -1325,6 +1326,229 @@ JLTV FMTV המשך מחקר פלטפורמות</li><li>המשך פיתוח נו�
 
 </div>
 
+
+<!-- ===== TAB: CASHFLOW ===== -->
+<div id="pane-cashflow" class="pane">
+
+  <div class="kpis kpis-4">
+    <div class="kpi g"><div class="kpi-l">יתרת בנק נכון ל-27.3</div><div class="kpi-v" style="color:#22c55e">₪93,403</div><div class="kpi-s">חשבון 12-630-688887</div></div>
+    <div class="kpi r"><div class="kpi-l">הוצאות מרץ (עד כה)</div><div class="kpi-v" style="color:#ef4444">₪473,263</div><div class="kpi-s">חריג — כולל שכר + ספקים</div></div>
+    <div class="kpi b"><div class="kpi-l">הכנסות מרץ (עד כה)</div><div class="kpi-v" style="color:#60a5fa">₪213,557</div><div class="kpi-s">ציפייה: תשלומי אלביט + Line5</div></div>
+    <div class="kpi y"><div class="kpi-l">גרעון מרץ (עד כה)</div><div class="kpi-v" style="color:#fbbf24">-₪259,706</div><div class="kpi-s">⚠️ תזרים שלילי</div></div>
+  </div>
+
+  <!-- Monthly trend -->
+  <div class="panel">
+    <div class="panel-title">📊 תזרים חודשי — בנק (דצמבר 2025 – מרץ 2026)</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px">
+
+      <div style="background:#0f172a;border-radius:10px;padding:14px;border:1px solid #1e293b">
+        <div style="font-size:11px;color:#64748b;margin-bottom:6px">דצמבר 2025</div>
+        <div style="font-size:13px;color:#86efac;margin-bottom:2px">+₪498,117 <span style="font-size:10px;color:#64748b">הכנסות</span></div>
+        <div style="font-size:13px;color:#fca5a5;margin-bottom:6px">-₪268,772 <span style="font-size:10px;color:#64748b">הוצאות</span></div>
+        <div style="font-size:14px;font-weight:700;color:#22c55e">נטו: +₪229,345</div>
+        <div class="bar-bg" style="margin-top:8px"><div class="bar-f bg" style="width:100%"></div></div>
+      </div>
+
+      <div style="background:#0f172a;border-radius:10px;padding:14px;border:1px solid #1e293b">
+        <div style="font-size:11px;color:#64748b;margin-bottom:6px">ינואר 2026</div>
+        <div style="font-size:13px;color:#86efac;margin-bottom:2px">+₪253,377 <span style="font-size:10px;color:#64748b">הכנסות</span></div>
+        <div style="font-size:13px;color:#fca5a5;margin-bottom:6px">-₪390,779 <span style="font-size:10px;color:#64748b">הוצאות</span></div>
+        <div style="font-size:14px;font-weight:700;color:#ef4444">נטו: -₪137,403</div>
+        <div class="bar-bg" style="margin-top:8px"><div class="bar-f br" style="width:65%"></div></div>
+      </div>
+
+      <div style="background:#0f172a;border-radius:10px;padding:14px;border:1px solid #1e293b">
+        <div style="font-size:11px;color:#64748b;margin-bottom:6px">פברואר 2026</div>
+        <div style="font-size:13px;color:#86efac;margin-bottom:2px">+₪260,820 <span style="font-size:10px;color:#64748b">הכנסות</span></div>
+        <div style="font-size:13px;color:#fca5a5;margin-bottom:6px">-₪359,057 <span style="font-size:10px;color:#64748b">הוצאות</span></div>
+        <div style="font-size:14px;font-weight:700;color:#ef4444">נטו: -₪98,238</div>
+        <div class="bar-bg" style="margin-top:8px"><div class="bar-f br" style="width:73%"></div></div>
+      </div>
+
+      <div style="background:#0f172a;border-radius:10px;padding:14px;border:1px solid rgba(239,68,68,0.4)">
+        <div style="font-size:11px;color:#64748b;margin-bottom:6px">מרץ 2026 (חלקי)</div>
+        <div style="font-size:13px;color:#86efac;margin-bottom:2px">+₪213,557 <span style="font-size:10px;color:#64748b">הכנסות</span></div>
+        <div style="font-size:13px;color:#fca5a5;margin-bottom:6px">-₪473,263 <span style="font-size:10px;color:#64748b">הוצאות</span></div>
+        <div style="font-size:14px;font-weight:700;color:#ef4444">נטו: -₪259,706</div>
+        <div class="bar-bg" style="margin-top:8px"><div class="bar-f br" style="width:45%"></div></div>
+        <div style="font-size:10px;color:#fbbf24;margin-top:4px">⚠️ עד 27.3 בלבד</div>
+      </div>
+    </div>
+
+    <!-- Visual bar chart -->
+    <div style="margin-top:8px;padding:12px;background:#0f172a;border-radius:8px;border:1px solid #1e293b">
+      <div style="font-size:10px;color:#475569;margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em">יתרת בנק — מגמה</div>
+      <div style="display:flex;align-items:flex-end;gap:6px;height:60px">
+        <!-- Dec: ~340K end -->
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
+          <div style="width:100%;background:#22c55e;border-radius:3px 3px 0 0;height:52px;opacity:0.7"></div>
+          <div style="font-size:9px;color:#475569">דצ׳</div>
+        </div>
+        <!-- Jan: ~202K -->
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
+          <div style="width:100%;background:#eab308;border-radius:3px 3px 0 0;height:31px;opacity:0.7"></div>
+          <div style="font-size:9px;color:#475569">ינו׳</div>
+        </div>
+        <!-- Feb: ~147K (from oldest file 22.02 is ~147K) -->
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
+          <div style="width:100%;background:#eab308;border-radius:3px 3px 0 0;height:23px;opacity:0.7"></div>
+          <div style="font-size:9px;color:#475569">פבר׳</div>
+        </div>
+        <!-- Mar: 93K -->
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
+          <div style="width:100%;background:#ef4444;border-radius:3px 3px 0 0;height:14px;opacity:0.9"></div>
+          <div style="font-size:9px;color:#475569">מרץ</div>
+        </div>
+      </div>
+      <div style="font-size:10px;color:#475569;margin-top:6px;text-align:center">יתרה נוכחית: <strong style="color:#fbbf24">₪93,403</strong> · מגמת ירידה מדצמבר</div>
+    </div>
+  </div>
+
+  <div class="g2" style="align-items:start">
+
+    <!-- Breakdown of expenses by category -->
+    <div class="panel" style="margin-bottom:0">
+      <div class="panel-title">🔍 פירוט הוצאות מרץ (לפי סוג)</div>
+
+      <div class="cf-row"><span>🏢 שכירות (הוראות קבע)</span><span class="neg">-₪18,143</span></div>
+      <div class="cf-row"><span>👥 ביטוח לאומי + מס הכנסה</span><span class="neg">-₪9,265</span></div>
+      <div class="cf-row"><span>🔧 ספקים / חומרים (העברות)</span><span class="neg">-₪6,713</span></div>
+      <div class="cf-row"><span>💳 כרטיסי אשראי (מקס)</span><span class="neg">-₪1,673</span></div>
+      <div class="cf-row"><span>🏦 הלוואה קרן + ריבית</span><span class="neg">-₪6,116</span></div>
+      <div class="cf-row"><span>💸 מע"מ (27.3)</span><span class="neg">-₪21,313</span></div>
+      <div class="cf-row" style="border-top:1px solid #334155;margin-top:6px;padding-top:6px"><span style="color:#94a3b8">שאר / אחר (שכר + מקדמות)</span><span class="neg">-₪410,040</span></div>
+
+      <div class="infobox warn" style="margin-top:10px">
+        הוצאה גדולה חריגה במרץ — ככל הנראה תשלום שכר חודש מרץ + פברואר מרוכזים, או תשלום לספקים גדולים. כדאי לאמת מול קובץ הפיננסי.
+      </div>
+    </div>
+
+    <!-- Income breakdown -->
+    <div class="panel" style="margin-bottom:0">
+      <div class="panel-title">✅ פירוט הכנסות מרץ</div>
+
+      <div class="cf-row">
+        <div>
+          <div style="font-size:12px">רפאל מערכות לח (8.3)</div>
+          <div style="font-size:10px;color:#475569">ברק אלעד ורטיג</div>
+        </div>
+        <span class="pos">+₪35,400</span>
+      </div>
+      <div class="cf-row">
+        <div>
+          <div style="font-size:12px">ויסוניק בעמ (20.3)</div>
+          <div style="font-size:10px;color:#475569">Outdoor Camera</div>
+        </div>
+        <span class="pos">+₪28,320</span>
+      </div>
+      <div class="cf-row">
+        <div>
+          <div style="font-size:12px">ליין 5 (16.3)</div>
+          <div style="font-size:10px;color:#475569">חשבון עסקה 10329</div>
+        </div>
+        <span class="pos">+₪11,151</span>
+      </div>
+      <div class="cf-row">
+        <div>
+          <div style="font-size:12px">לייטביסי בעמ (5.3)</div>
+          <div style="font-size:10px;color:#475569">Hemoscope · חשבון 10326</div>
+        </div>
+        <span class="pos">+₪13,437</span>
+      </div>
+      <div class="cf-row">
+        <div>
+          <div style="font-size:12px">מקס זיכוי (6.3)</div>
+          <div style="font-size:10px;color:#475569">החזר</div>
+        </div>
+        <span class="pos">+₪928</span>
+      </div>
+      <div class="cf-row" style="border-top:1px solid #334155;margin-top:4px;padding-top:6px">
+        <div>
+          <div style="font-size:12px">שאר / זיכויים קטנים</div>
+        </div>
+        <span class="pos">+₪124,322</span>
+      </div>
+
+      <div style="margin-top:10px;padding:10px;background:#0f172a;border-radius:8px;border:1px solid #1e293b">
+        <div style="font-size:10px;color:#64748b;margin-bottom:6px">תשלומים צפויים (לא נכנסו עדיין)</div>
+        <div style="font-size:12px;color:#fde047">🕐 אלביט — תשלום מרץ: <strong>TBD</strong></div>
+        <div style="font-size:11px;color:#475569;margin-top:4px">תשלומי אלביט מגיעים בסוף חודש / תחילת החודש הבא</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Transaction log -->
+  <div class="panel" style="margin-top:18px">
+    <div class="panel-title">📋 תנועות אחרונות בחשבון (30 תנועות אחרונות)</div>
+    <table>
+      <thead>
+        <tr>
+          <th>תאריך</th>
+          <th>תיאור</th>
+          <th>פרטים</th>
+          <th style="text-align:left">חובה</th>
+          <th style="text-align:left">זכות</th>
+          <th style="text-align:left">יתרה</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>27/03</td><td>מס הכנסה ניכוי</td><td style="color:#475569;font-size:11px">ברק אלעד ורטיג</td><td style="color:#fca5a5">-₪3,759</td><td></td><td style="color:#fbbf24">₪93,403</td></tr>
+        <tr><td>27/03</td><td>מע"מ</td><td style="color:#475569;font-size:11px">ברק אלעד ורטיג</td><td style="color:#fca5a5">-₪21,313</td><td></td><td style="color:#fbbf24">₪72,090</td></tr>
+        <tr><td>24/03</td><td>מקס</td><td style="color:#475569;font-size:11px">כרטיס אשראי</td><td style="color:#fca5a5">-₪670</td><td></td><td style="color:#94a3b8">₪97,162</td></tr>
+        <tr><td>22/03</td><td>העברה — רקמת רויאל</td><td style="color:#475569;font-size:11px">Iron Hawk — חומרים</td><td style="color:#fca5a5">-₪5,000</td><td></td><td style="color:#94a3b8">₪103,338</td></tr>
+        <tr><td>22/03</td><td>ביטוח לאומי</td><td style="color:#475569;font-size:11px">ברק אלעד ורטיג</td><td style="color:#fca5a5">-₪5,506</td><td></td><td style="color:#94a3b8">₪97,832</td></tr>
+        <tr><td>20/03</td><td>ויסוניק</td><td style="color:#475569;font-size:11px">Outdoor Camera</td><td></td><td style="color:#86efac">+₪28,320</td><td style="color:#94a3b8">₪108,403</td></tr>
+        <tr><td>20/03</td><td>מקס</td><td></td><td style="color:#fca5a5">-₪64</td><td></td><td style="color:#94a3b8">₪108,338</td></tr>
+        <tr><td>19/03</td><td>מקס</td><td></td><td style="color:#fca5a5">-₪83</td><td></td><td style="color:#94a3b8">₪80,083</td></tr>
+        <tr><td>17/03</td><td>מקס</td><td></td><td style="color:#fca5a5">-₪234</td><td></td><td style="color:#94a3b8">₪80,165</td></tr>
+        <tr><td>16/03</td><td>ליין 5</td><td style="color:#475569;font-size:11px">חשבון 10329</td><td></td><td style="color:#86efac">+₪11,151</td><td style="color:#94a3b8">₪80,400</td></tr>
+        <tr><td>15/03</td><td>הלוואה קרן + ריבית</td><td></td><td style="color:#fca5a5">-₪6,116</td><td></td><td style="color:#94a3b8">₪69,249</td></tr>
+        <tr><td>13/03</td><td>מקס</td><td></td><td style="color:#fca5a5">-₪228</td><td></td><td style="color:#94a3b8">₪75,365</td></tr>
+        <tr><td>11/03</td><td>אברהם דובי</td><td></td><td style="color:#fca5a5">-₪1,239</td><td></td><td style="color:#94a3b8">₪75,593</td></tr>
+        <tr><td>10/03</td><td>מקס / כרטיסי אשראי</td><td></td><td style="color:#fca5a5">-₪404</td><td></td><td style="color:#94a3b8">₪76,832</td></tr>
+        <tr><td>08/03</td><td>רפאל מערכות לח</td><td style="color:#475569;font-size:11px">ברק אלעד ורטיג</td><td></td><td style="color:#86efac">+₪35,400</td><td style="color:#94a3b8">₪92,480</td></tr>
+        <tr><td>08/03</td><td>hilagoldma — העברה</td><td></td><td style="color:#fca5a5">-₪15,244</td><td></td><td style="color:#94a3b8">₪57,080</td></tr>
+        <tr><td>06/03</td><td>מקס זיכוי</td><td></td><td></td><td style="color:#86efac">+₪928</td><td style="color:#94a3b8">₪57,080</td></tr>
+        <tr><td>05/03</td><td>לייטביסי — Hemoscope</td><td style="color:#475569;font-size:11px">חשבון 10326</td><td></td><td style="color:#86efac">+₪13,437</td><td style="color:#94a3b8">₪69,229</td></tr>
+        <tr><td>05/03</td><td>הוראות קבע שכירות (×3)</td><td style="color:#475569;font-size:11px">גרין נכסים, גבעולי, מ.א.ש.</td><td style="color:#fca5a5">-₪12,604</td><td></td><td style="color:#94a3b8">₪56,151</td></tr>
+        <tr><td>04/03</td><td>פירעון שכר + ספקים</td><td style="color:#475569;font-size:11px">מרבית ההוצאה החודשית</td><td style="color:#fca5a5">-₪143,052</td><td></td><td style="color:#94a3b8">₪55,792</td></tr>
+        <tr><td>02/03</td><td>העברה/הפקדה — ברק אלעד ורטיג</td><td></td><td></td><td style="color:#86efac">+₪106,314</td><td style="color:#94a3b8">₪253,840</td></tr>
+        <tr><td>02/03</td><td>ליין 5 / זיכוי</td><td></td><td></td><td style="color:#86efac">+₪18,006</td><td style="color:#94a3b8">₪147,526</td></tr>
+        <tr><td>01/03</td><td>כרטיסי אשראי + ONTIME</td><td></td><td style="color:#fca5a5">-₪8,103</td><td></td><td style="color:#94a3b8">₪129,520</td></tr>
+      </tbody>
+    </table>
+    <div style="font-size:10px;color:#475569;margin-top:10px;text-align:center">
+      עדכון אחרון: 27.3.2026 · חשבון 12-630-688887 · בנק דיסקונט
+    </div>
+  </div>
+
+  <!-- Cash runway -->
+  <div class="panel" style="margin-top:0">
+    <div class="panel-title">⏱️ Runway — כמה זמן יש לנו?</div>
+    <div class="g3">
+      <div style="background:#0f172a;border-radius:10px;padding:14px;border:1px solid rgba(239,68,68,0.3)">
+        <div style="font-size:10px;color:#64748b;margin-bottom:6px">הוצאות חודשיות ממוצע (Q1)</div>
+        <div style="font-size:20px;font-weight:700;color:#fca5a5">₪407K</div>
+        <div style="font-size:11px;color:#64748b;margin-top:4px">ינו' ₪391K | פבר' ₪359K | מרץ (כולל חריגות) ₪473K</div>
+      </div>
+      <div style="background:#0f172a;border-radius:10px;padding:14px;border:1px solid rgba(234,179,8,0.3)">
+        <div style="font-size:10px;color:#64748b;margin-bottom:6px">יתרת בנק (27.3)</div>
+        <div style="font-size:20px;font-weight:700;color:#fde047">₪93,403</div>
+        <div style="font-size:11px;color:#64748b;margin-top:4px">ללא הכנסות נוספות — פחות מ-7 ימי שכר</div>
+      </div>
+      <div style="background:#0f172a;border-radius:10px;padding:14px;border:1px solid rgba(34,197,94,0.3)">
+        <div style="font-size:10px;color:#64748b;margin-bottom:6px">תשלום אלביט צפוי</div>
+        <div style="font-size:20px;font-weight:700;color:#86efac">TBD</div>
+        <div style="font-size:11px;color:#64748b;margin-top:4px">בדרך כלל תחילת חודש הבא — אפריל 2026</div>
+      </div>
+    </div>
+    <div class="infobox warn" style="margin-top:12px">
+      🚨 <strong>אזהרת תזרים:</strong> יתרת ₪93K מול הוצאות ₪400K+/חודש = runway קצר מאוד. תשלומי אלביט + לקוחות חדשים הם קריטיים לאפריל.
+    </div>
+  </div>
+
+</div>
 
 <script>
 function sw(name, btn) {
