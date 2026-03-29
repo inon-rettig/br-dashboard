@@ -116,6 +116,13 @@
   .btn-cancel { background: transparent; color: var(--text2); border: 1.5px solid var(--border); }
   .btn-cancel:hover { border-color: var(--text2); color: var(--text); }
 
+  /* EDIT BTN */
+  .edit-btn { font-size: 11px; padding: 3px 9px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface2); color: var(--text2); cursor: pointer; transition: all 0.15s; margin-right: auto; }
+  .edit-btn:hover { border-color: var(--yellow); color: var(--yellow); }
+  .modal-mode-badge { display: inline-block; font-size: 12px; padding: 3px 10px; border-radius: 20px; margin-right: 10px; font-weight: 600; }
+  .badge-add { background: rgba(79,126,248,0.2); color: var(--accent); }
+  .badge-edit { background: rgba(240,180,50,0.2); color: var(--yellow); }
+
   /* NO RESULTS */
   .no-results { text-align: center; padding: 60px 20px; color: var(--text2); }
   .no-results .icon { font-size: 48px; margin-bottom: 12px; }
@@ -170,7 +177,7 @@
 <!-- ADD VENDOR MODAL -->
 <div class="modal-overlay" id="modal">
   <div class="modal">
-    <h2>➕ הוסף ספק חדש</h2>
+    <h2 id="modal-title">➕ הוסף ספק חדש</h2>
     <div class="form-row">
       <div class="form-group">
         <label>שם העסק *</label>
@@ -217,7 +224,7 @@
     </div>
     <div class="modal-actions">
       <button class="btn btn-cancel" onclick="closeModal()">ביטול</button>
-      <button class="btn btn-primary" onclick="addVendor()">הוסף ספק</button>
+      <button class="btn btn-primary" id="modal-save-btn" onclick="saveVendor()">הוסף ספק</button>
     </div>
   </div>
 </div>
@@ -364,6 +371,7 @@ function renderCard(v) {
           <a class="action-btn" href="${googleUrl}" target="_blank">🔍 חפש בגוגל</a>
           <a class="action-btn" href="https://${v.domain}" target="_blank">🌐 אתר</a>
           ${v.contacts[0]?.email ? `<a class="action-btn" href="mailto:${v.contacts[0].email}">✉️ שלח מייל</a>` : ''}
+          <button class="edit-btn" onclick="event.stopPropagation(); openEditModal('${v._id}')">✏️ ערוך</button>
         </div>
       </div>
     </div>
@@ -413,8 +421,7 @@ function searchGoogle(query, bizName) {
   `;
 }
 
-// ===== ADD VENDOR =====
-function openAddModal() { document.getElementById('modal').classList.add('show'); }
+// ===== ADD/EDIT VENDOR =====
 function closeModal() { document.getElementById('modal').classList.remove('show'); }
 
 document.getElementById('modal').addEventListener('click', e => {
@@ -470,8 +477,138 @@ function loadSaved() {
   }
 }
 
+// ===== EDIT STATE =====
+let editingId = null;
+
+function openAddModal() {
+  editingId = null;
+  document.getElementById('modal-title').innerHTML = '➕ הוסף ספק חדש';
+  document.getElementById('modal-save-btn').textContent = 'הוסף ספק';
+  ['f-biz','f-desc','f-domain','f-country','f-cname','f-phone','f-email','f-notes'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('f-cat').selectedIndex = 0;
+  document.getElementById('modal').classList.add('show');
+}
+
+function openEditModal(id) {
+  const v = vendors.find(x => x._id === id);
+  if (!v) return;
+  editingId = id;
+
+  document.getElementById('modal-title').innerHTML = '✏️ ערוך ספק — ' + v.biz_name;
+  document.getElementById('modal-save-btn').textContent = 'שמור שינויים';
+
+  document.getElementById('f-biz').value = v.biz_name || '';
+  document.getElementById('f-desc').value = v.description || '';
+  document.getElementById('f-domain').value = v.domain || '';
+  document.getElementById('f-country').value = '';
+  document.getElementById('f-notes').value = v.notes || '';
+
+  // קטגוריה
+  const sel = document.getElementById('f-cat');
+  for (let i = 0; i < sel.options.length; i++) {
+    if (sel.options[i].value === v.category) { sel.selectedIndex = i; break; }
+  }
+
+  // איש קשר ראשי
+  const c = v.contacts && v.contacts[0];
+  document.getElementById('f-cname').value = c ? (c.name || '') : '';
+  document.getElementById('f-phone').value = c ? (c.phone || '') : '';
+  document.getElementById('f-email').value = c ? (c.email || '') : '';
+
+  document.getElementById('modal').classList.add('show');
+}
+
+async function saveVendor() {
+  const biz = document.getElementById('f-biz').value.trim();
+  const cat = document.getElementById('f-cat').value;
+  const desc = document.getElementById('f-desc').value.trim();
+  const domain = document.getElementById('f-domain').value.trim().replace(/^https?:\/\//, '').replace(/^www\./, '');
+  const cname = document.getElementById('f-cname').value.trim();
+  const phone = document.getElementById('f-phone').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const notes = document.getElementById('f-notes').value.trim();
+
+  if (!biz || !cat) { alert('שם עסק וקטגוריה הם שדות חובה'); return; }
+
+  if (editingId) {
+    // מצב עריכה
+    const idx = vendors.findIndex(x => x._id === editingId);
+    if (idx !== -1) {
+      vendors[idx].biz_name = biz;
+      vendors[idx].category = cat;
+      vendors[idx].description = desc;
+      vendors[idx].domain = domain || vendors[idx].domain;
+      vendors[idx].notes = notes;
+      if (vendors[idx].contacts && vendors[idx].contacts[0]) {
+        vendors[idx].contacts[0].name = cname;
+        vendors[idx].contacts[0].phone = phone;
+        vendors[idx].contacts[0].email = email;
+      } else {
+        vendors[idx].contacts = [{ name: cname, email: email, phone: phone }];
+      }
+    }
+    localStorage.setItem('br_vendors', JSON.stringify(vendors));
+    closeModal();
+    applyFilters();
+    showToast('✅ ספק עודכן!');
+
+    // שלח עדכון ל-Sheets
+    try {
+      await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        body: JSON.stringify({
+          action: 'edit', id: editingId,
+          category: cat, biz_name: biz, description: desc,
+          domain: domain, contact_name: cname, phone: phone,
+          email: email, notes: notes,
+        }),
+      });
+    } catch(e) {}
+
+  } else {
+    // מצב הוספה
+    const newVendor = {
+      _id: 'manual_' + Date.now(),
+      category: cat, biz_name: biz, description: desc,
+      domain: domain || (email ? email.split('@')[1] : ''),
+      website: domain ? 'https://' + domain : '',
+      contacts: [{ name: cname, email: email, phone: phone }],
+      msgs: 0, notes: notes, added_manually: true,
+    };
+    vendors.unshift(newVendor);
+    localStorage.setItem('br_vendors', JSON.stringify(vendors));
+    closeModal();
+    applyFilters();
+
+    try {
+      const resp = await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        body: JSON.stringify({
+          action: 'add', category: cat, biz_name: biz, description: desc,
+          domain: domain, contact_name: cname, phone: phone,
+          email: email, notes: notes,
+        }),
+      });
+      const result = await resp.json();
+      showToast(result.success ? '✅ ספק נוסף ונשמר בגיליון!' : '⚠️ נשמר מקומית בלבד');
+    } catch(e) {
+      showToast('⚠️ נשמר מקומית (אין חיבור לגיליון)');
+    }
+  }
+
+  ['f-biz','f-desc','f-domain','f-country','f-cname','f-phone','f-email','f-notes'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+}
+
 // ===== INIT =====
+// הוסף _id לכל ספק
+vendors = vendors.map((v, i) => ({ _id: v._id || ('v_' + i), ...v }));
 loadSaved();
+// עדכן _id לספקים שנטענו מ-localStorage ואין להם
+vendors = vendors.map((v, i) => ({ _id: v._id || ('v_' + i), ...v }));
 initFilters();
 applyFilters();
 </script>
