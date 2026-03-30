@@ -137,6 +137,7 @@ tr:hover td { background:rgba(255,255,255,.02); }
   <button class="tab-btn" onclick="sw('linkedin',this)">💼 LinkedIn</button>
   <button class="tab-btn" onclick="sw('elbit',this)">🛡️ אלביט</button>
   <button class="tab-btn" onclick="sw('cashflow',this)">💵 תזרים</button>
+  <button class="tab-btn" onclick="sw('rfq',this)">📄 הצעות מחיר</button>
 </div>
 
 <!-- ===== TAB 1: FINANCE ===== -->
@@ -1701,6 +1702,141 @@ JLTV FMTV המשך מחקר פלטפורמות</li><li>המשך פיתוח נו�
   </div>
 
 </div>
+
+<!-- ===== TAB RFQ: הצעות מחיר ===== -->
+<div id="pane-rfq" class="pane">
+
+  <!-- KPIs -->
+  <div class="kpis kpis-4" style="margin-bottom:20px">
+    <div class="kpi b"><div class="kpi-l">סה"כ הצעות 2026</div><div class="kpi-v" style="color:#60a5fa">22</div><div class="kpi-s">ינואר–מרץ</div></div>
+    <div class="kpi g"><div class="kpi-l">מאושרות</div><div class="kpi-v" style="color:#22c55e">₪56,551</div><div class="kpi-s">16 הצעות שאושרו</div></div>
+    <div class="kpi y"><div class="kpi-l">ממתינות להחלטה</div><div class="kpi-v" style="color:#eab308">₪132,806</div><div class="kpi-s">5 הצעות פתוחות</div></div>
+    <div class="kpi r"><div class="kpi-l">לא אושרו</div><div class="kpi-v" style="color:#ef4444">₪27,767</div><div class="kpi-s">2 הצעות שנפלו</div></div>
+  </div>
+
+  <!-- Month filter tabs -->
+  <div style="display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap">
+    <button onclick="rfqFilter('all',this)" class="rfq-ftab active" style="padding:5px 14px;border-radius:16px;border:1px solid #3b82f6;background:rgba(59,130,246,.15);color:#93c5fd;font-size:12px;cursor:pointer">כל החודשים</button>
+    <button onclick="rfqFilter('jan',this)" class="rfq-ftab" style="padding:5px 14px;border-radius:16px;border:1px solid #334155;background:none;color:#64748b;font-size:12px;cursor:pointer">ינואר</button>
+    <button onclick="rfqFilter('feb',this)" class="rfq-ftab" style="padding:5px 14px;border-radius:16px;border:1px solid #334155;background:none;color:#64748b;font-size:12px;cursor:pointer">פברואר</button>
+    <button onclick="rfqFilter('mar',this)" class="rfq-ftab" style="padding:5px 14px;border-radius:16px;border:1px solid #334155;background:none;color:#64748b;font-size:12px;cursor:pointer">מרץ</button>
+  </div>
+
+  <!-- January -->
+  <div class="rfq-block rfq-jan rfq-all">
+    <div class="panel">
+      <div class="panel-title" style="display:flex;justify-content:space-between;align-items:center">
+        <span>📅 ינואר 2026</span>
+        <span style="font-size:11px;color:#64748b">7 הצעות · אושרו: ₪11,345</span>
+      </div>
+      <table>
+        <thead><tr>
+          <th>לקוח</th><th>פרויקט</th><th>תיאור</th><th>תאריך</th><th>ספק</th><th>מחיר ספק</th><th>עמלה</th><th>מחיר ללקוח</th><th>סטטוס</th><th>מסמך</th>
+        </tr></thead>
+        <tbody>
+          <tr><td><span class="bdg bdg-b">LINE 5</span></td><td>PAK</td><td>ניסוי הדבקת מדבקת ויניל</td><td>8.1.26</td><td>קובירן</td><td>₪75</td><td>20%</td><td style="color:#22c55e;font-weight:600">₪90</td><td><span class="bdg bdg-g">אושר</span></td><td>—</td></tr>
+          <tr><td><span class="bdg bdg-p">LITEBC</span></td><td>ייצור מוקאפ</td><td>הדפסת חלקים SLS — זרוע משענת ראש</td><td>11.1.26</td><td>DIN 7</td><td>₪6,674</td><td>20%</td><td style="color:#22c55e;font-weight:600">₪8,009</td><td><span class="bdg bdg-g">אושר</span></td><td>—</td></tr>
+          <tr><td><span class="bdg bdg-p">LITEBC</span></td><td>ייצור מוקאפ</td><td>חריטת בורג ×2</td><td>11.1.26</td><td>דובי</td><td>₪560</td><td>20%</td><td style="color:#22c55e;font-weight:600">₪672</td><td><span class="bdg bdg-g">אושר</span></td><td>—</td></tr>
+          <tr><td><span class="bdg bdg-p">LITEBC</span></td><td>ייצור מוקאפ</td><td>הדפסת חלקים SLS — CAP HOLDER</td><td>15.1.26</td><td>DIN 7</td><td>₪980</td><td>20%</td><td style="color:#22c55e;font-weight:600">₪1,176</td><td><span class="bdg bdg-g">אושר</span></td><td>—</td></tr>
+          <tr><td><span class="bdg bdg-p">LITEBC</span></td><td>ייצור מוקאפ</td><td>הדפסות SLS — חשבונית DIN7 #20669</td><td>20.1.26</td><td>DIN 7</td><td>₪1,156</td><td>20%</td><td style="color:#22c55e;font-weight:600">₪1,388</td><td><span class="bdg bdg-g">אושר</span></td><td>—</td></tr>
+          <tr style="opacity:.55"><td><span class="bdg bdg-p">LITEBC</span></td><td>הצעת מחיר LiteBC</td><td>חשבונית מס #20669 — DIN 7 (כפילות)</td><td>20.1.26</td><td>din7.co.il</td><td>₪1,156</td><td>—</td><td>₪1,156</td><td><span class="bdg bdg-gray">ממתין</span></td><td><a href="https://drive.google.com/file/d/1WcGFQi5sLfcV7AUhV7OIgjYV-y9pRUJw/view" target="_blank" style="color:#60a5fa;font-size:11px">📎</a></td></tr>
+          <tr style="opacity:.55"><td><span class="bdg bdg-p">LITEBC</span></td><td>הצעת מחיר LiteBC</td><td>חשבונית מס #20669 — DIN 7 (כפילות)</td><td>20.1.26</td><td>din7.co.il</td><td>₪1,156</td><td>—</td><td>₪1,156</td><td><span class="bdg bdg-gray">ממתין</span></td><td><a href="https://drive.google.com/file/d/1zVUa7wScVy9pB7DyypKXCfr6qmJLVb9J/view" target="_blank" style="color:#60a5fa;font-size:11px">📎</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- February -->
+  <div class="rfq-block rfq-feb rfq-all">
+    <div class="panel">
+      <div class="panel-title" style="display:flex;justify-content:space-between;align-items:center">
+        <span>📅 פברואר 2026</span>
+        <span style="font-size:11px;color:#64748b">11 הצעות · אושרו: ₪13,935 · לא אושרו: ₪27,767</span>
+      </div>
+      <table>
+        <thead><tr>
+          <th>לקוח</th><th>פרויקט</th><th>תיאור</th><th>תאריך</th><th>ספק</th><th>מחיר ספק</th><th>עמלה</th><th>מחיר ללקוח</th><th>סטטוס</th><th>מסמך</th>
+        </tr></thead>
+        <tbody>
+          <tr><td><span class="bdg bdg-p">LITEBC</span></td><td>Hemoscope</td><td>הדפסת חלקים SLS — קליפ וקאפ</td><td>3.2.26</td><td>DIN 7</td><td>₪965</td><td>15%</td><td style="color:#22c55e;font-weight:600">₪1,110</td><td><span class="bdg bdg-g">אושר</span></td><td>—</td></tr>
+          <tr style="opacity:.6"><td><span class="bdg bdg-p">LITEBC</span></td><td>Hemoscope</td><td>הדפסת חלקים SLS — זרוע משענת ראש</td><td>3.2.26</td><td>DIN 7</td><td>₪3,400</td><td>15%</td><td>₪3,910</td><td><span class="bdg bdg-r">לא אושר</span></td><td>—</td></tr>
+          <tr><td><span class="bdg bdg-r" style="background:rgba(239,68,68,.15);color:#fca5a5">אלביט</span></td><td>Sting</td><td>חיתוך לייזר — פלטות צפצפה</td><td>10.2.26</td><td>LASER4</td><td>₪1,800</td><td>30%</td><td style="color:#22c55e;font-weight:600">₪2,340</td><td><span class="bdg bdg-g">אושר</span></td><td>—</td></tr>
+          <tr><td><span class="bdg bdg-b">LINE 5</span></td><td>System / PAK</td><td>Paint</td><td>17.1.26</td><td>Prostyle</td><td>₪2,500</td><td>15%</td><td style="color:#22c55e;font-weight:600">₪2,875</td><td><span class="bdg bdg-g">אושר</span></td><td>—</td></tr>
+          <tr><td><span class="bdg bdg-b">LINE 5</span></td><td>System / PAK</td><td>הדבקה</td><td>17.1.26</td><td>Sunguy</td><td>₪2,000</td><td>15%</td><td style="color:#22c55e;font-weight:600">₪2,300</td><td><span class="bdg bdg-g">אושר</span></td><td>—</td></tr>
+          <tr><td><span class="bdg bdg-r" style="background:rgba(239,68,68,.15);color:#fca5a5">אלביט</span></td><td>Nova Shield</td><td>משקולות למוקאפ מחסנית</td><td>19.2.26</td><td>fitbander</td><td>₪150</td><td>30%</td><td style="color:#22c55e;font-weight:600">₪195</td><td><span class="bdg bdg-g">אושר</span></td><td>—</td></tr>
+          <tr><td><span class="bdg bdg-r" style="background:rgba(239,68,68,.15);color:#fca5a5">אלביט</span></td><td>Nova Shield</td><td>ידיות למוקאפ מחסנית</td><td>19.2.26</td><td>כל נגרר</td><td>₪176</td><td>30%</td><td style="color:#22c55e;font-weight:600">₪229</td><td><span class="bdg bdg-g">אושר</span></td><td>—</td></tr>
+          <tr><td><span class="bdg bdg-r" style="background:rgba(239,68,68,.15);color:#fca5a5">אלביט</span></td><td>Nova Shield</td><td>חיתוך לייזר עץ — רכיבי מערכת</td><td>22.2.26</td><td>PAPER CUT</td><td>₪3,100</td><td>30%</td><td style="color:#22c55e;font-weight:600">₪4,030</td><td><span class="bdg bdg-g">אושר</span></td><td>—</td></tr>
+          <tr><td><span class="bdg bdg-r" style="background:rgba(239,68,68,.15);color:#fca5a5">אלביט</span></td><td>Sting Optic Fiber</td><td>רכש שרוול קרבון</td><td>23.2.26</td><td>—</td><td>₪300</td><td>30%</td><td style="color:#22c55e;font-weight:600">₪390</td><td><span class="bdg bdg-g">אושר</span></td><td>—</td></tr>
+          <tr style="opacity:.6"><td><span class="bdg bdg-r" style="background:rgba(239,68,68,.15);color:#fca5a5">אלביט</span></td><td>BrightNite 2.0</td><td>הצעה עבור 3 מוקאפים שיווקיים — Zoey</td><td>26.2.26</td><td>זואי</td><td>₪23,857</td><td>—</td><td>₪23,857</td><td><span class="bdg bdg-r">לא אושר</span></td><td>—</td></tr>
+          <tr><td><span class="bdg bdg-r" style="background:rgba(239,68,68,.15);color:#fca5a5">אלביט</span></td><td>Pulse Solan</td><td>מודל הנדסת אנוש — לייזר</td><td>12.2.26</td><td>LASER4</td><td>₪1,700</td><td>30%</td><td style="color:#22c55e;font-weight:600">₪965</td><td><span class="bdg bdg-g">אושר</span></td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- March -->
+  <div class="rfq-block rfq-mar rfq-all">
+    <div class="panel">
+      <div class="panel-title" style="display:flex;justify-content:space-between;align-items:center">
+        <span>📅 מרץ 2026</span>
+        <span style="font-size:11px;color:#64748b">5 הצעות · ממתינות להחלטה: ₪132,806</span>
+      </div>
+      <table>
+        <thead><tr>
+          <th>לקוח</th><th>פרויקט</th><th>תיאור</th><th>תאריך</th><th>ספק</th><th>מחיר ספק</th><th>מחיר ללקוח</th><th>סטטוס</th><th>מסמך</th>
+        </tr></thead>
+        <tbody>
+          <tr><td><span class="bdg bdg-r" style="background:rgba(239,68,68,.15);color:#fca5a5">אלביט</span></td><td>Pulse Solan</td><td>חיתוך לייזר שתי פלטות 12mm</td><td>12.3.26</td><td>LASER4</td><td>₪1,700</td><td style="color:#22c55e;font-weight:600">₪2,210</td><td><span class="bdg bdg-g">אושר</span></td><td>—</td></tr>
+          <tr><td><span class="bdg bdg-p">LITEBC</span></td><td>Hemoscope</td><td>MJF PA12 ביוקומפטיבל — 70 יח׳ (Longi Prototype)</td><td>23.3.26</td><td>Longi Prototype 🇨🇳</td><td>$3,001 USD</td><td style="color:#eab308;font-weight:600">₪10,547</td><td><span class="bdg bdg-gray">ממתין</span></td><td><a href="https://drive.google.com/drive/folders/1886FUYWbKQr-fD7Ypgm2wSX2dcWOVbfy" target="_blank" style="color:#60a5fa;font-size:11px">📎</a></td></tr>
+          <tr><td><span class="bdg bdg-p">LITEBC</span></td><td>Hemoscope</td><td>MJF PA12 ביוקומפטיבל — 70 יח׳ (TTH)</td><td>24.3.26</td><td>TTH 🇺🇸</td><td>$6,019 USD</td><td style="color:#eab308;font-weight:600">₪22,629</td><td><span class="bdg bdg-gray">ממתין</span></td><td><a href="https://drive.google.com/file/d/1ctaBWYxIf6hLdxS00WKp1Ki-fyOcSTuO/view" target="_blank" style="color:#60a5fa;font-size:11px">📎</a></td></tr>
+          <tr><td><span class="bdg bdg-r" style="background:rgba(239,68,68,.15);color:#fca5a5">אלביט</span></td><td>Helios</td><td>5 יח׳ SLS + טבילה + אינסרטים, 3 משקפים CNC (הירש #794)</td><td>24.3.26</td><td>הירש דגמים</td><td>₪5,800</td><td style="color:#eab308;font-weight:600">₪5,800</td><td><span class="bdg bdg-gray">ממתין</span></td><td><a href="https://drive.google.com/file/d/1r2RFX9eS5e5WFRJR3NTZwqD75LOlMdCl/view" target="_blank" style="color:#60a5fa;font-size:11px">📎</a></td></tr>
+          <tr><td><span class="bdg bdg-r" style="background:rgba(239,68,68,.15);color:#fca5a5">אלביט</span></td><td>EL-SD</td><td>CNC parts — 35 פריטים 4 סטים (Mastars MAS2026032430-R2)</td><td>10.3.26</td><td>Mastars 🇨🇳</td><td>$23,863 USD</td><td style="color:#eab308;font-weight:600">₪94,420</td><td><span class="bdg bdg-gray">ממתין</span></td><td><a href="https://docs.google.com/spreadsheets/d/1jRswnFCy7snRd_UKa2zHPA47jvyTHRwG/edit" target="_blank" style="color:#60a5fa;font-size:11px">📎</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Quick summary -->
+  <div class="panel" style="margin-top:4px">
+    <div class="panel-title">💡 פעולות נדרשות</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="background:#0f172a;border-radius:8px;padding:12px;border-right:3px solid #eab308">
+        <div style="font-size:12px;font-weight:600;color:#fde047;margin-bottom:4px">⚠️ LITEBC — Hemoscope MJF PA12</div>
+        <div style="font-size:11px;color:#94a3b8">חן ממתין לאישור ביוקומפטיביליות מ-Longi (₪10,547) מול TTH (₪22,629). פער של ₪12K — צריך החלטה.</div>
+      </div>
+      <div style="background:#0f172a;border-radius:8px;padding:12px;border-right:3px solid #eab308">
+        <div style="font-size:12px;font-weight:600;color:#fde047;margin-bottom:4px">⚠️ אלביט — Helios ויזורים (הירש #794)</div>
+        <div style="font-size:12px;color:#94a3b8">הצעה בתוקף 48 שעות. אילן מהירש רוצה שיחה — צריך אישור מהר. ₪5,800 → לגבות ₪7,540 (30%+).</div>
+      </div>
+      <div style="background:#0f172a;border-radius:8px;padding:12px;border-right:3px solid #3b82f6">
+        <div style="font-size:12px;font-weight:600;color:#93c5fd;margin-bottom:4px">📋 אלביט — Sting (לגבייה)</div>
+        <div style="font-size:11px;color:#94a3b8">₪2,730 מאושרים לגבייה (₪2,340 לייזר + ₪390 שרוול קרבון). לשלוח חשבונית.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Google Sheets link -->
+  <div style="text-align:center;margin-top:12px;padding:10px">
+    <a href="https://docs.google.com/spreadsheets/d/1B937kKEq8zw0oN1sJ9pVVYlAebEHB6azzy8IIUFToqs/edit" target="_blank" style="color:#64748b;font-size:11px;text-decoration:none">📊 פתח Google Sheets מלא ↗</a>
+  </div>
+
+</div>
+
+<script>
+function rfqFilter(month, btn) {
+  document.querySelectorAll('.rfq-ftab').forEach(b => {
+    b.style.background = 'none';
+    b.style.color = '#64748b';
+    b.style.borderColor = '#334155';
+  });
+  btn.style.background = 'rgba(59,130,246,.15)';
+  btn.style.color = '#93c5fd';
+  btn.style.borderColor = '#3b82f6';
+  document.querySelectorAll('.rfq-block').forEach(el => {
+    el.style.display = (month === 'all' || el.classList.contains('rfq-' + month)) ? 'block' : 'none';
+  });
+}
+</script>
 
 <script>
 function sw(name, btn) {
