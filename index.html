@@ -137,7 +137,7 @@ tr:hover td { background:rgba(255,255,255,.02); }
   <button class="tab-btn" onclick="sw('linkedin',this)">💼 LinkedIn</button>
   <button class="tab-btn" onclick="sw('elbit',this)">🛡️ אלביט</button>
   <button class="tab-btn" onclick="sw('cashflow',this)">💵 תזרים</button>
-  <button class="tab-btn" onclick="sw('rfq',this)">📄 הצעות מחיר</button>
+  <button class="tab-btn" onclick="sw('rfq',this)">🏭 הוצאות יצרנים</button>
 </div>
 
 <!-- ===== TAB 1: FINANCE ===== -->
@@ -1726,7 +1726,42 @@ JLTV FMTV המשך מחקר פלטפורמות</li><li>המשך פיתוח נו�
 .rfq-mstat { text-align:center; }
 .rfq-mstat .v { font-size:14px; font-weight:700; }
 .rfq-mstat .l { font-size:10px; color:#64748b; }
+
+/* Status buttons */
+.status-btn { display:inline-flex; align-items:center; gap:5px; padding:4px 10px; border-radius:12px; border:none; font-size:11px; font-weight:600; cursor:pointer; transition:all .15s; white-space:nowrap; }
+.status-btn:hover { filter:brightness(1.2); }
+.status-btn.approved  { background:rgba(34,197,94,.15);  color:#86efac; border:1px solid rgba(34,197,94,.3); }
+.status-btn.waiting   { background:rgba(234,179,8,.15);  color:#fde047; border:1px solid rgba(234,179,8,.3); }
+.status-btn.rejected  { background:rgba(239,68,68,.15);  color:#fca5a5; border:1px solid rgba(239,68,68,.3); }
+.status-menu { position:relative; display:inline-block; }
+.status-dropdown { display:none; position:absolute; left:0; top:calc(100% + 4px); background:#1e293b; border:1px solid #334155; border-radius:8px; overflow:hidden; z-index:999; min-width:130px; box-shadow:0 8px 24px rgba(0,0,0,.4); }
+.status-dropdown.open { display:block; }
+.status-opt { display:block; padding:8px 14px; font-size:12px; cursor:pointer; white-space:nowrap; }
+.status-opt:hover { background:#334155; }
+.status-opt.opt-ok   { color:#86efac; }
+.status-opt.opt-wait { color:#fde047; }
+.status-opt.opt-no   { color:#fca5a5; }
+.status-saving { opacity:.5; pointer-events:none; }
 </style>
+
+  <!-- API not configured banner -->
+  <div id="rfq-api-banner" style="background:rgba(234,179,8,.07);border:1px solid rgba(234,179,8,.25);border-radius:8px;padding:10px 16px;margin-bottom:16px;font-size:12px;color:#fde047;display:flex;justify-content:space-between;align-items:center">
+    <span>⚙️ כפתורי שינוי סטטוס מוכנים — חסר רק Apps Script URL. <a href="#" onclick="showApiSetup()" style="color:#93c5fd;text-decoration:underline">להגדרה (30 שניות) ↗</a></span>
+    <span id="rfq-api-status" style="font-size:11px;color:#64748b"></span>
+  </div>
+  <div id="rfq-setup-box" style="display:none;background:#0f172a;border:1px solid #3b82f6;border-radius:10px;padding:16px;margin-bottom:16px;font-size:12px">
+    <div style="font-weight:600;color:#93c5fd;margin-bottom:10px">📋 הגדרת Apps Script (פעם אחת בלבד)</div>
+    <ol style="color:#94a3b8;line-height:2;padding-right:18px">
+      <li>פתח <a href="https://script.google.com/home/start" target="_blank" style="color:#60a5fa">script.google.com</a> → New project</li>
+      <li>מחק הכל, הדבק את הקוד שקיבלת מ-Bob (rfq_apps_script.gs)</li>
+      <li>Deploy → New deployment → Web App → Execute as Me → Anyone</li>
+      <li>העתק את ה-URL שמתקבל, הדבק כאן:</li>
+    </ol>
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <input id="rfq-api-input" type="text" placeholder="https://script.google.com/macros/s/..." style="flex:1;background:#1e293b;border:1px solid #334155;border-radius:6px;padding:7px 10px;color:#e2e8f0;font-size:12px">
+      <button onclick="saveApiUrl()" style="background:#3b82f6;color:#fff;border:none;border-radius:6px;padding:7px 14px;font-size:12px;cursor:pointer;font-weight:600">שמור</button>
+    </div>
+  </div>
 
   <!-- KPIs -->
   <div class="kpis kpis-4" style="margin-bottom:20px">
@@ -1744,289 +1779,313 @@ JLTV FMTV המשך מחקר פלטפורמות</li><li>המשך פיתוח נו�
     <button onclick="rfqFilter('mar',this)" class="rfq-ftab" style="padding:5px 14px;border-radius:16px;border:1px solid #334155;background:none;color:#64748b;font-size:12px;cursor:pointer">מרץ</button>
   </div>
 
-  <!-- ═══ JANUARY ═══ -->
-  <div class="rfq-block rfq-jan rfq-all panel" style="padding:0;overflow:hidden;margin-bottom:18px">
+  <!-- MONTHS (auto-generated) -->
+<div class="rfq-block rfq-jan rfq-all panel" style="padding:0;overflow:hidden;margin-bottom:18px">
     <div style="padding:14px 20px 12px" class="rfq-month-header">
       <span class="rfq-month-title">📅 ינואר 2026</span>
-      <div class="rfq-month-stats">
-        <div class="rfq-mstat"><div class="v" style="color:#22c55e">₪11,345</div><div class="l">אושר ללקוח</div></div>
-        <div class="rfq-mstat"><div class="v" style="color:#475569">₪9,445</div><div class="l">לספקים</div></div>
-      </div>
+      <div class="rfq-month-stats"><div class="rfq-mstat"><div class="v" style="color:#22c55e">₪11,335</div><div class="l">אושר ללקוח</div></div><div class="rfq-mstat"><div class="v" style="color:#475569">₪9,445</div><div class="l">לספקים</div></div><div class="rfq-mstat"><div class="v" style="color:#eab308">₪2,312</div><div class="l">ממתין</div></div></div>
     </div>
     <table class="rfq-table">
       <thead><tr>
         <th>לקוח</th><th>פרויקט</th><th>תאריך</th><th>ספק</th>
         <th style="text-align:center">מחיר ספק</th>
-        <th style="text-align:center">→</th>
+        <th style="text-align:center"></th>
         <th style="text-align:center">מחיר ללקוח</th>
         <th>סטטוס</th><th></th>
       </tr></thead>
       <tbody>
         <tr>
-          <td><span class="bdg bdg-b">LINE 5</span></td>
+          <td><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:8px;background:rgba(59,130,246,.15);color:#93c5fd;border:1px solid rgba(59,130,246,.25)">LINE 5</span></td>
           <td><div class="proj-cell">PAK</div><div class="proj-sub">ניסוי הדבקת מדבקת ויניל</div></td>
           <td style="color:#64748b;font-size:11px;white-space:nowrap">8.1.26</td>
           <td style="font-size:12px;color:#94a3b8">קובירן</td>
-          <td style="text-align:center"><span class="price-supplier">₪75</span></td>
-          <td style="text-align:center" class="arr">→</td>
-          <td style="text-align:center"><span class="price-client-ok">₪90</span></td>
-          <td><span class="bdg bdg-g">אושר</span></td><td></td>
+          <td style="text-align:center"><span class="price-supplier">₪75.00</span></td>
+          <td style="text-align:center;color:#475569;font-size:14px">→</td>
+          <td style="text-align:center"><span class="price-client-ok">₪90.00</span></td>
+          <td><div class="status-menu"><button class="status-btn approved" onclick="openStatusMenu(this,'%D7%99%D7%A0%D7%95%D7%90%D7%A8%202026',2)">✓ אושר ▾</button><div class="status-dropdown"><div class="status-opt opt-ok"  onclick="setStatus(this,'אושר','%D7%99%D7%A0%D7%95%D7%90%D7%A8%202026',2)">✓ אושר</div><div class="status-opt opt-wait" onclick="setStatus(this,'ממתין','%D7%99%D7%A0%D7%95%D7%90%D7%A8%202026',2)">⏳ ממתין</div><div class="status-opt opt-no"  onclick="setStatus(this,'לא אושר','%D7%99%D7%A0%D7%95%D7%90%D7%A8%202026',2)">✗ לא אושר</div></div></div></td>
+          <td>—</td>
         </tr>
         <tr>
-          <td><span class="bdg bdg-p">LITEBC</span></td>
-          <td><div class="proj-cell">ייצור מוקאפ</div><div class="proj-sub">SLS — זרוע משענת ראש</div></td>
+          <td><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:8px;background:rgba(168,85,247,.15);color:#d8b4fe;border:1px solid rgba(168,85,247,.25)">LITEBC</span></td>
+          <td><div class="proj-cell">ייצור מוקאפ</div><div class="proj-sub">הדפסת חלקיים ב-SLS</div></td>
           <td style="color:#64748b;font-size:11px;white-space:nowrap">11.1.26</td>
           <td style="font-size:12px;color:#94a3b8">DIN 7</td>
-          <td style="text-align:center"><span class="price-supplier">₪6,674</span></td>
-          <td style="text-align:center" class="arr">→</td>
-          <td style="text-align:center"><span class="price-client-ok">₪8,009</span></td>
-          <td><span class="bdg bdg-g">אושר</span></td><td></td>
+          <td style="text-align:center"><span class="price-supplier">₪6,674.00</span></td>
+          <td style="text-align:center;color:#475569;font-size:14px">→</td>
+          <td style="text-align:center"><span class="price-client-ok">₪8,009.00</span></td>
+          <td><div class="status-menu"><button class="status-btn approved" onclick="openStatusMenu(this,'%D7%99%D7%A0%D7%95%D7%90%D7%A8%202026',3)">✓ אושר ▾</button><div class="status-dropdown"><div class="status-opt opt-ok"  onclick="setStatus(this,'אושר','%D7%99%D7%A0%D7%95%D7%90%D7%A8%202026',3)">✓ אושר</div><div class="status-opt opt-wait" onclick="setStatus(this,'ממתין','%D7%99%D7%A0%D7%95%D7%90%D7%A8%202026',3)">⏳ ממתין</div><div class="status-opt opt-no"  onclick="setStatus(this,'לא אושר','%D7%99%D7%A0%D7%95%D7%90%D7%A8%202026',3)">✗ לא אושר</div></div></div></td>
+          <td>—</td>
         </tr>
         <tr>
-          <td><span class="bdg bdg-p">LITEBC</span></td>
-          <td><div class="proj-cell">ייצור מוקאפ</div><div class="proj-sub">חריטת בורג ×2</div></td>
+          <td><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:8px;background:rgba(168,85,247,.15);color:#d8b4fe;border:1px solid rgba(168,85,247,.25)">LITEBC</span></td>
+          <td><div class="proj-cell">ייצור מוקאפ</div><div class="proj-sub">חריטת בורגX2</div></td>
           <td style="color:#64748b;font-size:11px;white-space:nowrap">11.1.26</td>
           <td style="font-size:12px;color:#94a3b8">דובי</td>
-          <td style="text-align:center"><span class="price-supplier">₪560</span></td>
-          <td style="text-align:center" class="arr">→</td>
-          <td style="text-align:center"><span class="price-client-ok">₪672</span></td>
-          <td><span class="bdg bdg-g">אושר</span></td><td></td>
+          <td style="text-align:center"><span class="price-supplier">₪560.00</span></td>
+          <td style="text-align:center;color:#475569;font-size:14px">→</td>
+          <td style="text-align:center"><span class="price-client-ok">₪672.00</span></td>
+          <td><div class="status-menu"><button class="status-btn approved" onclick="openStatusMenu(this,'%D7%99%D7%A0%D7%95%D7%90%D7%A8%202026',4)">✓ אושר ▾</button><div class="status-dropdown"><div class="status-opt opt-ok"  onclick="setStatus(this,'אושר','%D7%99%D7%A0%D7%95%D7%90%D7%A8%202026',4)">✓ אושר</div><div class="status-opt opt-wait" onclick="setStatus(this,'ממתין','%D7%99%D7%A0%D7%95%D7%90%D7%A8%202026',4)">⏳ ממתין</div><div class="status-opt opt-no"  onclick="setStatus(this,'לא אושר','%D7%99%D7%A0%D7%95%D7%90%D7%A8%202026',4)">✗ לא אושר</div></div></div></td>
+          <td>—</td>
         </tr>
         <tr>
-          <td><span class="bdg bdg-p">LITEBC</span></td>
-          <td><div class="proj-cell">ייצור מוקאפ</div><div class="proj-sub">SLS — CAP HOLDER</div></td>
+          <td><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:8px;background:rgba(168,85,247,.15);color:#d8b4fe;border:1px solid rgba(168,85,247,.25)">LITEBC</span></td>
+          <td><div class="proj-cell">ייצור מוקאפ</div><div class="proj-sub">הדפסת חלקיים ב-SLS</div></td>
           <td style="color:#64748b;font-size:11px;white-space:nowrap">15.1.26</td>
           <td style="font-size:12px;color:#94a3b8">DIN 7</td>
-          <td style="text-align:center"><span class="price-supplier">₪980</span></td>
-          <td style="text-align:center" class="arr">→</td>
-          <td style="text-align:center"><span class="price-client-ok">₪1,176</span></td>
-          <td><span class="bdg bdg-g">אושר</span></td><td></td>
+          <td style="text-align:center"><span class="price-supplier">₪980.00</span></td>
+          <td style="text-align:center;color:#475569;font-size:14px">→</td>
+          <td style="text-align:center"><span class="price-client-ok">₪1,176.00</span></td>
+          <td><div class="status-menu"><button class="status-btn approved" onclick="openStatusMenu(this,'%D7%99%D7%A0%D7%95%D7%90%D7%A8%202026',5)">✓ אושר ▾</button><div class="status-dropdown"><div class="status-opt opt-ok"  onclick="setStatus(this,'אושר','%D7%99%D7%A0%D7%95%D7%90%D7%A8%202026',5)">✓ אושר</div><div class="status-opt opt-wait" onclick="setStatus(this,'ממתין','%D7%99%D7%A0%D7%95%D7%90%D7%A8%202026',5)">⏳ ממתין</div><div class="status-opt opt-no"  onclick="setStatus(this,'לא אושר','%D7%99%D7%A0%D7%95%D7%90%D7%A8%202026',5)">✗ לא אושר</div></div></div></td>
+          <td>—</td>
         </tr>
         <tr>
-          <td><span class="bdg bdg-p">LITEBC</span></td>
-          <td><div class="proj-cell">ייצור מוקאפ</div><div class="proj-sub">DIN7 חשבונית #20669</div></td>
+          <td><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:8px;background:rgba(168,85,247,.15);color:#d8b4fe;border:1px solid rgba(168,85,247,.25)">LITEBC</span></td>
+          <td><div class="proj-cell">ייצור מוקאפ</div><div class="proj-sub">הדפסות SLS - חשבונית DIN7 #20669</div></td>
           <td style="color:#64748b;font-size:11px;white-space:nowrap">20.1.26</td>
           <td style="font-size:12px;color:#94a3b8">DIN 7</td>
-          <td style="text-align:center"><span class="price-supplier">₪1,156</span></td>
-          <td style="text-align:center" class="arr">→</td>
-          <td style="text-align:center"><span class="price-client-ok">₪1,388</span></td>
-          <td><span class="bdg bdg-g">אושר</span></td><td></td>
+          <td style="text-align:center"><span class="price-supplier">₪1,156.40</span></td>
+          <td style="text-align:center;color:#475569;font-size:14px">→</td>
+          <td style="text-align:center"><span class="price-client-ok">₪1,388.00</span></td>
+          <td><div class="status-menu"><button class="status-btn approved" onclick="openStatusMenu(this,'%D7%99%D7%A0%D7%95%D7%90%D7%A8%202026',6)">✓ אושר ▾</button><div class="status-dropdown"><div class="status-opt opt-ok"  onclick="setStatus(this,'אושר','%D7%99%D7%A0%D7%95%D7%90%D7%A8%202026',6)">✓ אושר</div><div class="status-opt opt-wait" onclick="setStatus(this,'ממתין','%D7%99%D7%A0%D7%95%D7%90%D7%A8%202026',6)">⏳ ממתין</div><div class="status-opt opt-no"  onclick="setStatus(this,'לא אושר','%D7%99%D7%A0%D7%95%D7%90%D7%A8%202026',6)">✗ לא אושר</div></div></div></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:8px;background:rgba(168,85,247,.15);color:#d8b4fe;border:1px solid rgba(168,85,247,.25)">LITEBC</span></td>
+          <td><div class="proj-cell">Re: הצעת מחיר - LiteBC</div><div class="proj-sub">חשבונית מס #20669 מאת דין 7 בע''מ.pdf</div></td>
+          <td style="color:#64748b;font-size:11px;white-space:nowrap">20/Jan/2026</td>
+          <td style="font-size:12px;color:#94a3b8">din7.co.il</td>
+          <td style="text-align:center"><span class="price-supplier">₪1,156.40</span></td>
+          <td style="text-align:center;color:#475569;font-size:14px">→</td>
+          <td style="text-align:center"><span class="price-client-wait">₪1,156.00</span></td>
+          <td><div class="status-menu"><button class="status-btn waiting" onclick="openStatusMenu(this,'%D7%99%D7%A0%D7%95%D7%90%D7%A8%202026',7)">⏳ ממתין ▾</button><div class="status-dropdown"><div class="status-opt opt-ok"  onclick="setStatus(this,'אושר','%D7%99%D7%A0%D7%95%D7%90%D7%A8%202026',7)">✓ אושר</div><div class="status-opt opt-wait" onclick="setStatus(this,'ממתין','%D7%99%D7%A0%D7%95%D7%90%D7%A8%202026',7)">⏳ ממתין</div><div class="status-opt opt-no"  onclick="setStatus(this,'לא אושר','%D7%99%D7%A0%D7%95%D7%90%D7%A8%202026',7)">✗ לא אושר</div></div></div></td>
+          <td><a href="https://drive.google.com/file/d/1WcGFQi5sLfcV7AUhV7OIgjYV-y9pRUJw/view?usp=drivesdk" target="_blank" style="color:#60a5fa;font-size:14px">📎</a></td>
+        </tr>
+        <tr>
+          <td><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:8px;background:rgba(168,85,247,.15);color:#d8b4fe;border:1px solid rgba(168,85,247,.25)">LITEBC</span></td>
+          <td><div class="proj-cell">Re: הצעת מחיר - LiteBC</div><div class="proj-sub">חשבונית מס #20669 מאת דין 7 בע''מ.pdf</div></td>
+          <td style="color:#64748b;font-size:11px;white-space:nowrap">20/Jan/2026</td>
+          <td style="font-size:12px;color:#94a3b8">din7.co.il</td>
+          <td style="text-align:center"><span class="price-supplier">₪1,156.40</span></td>
+          <td style="text-align:center;color:#475569;font-size:14px">→</td>
+          <td style="text-align:center"><span class="price-client-wait">₪1,156.00</span></td>
+          <td><div class="status-menu"><button class="status-btn waiting" onclick="openStatusMenu(this,'%D7%99%D7%A0%D7%95%D7%90%D7%A8%202026',8)">⏳ ממתין ▾</button><div class="status-dropdown"><div class="status-opt opt-ok"  onclick="setStatus(this,'אושר','%D7%99%D7%A0%D7%95%D7%90%D7%A8%202026',8)">✓ אושר</div><div class="status-opt opt-wait" onclick="setStatus(this,'ממתין','%D7%99%D7%A0%D7%95%D7%90%D7%A8%202026',8)">⏳ ממתין</div><div class="status-opt opt-no"  onclick="setStatus(this,'לא אושר','%D7%99%D7%A0%D7%95%D7%90%D7%A8%202026',8)">✗ לא אושר</div></div></div></td>
+          <td><a href="https://drive.google.com/file/d/1zVUa7wScVy9pB7DyypKXCfr6qmJLVb9J/view?usp=drivesdk" target="_blank" style="color:#60a5fa;font-size:14px">📎</a></td>
         </tr>
       </tbody>
     </table>
   </div>
-
-  <!-- ═══ FEBRUARY ═══ -->
   <div class="rfq-block rfq-feb rfq-all panel" style="padding:0;overflow:hidden;margin-bottom:18px">
     <div style="padding:14px 20px 12px" class="rfq-month-header">
       <span class="rfq-month-title">📅 פברואר 2026</span>
-      <div class="rfq-month-stats">
-        <div class="rfq-mstat"><div class="v" style="color:#22c55e">₪13,935</div><div class="l">אושר ללקוח</div></div>
-        <div class="rfq-mstat"><div class="v" style="color:#ef4444">₪27,767</div><div class="l">לא אושר</div></div>
-        <div class="rfq-mstat"><div class="v" style="color:#475569">₪10,726</div><div class="l">לספקים</div></div>
-      </div>
+      <div class="rfq-month-stats"><div class="rfq-mstat"><div class="v" style="color:#22c55e">₪14,434</div><div class="l">אושר ללקוח</div></div><div class="rfq-mstat"><div class="v" style="color:#475569">₪12,691</div><div class="l">לספקים</div></div><div class="rfq-mstat"><div class="v" style="color:#ef4444">₪27,767</div><div class="l">לא אושר</div></div></div>
     </div>
     <table class="rfq-table">
       <thead><tr>
         <th>לקוח</th><th>פרויקט</th><th>תאריך</th><th>ספק</th>
         <th style="text-align:center">מחיר ספק</th>
-        <th style="text-align:center">→</th>
+        <th style="text-align:center"></th>
         <th style="text-align:center">מחיר ללקוח</th>
         <th>סטטוס</th><th></th>
       </tr></thead>
       <tbody>
         <tr>
-          <td><span class="bdg bdg-p">LITEBC</span></td>
-          <td><div class="proj-cell">Hemoscope</div><div class="proj-sub">SLS — קליפ וקאפ</div></td>
-          <td style="color:#64748b;font-size:11px;white-space:nowrap">3.2.26</td>
+          <td><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:8px;background:rgba(168,85,247,.15);color:#d8b4fe;border:1px solid rgba(168,85,247,.25)">LITEBC</span></td>
+          <td><div class="proj-cell">hemoscope</div><div class="proj-sub">הדפסת חלקיים ב-SLS</div></td>
+          <td style="color:#64748b;font-size:11px;white-space:nowrap">3.02.2026</td>
           <td style="font-size:12px;color:#94a3b8">DIN 7</td>
-          <td style="text-align:center"><span class="price-supplier">₪965</span></td>
-          <td style="text-align:center" class="arr">→</td>
-          <td style="text-align:center"><span class="price-client-ok">₪1,110</span></td>
-          <td><span class="bdg bdg-g">אושר</span></td><td></td>
+          <td style="text-align:center"><span class="price-supplier">₪965.00</span></td>
+          <td style="text-align:center;color:#475569;font-size:14px">→</td>
+          <td style="text-align:center"><span class="price-client-ok">₪1,110.00</span></td>
+          <td><div class="status-menu"><button class="status-btn approved" onclick="openStatusMenu(this,'%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',2)">✓ אושר ▾</button><div class="status-dropdown"><div class="status-opt opt-ok"  onclick="setStatus(this,'אושר','%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',2)">✓ אושר</div><div class="status-opt opt-wait" onclick="setStatus(this,'ממתין','%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',2)">⏳ ממתין</div><div class="status-opt opt-no"  onclick="setStatus(this,'לא אושר','%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',2)">✗ לא אושר</div></div></div></td>
+          <td>—</td>
         </tr>
         <tr class="dimmed">
-          <td><span class="bdg bdg-p">LITEBC</span></td>
-          <td><div class="proj-cell">Hemoscope</div><div class="proj-sub">SLS — זרוע משענת ראש</div></td>
-          <td style="color:#64748b;font-size:11px;white-space:nowrap">3.2.26</td>
+          <td><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:8px;background:rgba(168,85,247,.15);color:#d8b4fe;border:1px solid rgba(168,85,247,.25)">LITEBC</span></td>
+          <td><div class="proj-cell">hemoscope</div><div class="proj-sub">הדפסת חלקיים ב-SLS</div></td>
+          <td style="color:#64748b;font-size:11px;white-space:nowrap">3.02.2026</td>
           <td style="font-size:12px;color:#94a3b8">DIN 7</td>
-          <td style="text-align:center"><span class="price-supplier">₪3,400</span></td>
-          <td style="text-align:center" class="arr">→</td>
-          <td style="text-align:center"><span class="price-client-no">₪3,910</span></td>
-          <td><span class="bdg bdg-r">לא אושר</span></td><td></td>
+          <td style="text-align:center"><span class="price-supplier">₪3,400.00</span></td>
+          <td style="text-align:center;color:#475569;font-size:14px">→</td>
+          <td style="text-align:center"><span class="price-client-no" style="text-decoration:line-through">₪3,910.00</span></td>
+          <td><div class="status-menu"><button class="status-btn rejected" onclick="openStatusMenu(this,'%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',3)">✗ לא אושר ▾</button><div class="status-dropdown"><div class="status-opt opt-ok"  onclick="setStatus(this,'אושר','%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',3)">✓ אושר</div><div class="status-opt opt-wait" onclick="setStatus(this,'ממתין','%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',3)">⏳ ממתין</div><div class="status-opt opt-no"  onclick="setStatus(this,'לא אושר','%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',3)">✗ לא אושר</div></div></div></td>
+          <td>—</td>
         </tr>
         <tr>
-          <td><span class="bdg bdg-r" style="background:rgba(239,68,68,.15);color:#fca5a5">אלביט</span></td>
-          <td><div class="proj-cell">Sting</div><div class="proj-sub">חיתוך לייזר — פלטות צפצפה</div></td>
-          <td style="color:#64748b;font-size:11px;white-space:nowrap">10.2.26</td>
+          <td><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:8px;background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid rgba(239,68,68,.25)">אלביט</span></td>
+          <td><div class="proj-cell">sting</div><div class="proj-sub">חיתוך לייזר - פלטות צפצפה</div></td>
+          <td style="color:#64748b;font-size:11px;white-space:nowrap">10.02.2026</td>
           <td style="font-size:12px;color:#94a3b8">LASER4</td>
-          <td style="text-align:center"><span class="price-supplier">₪1,800</span></td>
-          <td style="text-align:center" class="arr">→</td>
-          <td style="text-align:center"><span class="price-client-ok">₪2,340</span></td>
-          <td><span class="bdg bdg-g">אושר</span></td><td></td>
+          <td style="text-align:center"><span class="price-supplier">₪1,800.00</span></td>
+          <td style="text-align:center;color:#475569;font-size:14px">→</td>
+          <td style="text-align:center"><span class="price-client-ok">₪2,340.00</span></td>
+          <td><div class="status-menu"><button class="status-btn approved" onclick="openStatusMenu(this,'%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',4)">✓ אושר ▾</button><div class="status-dropdown"><div class="status-opt opt-ok"  onclick="setStatus(this,'אושר','%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',4)">✓ אושר</div><div class="status-opt opt-wait" onclick="setStatus(this,'ממתין','%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',4)">⏳ ממתין</div><div class="status-opt opt-no"  onclick="setStatus(this,'לא אושר','%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',4)">✗ לא אושר</div></div></div></td>
+          <td>—</td>
         </tr>
         <tr>
-          <td><span class="bdg bdg-b">LINE 5</span></td>
-          <td><div class="proj-cell">System / PAK</div><div class="proj-sub">Paint</div></td>
-          <td style="color:#64748b;font-size:11px;white-space:nowrap">17.2.26</td>
+          <td><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:8px;background:rgba(59,130,246,.15);color:#93c5fd;border:1px solid rgba(59,130,246,.25)">LINE 5</span></td>
+          <td><div class="proj-cell">System</div><div class="proj-sub">Paint</div></td>
+          <td style="color:#64748b;font-size:11px;white-space:nowrap">17.1.26</td>
           <td style="font-size:12px;color:#94a3b8">Prostyle</td>
-          <td style="text-align:center"><span class="price-supplier">₪2,500</span></td>
-          <td style="text-align:center" class="arr">→</td>
-          <td style="text-align:center"><span class="price-client-ok">₪2,875</span></td>
-          <td><span class="bdg bdg-g">אושר</span></td><td></td>
+          <td style="text-align:center"><span class="price-supplier">₪2,500.00</span></td>
+          <td style="text-align:center;color:#475569;font-size:14px">→</td>
+          <td style="text-align:center"><span class="price-client-ok">₪2,875.00</span></td>
+          <td><div class="status-menu"><button class="status-btn approved" onclick="openStatusMenu(this,'%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',5)">✓ אושר ▾</button><div class="status-dropdown"><div class="status-opt opt-ok"  onclick="setStatus(this,'אושר','%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',5)">✓ אושר</div><div class="status-opt opt-wait" onclick="setStatus(this,'ממתין','%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',5)">⏳ ממתין</div><div class="status-opt opt-no"  onclick="setStatus(this,'לא אושר','%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',5)">✗ לא אושר</div></div></div></td>
+          <td>—</td>
         </tr>
         <tr>
-          <td><span class="bdg bdg-b">LINE 5</span></td>
-          <td><div class="proj-cell">System / PAK</div><div class="proj-sub">הדבקה</div></td>
-          <td style="color:#64748b;font-size:11px;white-space:nowrap">17.2.26</td>
+          <td><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:8px;background:rgba(59,130,246,.15);color:#93c5fd;border:1px solid rgba(59,130,246,.25)">LINE 5</span></td>
+          <td><div class="proj-cell">System</div><div class="proj-sub">הדבקה</div></td>
+          <td style="color:#64748b;font-size:11px;white-space:nowrap">17.1.26</td>
           <td style="font-size:12px;color:#94a3b8">Sunguy</td>
-          <td style="text-align:center"><span class="price-supplier">₪2,000</span></td>
-          <td style="text-align:center" class="arr">→</td>
-          <td style="text-align:center"><span class="price-client-ok">₪2,300</span></td>
-          <td><span class="bdg bdg-g">אושר</span></td><td></td>
+          <td style="text-align:center"><span class="price-supplier">₪2,000.00</span></td>
+          <td style="text-align:center;color:#475569;font-size:14px">→</td>
+          <td style="text-align:center"><span class="price-client-ok">₪2,300.00</span></td>
+          <td><div class="status-menu"><button class="status-btn approved" onclick="openStatusMenu(this,'%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',6)">✓ אושר ▾</button><div class="status-dropdown"><div class="status-opt opt-ok"  onclick="setStatus(this,'אושר','%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',6)">✓ אושר</div><div class="status-opt opt-wait" onclick="setStatus(this,'ממתין','%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',6)">⏳ ממתין</div><div class="status-opt opt-no"  onclick="setStatus(this,'לא אושר','%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',6)">✗ לא אושר</div></div></div></td>
+          <td>—</td>
         </tr>
         <tr>
-          <td><span class="bdg bdg-r" style="background:rgba(239,68,68,.15);color:#fca5a5">אלביט</span></td>
+          <td><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:8px;background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid rgba(239,68,68,.25)">אלביט</span></td>
           <td><div class="proj-cell">Nova Shield</div><div class="proj-sub">משקולות למוקאפ מחסנית</div></td>
           <td style="color:#64748b;font-size:11px;white-space:nowrap">19.2.26</td>
           <td style="font-size:12px;color:#94a3b8">fitbander</td>
-          <td style="text-align:center"><span class="price-supplier">₪150</span></td>
-          <td style="text-align:center" class="arr">→</td>
-          <td style="text-align:center"><span class="price-client-ok">₪195</span></td>
-          <td><span class="bdg bdg-g">אושר</span></td><td></td>
+          <td style="text-align:center"><span class="price-supplier">₪150.00</span></td>
+          <td style="text-align:center;color:#475569;font-size:14px">→</td>
+          <td style="text-align:center"><span class="price-client-ok">₪195.00</span></td>
+          <td><div class="status-menu"><button class="status-btn approved" onclick="openStatusMenu(this,'%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',7)">✓ אושר ▾</button><div class="status-dropdown"><div class="status-opt opt-ok"  onclick="setStatus(this,'אושר','%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',7)">✓ אושר</div><div class="status-opt opt-wait" onclick="setStatus(this,'ממתין','%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',7)">⏳ ממתין</div><div class="status-opt opt-no"  onclick="setStatus(this,'לא אושר','%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',7)">✗ לא אושר</div></div></div></td>
+          <td>—</td>
         </tr>
         <tr>
-          <td><span class="bdg bdg-r" style="background:rgba(239,68,68,.15);color:#fca5a5">אלביט</span></td>
+          <td><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:8px;background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid rgba(239,68,68,.25)">אלביט</span></td>
           <td><div class="proj-cell">Nova Shield</div><div class="proj-sub">ידיות למוקאפ מחסנית</div></td>
           <td style="color:#64748b;font-size:11px;white-space:nowrap">19.2.26</td>
           <td style="font-size:12px;color:#94a3b8">כל נגרר</td>
-          <td style="text-align:center"><span class="price-supplier">₪176</span></td>
-          <td style="text-align:center" class="arr">→</td>
-          <td style="text-align:center"><span class="price-client-ok">₪229</span></td>
-          <td><span class="bdg bdg-g">אושר</span></td><td></td>
+          <td style="text-align:center"><span class="price-supplier">₪176.00</span></td>
+          <td style="text-align:center;color:#475569;font-size:14px">→</td>
+          <td style="text-align:center"><span class="price-client-ok">₪229.00</span></td>
+          <td><div class="status-menu"><button class="status-btn approved" onclick="openStatusMenu(this,'%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',8)">✓ אושר ▾</button><div class="status-dropdown"><div class="status-opt opt-ok"  onclick="setStatus(this,'אושר','%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',8)">✓ אושר</div><div class="status-opt opt-wait" onclick="setStatus(this,'ממתין','%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',8)">⏳ ממתין</div><div class="status-opt opt-no"  onclick="setStatus(this,'לא אושר','%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',8)">✗ לא אושר</div></div></div></td>
+          <td>—</td>
         </tr>
         <tr>
-          <td><span class="bdg bdg-r" style="background:rgba(239,68,68,.15);color:#fca5a5">אלביט</span></td>
-          <td><div class="proj-cell">Nova Shield</div><div class="proj-sub">חיתוך לייזר עץ — רכיבי מערכת</div></td>
+          <td><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:8px;background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid rgba(239,68,68,.25)">אלביט</span></td>
+          <td><div class="proj-cell">Nova Shield</div><div class="proj-sub">חיתוך לייזר עץ-רכיבי מערכת</div></td>
           <td style="color:#64748b;font-size:11px;white-space:nowrap">22.2.26</td>
           <td style="font-size:12px;color:#94a3b8">PAPER CUT</td>
-          <td style="text-align:center"><span class="price-supplier">₪3,100</span></td>
-          <td style="text-align:center" class="arr">→</td>
-          <td style="text-align:center"><span class="price-client-ok">₪4,030</span></td>
-          <td><span class="bdg bdg-g">אושר</span></td><td></td>
+          <td style="text-align:center"><span class="price-supplier">₪3,100.00</span></td>
+          <td style="text-align:center;color:#475569;font-size:14px">→</td>
+          <td style="text-align:center"><span class="price-client-ok">₪4,030.00</span></td>
+          <td><div class="status-menu"><button class="status-btn approved" onclick="openStatusMenu(this,'%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',9)">✓ אושר ▾</button><div class="status-dropdown"><div class="status-opt opt-ok"  onclick="setStatus(this,'אושר','%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',9)">✓ אושר</div><div class="status-opt opt-wait" onclick="setStatus(this,'ממתין','%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',9)">⏳ ממתין</div><div class="status-opt opt-no"  onclick="setStatus(this,'לא אושר','%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',9)">✗ לא אושר</div></div></div></td>
+          <td>—</td>
         </tr>
         <tr>
-          <td><span class="bdg bdg-r" style="background:rgba(239,68,68,.15);color:#fca5a5">אלביט</span></td>
-          <td><div class="proj-cell">Sting Optic Fiber</div><div class="proj-sub">רכש שרוול קרבון</div></td>
-          <td style="color:#64748b;font-size:11px;white-space:nowrap">23.2.26</td>
+          <td><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:8px;background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid rgba(239,68,68,.25)">אלביט</span></td>
+          <td><div class="proj-cell">Sting Optic fiber</div><div class="proj-sub">רכש שרוול קרבון</div></td>
+          <td style="color:#64748b;font-size:11px;white-space:nowrap">23.02.2026</td>
           <td style="font-size:12px;color:#94a3b8">—</td>
-          <td style="text-align:center"><span class="price-supplier">₪300</span></td>
-          <td style="text-align:center" class="arr">→</td>
-          <td style="text-align:center"><span class="price-client-ok">₪390</span></td>
-          <td><span class="bdg bdg-g">אושר</span></td><td></td>
+          <td style="text-align:center"><span class="price-supplier">₪300.00</span></td>
+          <td style="text-align:center;color:#475569;font-size:14px">→</td>
+          <td style="text-align:center"><span class="price-client-ok">₪390.00</span></td>
+          <td><div class="status-menu"><button class="status-btn approved" onclick="openStatusMenu(this,'%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',10)">✓ אושר ▾</button><div class="status-dropdown"><div class="status-opt opt-ok"  onclick="setStatus(this,'אושר','%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',10)">✓ אושר</div><div class="status-opt opt-wait" onclick="setStatus(this,'ממתין','%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',10)">⏳ ממתין</div><div class="status-opt opt-no"  onclick="setStatus(this,'לא אושר','%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',10)">✗ לא אושר</div></div></div></td>
+          <td>—</td>
         </tr>
         <tr class="dimmed">
-          <td><span class="bdg bdg-r" style="background:rgba(239,68,68,.15);color:#fca5a5">אלביט</span></td>
-          <td><div class="proj-cell">BrightNite 2.0</div><div class="proj-sub">3 מוקאפים שיווקיים — Zoey</div></td>
+          <td><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:8px;background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid rgba(239,68,68,.25)">אלביט</span></td>
+          <td><div class="proj-cell">brightnite2.0</div><div class="proj-sub">הצעה עבור 3 מוקאפים</div></td>
           <td style="color:#64748b;font-size:11px;white-space:nowrap">26.2.26</td>
-          <td style="font-size:12px;color:#94a3b8">Mastars</td>
-          <td style="text-align:center"><span class="price-supplier">₪23,857</span></td>
-          <td style="text-align:center" class="arr">→</td>
-          <td style="text-align:center"><span class="price-client-no">₪23,857</span></td>
-          <td><span class="bdg bdg-r">לא אושר</span></td><td></td>
+          <td style="font-size:12px;color:#94a3b8">זואי</td>
+          <td style="text-align:center"><span class="price-supplier">₪23,857.00</span></td>
+          <td style="text-align:center;color:#475569;font-size:14px">→</td>
+          <td style="text-align:center"><span class="price-client-no" style="text-decoration:line-through">₪23,857.00</span></td>
+          <td><div class="status-menu"><button class="status-btn rejected" onclick="openStatusMenu(this,'%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',11)">✗ לא אושר ▾</button><div class="status-dropdown"><div class="status-opt opt-ok"  onclick="setStatus(this,'אושר','%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',11)">✓ אושר</div><div class="status-opt opt-wait" onclick="setStatus(this,'ממתין','%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',11)">⏳ ממתין</div><div class="status-opt opt-no"  onclick="setStatus(this,'לא אושר','%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',11)">✗ לא אושר</div></div></div></td>
+          <td>—</td>
         </tr>
         <tr>
-          <td><span class="bdg bdg-r" style="background:rgba(239,68,68,.15);color:#fca5a5">אלביט</span></td>
-          <td><div class="proj-cell">Pulse Solan</div><div class="proj-sub">מודל הנדסת אנוש — לייזר</div></td>
-          <td style="color:#64748b;font-size:11px;white-space:nowrap">12.2.26</td>
+          <td><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:8px;background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid rgba(239,68,68,.25)">אלביט</span></td>
+          <td><div class="proj-cell">pulse</div><div class="proj-sub">הצעה עבור מודל לייזר</div></td>
+          <td style="color:#64748b;font-size:11px;white-space:nowrap">12.02.26</td>
           <td style="font-size:12px;color:#94a3b8">LASER4</td>
-          <td style="text-align:center"><span class="price-supplier">₪1,700</span></td>
-          <td style="text-align:center" class="arr">→</td>
-          <td style="text-align:center"><span class="price-client-ok">₪965</span><div class="price-sub">ללא עמלה</div></td>
-          <td><span class="bdg bdg-g">אושר</span></td><td></td>
+          <td style="text-align:center"><span class="price-supplier">₪1,700.00</span></td>
+          <td style="text-align:center;color:#475569;font-size:14px">→</td>
+          <td style="text-align:center"><span class="price-client-ok">₪965.00</span></td>
+          <td><div class="status-menu"><button class="status-btn approved" onclick="openStatusMenu(this,'%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',12)">✓ אושר ▾</button><div class="status-dropdown"><div class="status-opt opt-ok"  onclick="setStatus(this,'אושר','%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',12)">✓ אושר</div><div class="status-opt opt-wait" onclick="setStatus(this,'ממתין','%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',12)">⏳ ממתין</div><div class="status-opt opt-no"  onclick="setStatus(this,'לא אושר','%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026',12)">✗ לא אושר</div></div></div></td>
+          <td>—</td>
         </tr>
       </tbody>
     </table>
   </div>
-
-  <!-- ═══ MARCH ═══ -->
   <div class="rfq-block rfq-mar rfq-all panel" style="padding:0;overflow:hidden;margin-bottom:18px">
     <div style="padding:14px 20px 12px" class="rfq-month-header">
       <span class="rfq-month-title">📅 מרץ 2026</span>
-      <div class="rfq-month-stats">
-        <div class="rfq-mstat"><div class="v" style="color:#22c55e">₪2,210</div><div class="l">אושר ללקוח</div></div>
-        <div class="rfq-mstat"><div class="v" style="color:#eab308">₪132,806</div><div class="l">ממתין להחלטה</div></div>
-      </div>
+      <div class="rfq-month-stats"><div class="rfq-mstat"><div class="v" style="color:#22c55e">₪2,210</div><div class="l">אושר ללקוח</div></div><div class="rfq-mstat"><div class="v" style="color:#475569">₪1,700</div><div class="l">לספקים</div></div><div class="rfq-mstat"><div class="v" style="color:#eab308">₪133,396</div><div class="l">ממתין</div></div></div>
     </div>
     <table class="rfq-table">
       <thead><tr>
         <th>לקוח</th><th>פרויקט</th><th>תאריך</th><th>ספק</th>
         <th style="text-align:center">מחיר ספק</th>
-        <th style="text-align:center">→</th>
+        <th style="text-align:center"></th>
         <th style="text-align:center">מחיר ללקוח</th>
-        <th>סטטוס</th><th>PDF</th>
+        <th>סטטוס</th><th></th>
       </tr></thead>
       <tbody>
         <tr>
-          <td><span class="bdg bdg-r" style="background:rgba(239,68,68,.15);color:#fca5a5">אלביט</span></td>
-          <td><div class="proj-cell">Pulse Solan</div><div class="proj-sub">חיתוך לייזר שתי פלטות 12mm</div></td>
+          <td><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:8px;background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid rgba(239,68,68,.25)">EL</span></td>
+          <td><div class="proj-cell">pulse</div><div class="proj-sub">חיתוך לייזר שתי פלטות 12mm</div></td>
           <td style="color:#64748b;font-size:11px;white-space:nowrap">12.3.26</td>
           <td style="font-size:12px;color:#94a3b8">LASER4</td>
-          <td style="text-align:center"><span class="price-supplier">₪1,700</span></td>
-          <td style="text-align:center" class="arr">→</td>
-          <td style="text-align:center"><span class="price-client-ok">₪2,210</span></td>
-          <td><span class="bdg bdg-g">אושר</span></td>
+          <td style="text-align:center"><span class="price-supplier">₪1,700.00</span></td>
+          <td style="text-align:center;color:#475569;font-size:14px">→</td>
+          <td style="text-align:center"><span class="price-client-ok">₪2,210.00</span></td>
+          <td><div class="status-menu"><button class="status-btn approved" onclick="openStatusMenu(this,'%D7%9E%D7%A8%D7%A5%202026',2)">✓ אושר ▾</button><div class="status-dropdown"><div class="status-opt opt-ok"  onclick="setStatus(this,'אושר','%D7%9E%D7%A8%D7%A5%202026',2)">✓ אושר</div><div class="status-opt opt-wait" onclick="setStatus(this,'ממתין','%D7%9E%D7%A8%D7%A5%202026',2)">⏳ ממתין</div><div class="status-opt opt-no"  onclick="setStatus(this,'לא אושר','%D7%9E%D7%A8%D7%A5%202026',2)">✗ לא אושר</div></div></div></td>
           <td>—</td>
         </tr>
         <tr>
-          <td><span class="bdg bdg-p">LITEBC</span></td>
-          <td><div class="proj-cell">Hemoscope</div><div class="proj-sub">MJF PA12 ביוקומפטיבל — 70 יח׳</div></td>
+          <td><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:8px;background:rgba(168,85,247,.15);color:#d8b4fe;border:1px solid rgba(168,85,247,.25)">LITEBC</span></td>
+          <td><div class="proj-cell">hemoscope</div><div class="proj-sub">MJF PA12 Biocompatible - 70 units</div></td>
           <td style="color:#64748b;font-size:11px;white-space:nowrap">23.3.26</td>
-          <td style="font-size:12px;color:#94a3b8">Longi 🇨🇳</td>
-          <td style="text-align:center"><span class="price-supplier">$3,001</span><div class="price-sub">USD</div></td>
-          <td style="text-align:center" class="arr">→</td>
-          <td style="text-align:center"><span class="price-client-wait">₪10,547</span></td>
-          <td><span class="bdg bdg-gray">ממתין</span></td>
-          <td><a href="https://drive.google.com/drive/folders/1886FUYWbKQr-fD7Ypgm2wSX2dcWOVbfy" target="_blank" style="color:#60a5fa">📎</a></td>
+          <td style="font-size:12px;color:#94a3b8">Longi Prototype</td>
+          <td style="text-align:center"><span class="price-supplier">$2,665.50</span><div class="price-sub">USD</div></td>
+          <td style="text-align:center;color:#475569;font-size:14px">→</td>
+          <td style="text-align:center"><span class="price-client-wait">₪10,547.00</span></td>
+          <td><div class="status-menu"><button class="status-btn waiting" onclick="openStatusMenu(this,'%D7%9E%D7%A8%D7%A5%202026',3)">⏳ ממתין ▾</button><div class="status-dropdown"><div class="status-opt opt-ok"  onclick="setStatus(this,'אושר','%D7%9E%D7%A8%D7%A5%202026',3)">✓ אושר</div><div class="status-opt opt-wait" onclick="setStatus(this,'ממתין','%D7%9E%D7%A8%D7%A5%202026',3)">⏳ ממתין</div><div class="status-opt opt-no"  onclick="setStatus(this,'לא אושר','%D7%9E%D7%A8%D7%A5%202026',3)">✗ לא אושר</div></div></div></td>
+          <td><a href="https://drive.google.com/drive/folders/1886FUYWbKQr-fD7Ypgm2wSX2dcWOVbfy" target="_blank" style="color:#60a5fa;font-size:14px">📎</a></td>
         </tr>
         <tr>
-          <td><span class="bdg bdg-p">LITEBC</span></td>
-          <td><div class="proj-cell">Hemoscope</div><div class="proj-sub">MJF PA12 ביוקומפטיבל — 70 יח׳</div></td>
-          <td style="color:#64748b;font-size:11px;white-space:nowrap">24.3.26</td>
-          <td style="font-size:12px;color:#94a3b8">TTH 🇺🇸</td>
-          <td style="text-align:center"><span class="price-supplier">$6,019</span><div class="price-sub">USD</div></td>
-          <td style="text-align:center" class="arr">→</td>
-          <td style="text-align:center"><span class="price-client-wait">₪22,629</span></td>
-          <td><span class="bdg bdg-gray">ממתין</span></td>
-          <td><a href="https://drive.google.com/file/d/1ctaBWYxIf6hLdxS00WKp1Ki-fyOcSTuO/view" target="_blank" style="color:#60a5fa">📎</a></td>
+          <td><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:8px;background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid rgba(239,68,68,.25)">EL</span></td>
+          <td><div class="proj-cell">EL-SD</div><div class="proj-sub">CNC parts - 35 items, 4 sets (quote MAS2026032430-R2)</div></td>
+          <td style="color:#64748b;font-size:11px;white-space:nowrap">10/Mar/2026</td>
+          <td style="font-size:12px;color:#94a3b8">mastars.com.cn</td>
+          <td style="text-align:center"><span class="price-supplier">$23,862.80</span><div class="price-sub">USD</div></td>
+          <td style="text-align:center;color:#475569;font-size:14px">→</td>
+          <td style="text-align:center"><span class="price-client-wait">₪94,420.00</span></td>
+          <td><div class="status-menu"><button class="status-btn waiting" onclick="openStatusMenu(this,'%D7%9E%D7%A8%D7%A5%202026',4)">⏳ ממתין ▾</button><div class="status-dropdown"><div class="status-opt opt-ok"  onclick="setStatus(this,'אושר','%D7%9E%D7%A8%D7%A5%202026',4)">✓ אושר</div><div class="status-opt opt-wait" onclick="setStatus(this,'ממתין','%D7%9E%D7%A8%D7%A5%202026',4)">⏳ ממתין</div><div class="status-opt opt-no"  onclick="setStatus(this,'לא אושר','%D7%9E%D7%A8%D7%A5%202026',4)">✗ לא אושר</div></div></div></td>
+          <td><a href="https://docs.google.com/spreadsheets/d/1jRswnFCy7snRd_UKa2zHPA47jvyTHRwG/edit?usp=drivesdk&ouid=110871808109910093191&rtpof=true&sd=true" target="_blank" style="color:#60a5fa;font-size:14px">📎</a></td>
         </tr>
         <tr>
-          <td><span class="bdg bdg-r" style="background:rgba(239,68,68,.15);color:#fca5a5">אלביט</span></td>
-          <td><div class="proj-cell">Helios</div><div class="proj-sub">SLS+CNC ויזורים — הירש #794</div></td>
-          <td style="color:#64748b;font-size:11px;white-space:nowrap">24.3.26</td>
-          <td style="font-size:12px;color:#94a3b8">הירש דגמים</td>
-          <td style="text-align:center"><span class="price-supplier">₪5,800</span></td>
-          <td style="text-align:center" class="arr">→</td>
-          <td style="text-align:center"><span class="price-client-wait">₪7,540</span><div class="price-sub">30% עמלה</div></td>
-          <td><span class="bdg bdg-gray">ממתין</span></td>
-          <td><a href="https://drive.google.com/file/d/1r2RFX9eS5e5WFRJR3NTZwqD75LOlMdCl/view" target="_blank" style="color:#60a5fa">📎</a></td>
+          <td><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:8px;background:rgba(168,85,247,.15);color:#d8b4fe;border:1px solid rgba(168,85,247,.25)">LITEBC</span></td>
+          <td><div class="proj-cell">Hemoscope</div><div class="proj-sub">MJF PA12 Biocompatible - quote from TTH</div></td>
+          <td style="color:#64748b;font-size:11px;white-space:nowrap">24/Mar/2026</td>
+          <td style="font-size:12px;color:#94a3b8">tth.com</td>
+          <td style="text-align:center"><span class="price-supplier">$5,719.00</span><div class="price-sub">USD</div></td>
+          <td style="text-align:center;color:#475569;font-size:14px">→</td>
+          <td style="text-align:center"><span class="price-client-wait">₪22,629.00</span></td>
+          <td><div class="status-menu"><button class="status-btn waiting" onclick="openStatusMenu(this,'%D7%9E%D7%A8%D7%A5%202026',5)">⏳ ממתין ▾</button><div class="status-dropdown"><div class="status-opt opt-ok"  onclick="setStatus(this,'אושר','%D7%9E%D7%A8%D7%A5%202026',5)">✓ אושר</div><div class="status-opt opt-wait" onclick="setStatus(this,'ממתין','%D7%9E%D7%A8%D7%A5%202026',5)">⏳ ממתין</div><div class="status-opt opt-no"  onclick="setStatus(this,'לא אושר','%D7%9E%D7%A8%D7%A5%202026',5)">✗ לא אושר</div></div></div></td>
+          <td><a href="https://drive.google.com/file/d/1ctaBWYxIf6hLdxS00WKp1Ki-fyOcSTuO/view?usp=drivesdk" target="_blank" style="color:#60a5fa;font-size:14px">📎</a></td>
         </tr>
         <tr>
-          <td><span class="bdg bdg-r" style="background:rgba(239,68,68,.15);color:#fca5a5">אלביט</span></td>
-          <td><div class="proj-cell">EL-SD</div><div class="proj-sub">CNC 35 פריטים 4 סטים (Mastars)</div></td>
-          <td style="color:#64748b;font-size:11px;white-space:nowrap">10.3.26</td>
-          <td style="font-size:12px;color:#94a3b8">Mastars 🇨🇳</td>
-          <td style="text-align:center"><span class="price-supplier">$23,863</span><div class="price-sub">USD</div></td>
-          <td style="text-align:center" class="arr">→</td>
-          <td style="text-align:center"><span class="price-client-wait">₪94,420</span></td>
-          <td><span class="bdg bdg-gray">ממתין</span></td>
-          <td><a href="https://docs.google.com/spreadsheets/d/1jRswnFCy7snRd_UKa2zHPA47jvyTHRwG/edit" target="_blank" style="color:#60a5fa">📎</a></td>
+          <td><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:8px;background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid rgba(239,68,68,.25)">אלביט</span></td>
+          <td><div class="proj-cell">Helios</div><div class="proj-sub">5 יח׳ SLS + טבילה + אינסרטים, 3 משקפים CNC + מתקן (PQ26</div></td>
+          <td style="color:#64748b;font-size:11px;white-space:nowrap">24/03/26</td>
+          <td style="font-size:12px;color:#94a3b8">hirshpro.com</td>
+          <td style="text-align:center"><span class="price-supplier">₪5,800.00</span></td>
+          <td style="text-align:center;color:#475569;font-size:14px">→</td>
+          <td style="text-align:center"><span class="price-client-wait">₪5,800.00</span></td>
+          <td><div class="status-menu"><button class="status-btn waiting" onclick="openStatusMenu(this,'%D7%9E%D7%A8%D7%A5%202026',6)">⏳ ממתין ▾</button><div class="status-dropdown"><div class="status-opt opt-ok"  onclick="setStatus(this,'אושר','%D7%9E%D7%A8%D7%A5%202026',6)">✓ אושר</div><div class="status-opt opt-wait" onclick="setStatus(this,'ממתין','%D7%9E%D7%A8%D7%A5%202026',6)">⏳ ממתין</div><div class="status-opt opt-no"  onclick="setStatus(this,'לא אושר','%D7%9E%D7%A8%D7%A5%202026',6)">✗ לא אושר</div></div></div></td>
+          <td><a href="https://drive.google.com/file/d/1r2RFX9eS5e5WFRJR3NTZwqD75LOlMdCl/view?usp=drivesdk" target="_blank" style="color:#60a5fa;font-size:14px">📎</a></td>
         </tr>
       </tbody>
     </table>
   </div>
 
-  <!-- Action items -->
+    <!-- Action items -->
   <div class="panel">
     <div class="panel-title">💡 פעולות נדרשות</div>
     <div style="display:flex;flex-direction:column;gap:10px">
@@ -2052,6 +2111,107 @@ JLTV FMTV המשך מחקר פלטפורמות</li><li>המשך פיתוח נו�
 </div>
 
 <script>
+
+// ── RFQ Status Update ──────────────────────────────────────────
+var RFQ_API = localStorage.getItem('rfq_api_url') || '';
+var RFQ_SECRET = 'br-rfq-2026';
+
+function showApiSetup() {
+  var box = document.getElementById('rfq-setup-box');
+  box.style.display = box.style.display === 'none' ? 'block' : 'none';
+  if (RFQ_API) document.getElementById('rfq-api-input').value = RFQ_API;
+}
+
+function saveApiUrl() {
+  var url = document.getElementById('rfq-api-input').value.trim();
+  if (!url) return;
+  localStorage.setItem('rfq_api_url', url);
+  RFQ_API = url;
+  document.getElementById('rfq-api-banner').style.display = 'none';
+  document.getElementById('rfq-setup-box').style.display = 'none';
+  document.getElementById('rfq-api-status').textContent = '✓ מחובר';
+  testApiUrl(url);
+}
+
+function testApiUrl(url) {
+  fetch(url).then(r => r.json()).then(d => {
+    if (d.ok) document.getElementById('rfq-api-status').textContent = '✓ API מחובר';
+  }).catch(() => {
+    document.getElementById('rfq-api-status').textContent = '⚠ לא הצלחתי להגיע ל-API';
+  });
+}
+
+function openStatusMenu(btn, sheet, row) {
+  // Close all other open dropdowns
+  document.querySelectorAll('.status-dropdown.open').forEach(d => {
+    if (d !== btn.nextElementSibling) d.classList.remove('open');
+  });
+  btn.nextElementSibling.classList.toggle('open');
+  // Close on outside click
+  setTimeout(() => {
+    document.addEventListener('click', closeAllMenus, {once:true});
+  }, 0);
+}
+
+function closeAllMenus() {
+  document.querySelectorAll('.status-dropdown.open').forEach(d => d.classList.remove('open'));
+}
+
+function setStatus(optEl, status, sheetEnc, row) {
+  optEl.closest('.status-dropdown').classList.remove('open');
+  var menu = optEl.closest('.status-menu');
+  var btn = menu.querySelector('.status-btn');
+
+  // Optimistic update UI
+  btn.className = 'status-btn ' + (status === 'אושר' ? 'approved' : status === 'לא אושר' ? 'rejected' : 'waiting');
+  btn.innerHTML = (status === 'אושר' ? '✓ אושר' : status === 'לא אושר' ? '✗ לא אושר' : '⏳ ממתין') + ' ▾';
+
+  // Update row dimming and price color
+  var tr = menu.closest('tr');
+  if (status === 'לא אושר') {
+    tr.classList.add('dimmed');
+    var pEl = tr.querySelector('.price-client-ok, .price-client-wait, .price-client-no');
+    if (pEl) { pEl.className = 'price-client-no'; pEl.style.textDecoration = 'line-through'; }
+  } else {
+    tr.classList.remove('dimmed');
+    var pEl2 = tr.querySelector('.price-client-ok, .price-client-wait, .price-client-no');
+    if (pEl2) {
+      pEl2.className = status === 'אושר' ? 'price-client-ok' : 'price-client-wait';
+      pEl2.style.textDecoration = '';
+    }
+  }
+
+  // Update Google Sheets via Apps Script
+  if (!RFQ_API) {
+    showApiSetup();
+    return;
+  }
+  btn.classList.add('status-saving');
+  var url = RFQ_API + '?token=' + encodeURIComponent(RFQ_SECRET)
+          + '&action=update_status'
+          + '&sheet=' + sheetEnc
+          + '&row=' + row
+          + '&status=' + encodeURIComponent(status);
+  fetch(url)
+    .then(r => r.json())
+    .then(d => {
+      btn.classList.remove('status-saving');
+      if (!d.ok) console.error('RFQ API error:', d);
+    })
+    .catch(e => {
+      btn.classList.remove('status-saving');
+      console.error('RFQ API fetch error:', e);
+    });
+}
+
+// On load — hide banner if API already configured
+(function() {
+  if (RFQ_API) {
+    document.getElementById('rfq-api-banner').style.display = 'none';
+    testApiUrl(RFQ_API);
+  }
+})();
+
 function rfqFilter(month, btn) {
   document.querySelectorAll('.rfq-ftab').forEach(b => {
     b.style.background = 'none';
