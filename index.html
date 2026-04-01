@@ -133,7 +133,7 @@ tr:hover td { background:rgba(255,255,255,.02); }
   <button class="tab-btn" onclick="sw('crm',this)">🤝 CRM</button>
   <a class="tab-btn" href="vendors.html" style="text-decoration:none">📋 ספקים</a>
   <button class="tab-btn" onclick="sw('linkedin',this)">💼 LinkedIn</button>
-  <button class="tab-btn" onclick="sw('elbit',this)">🛡️ אלביט</button>
+  <button class="tab-btn" onclick="sw('elbit',this)">🛡️ דו"ח אלביט</button>
   <button class="tab-btn" onclick="sw('rfq',this)">🏭 הוצאות יצרנים</button>
   <button class="tab-btn" onclick="sw('bob',this)">🤖 Bob — אוטומציות</button>
 </div>
@@ -1536,412 +1536,223 @@ tr:hover td { background:rgba(255,255,255,.02); }
 
 <!-- ===== TAB: ELBIT ===== -->
 <div id="pane-elbit" class="pane">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+    <div>
+      <div style="font-size:18px;font-weight:700;color:#f1f5f9">🛡️ דו"ח אלביט — אפריל 2026</div>
+      <div style="font-size:11px;color:#64748b;margin-top:2px">תעריף ₪211/שעה · מקור: אפריל 26</div>
+    </div>
+    <div style="font-size:11px;color:#475569">מסגרות שעות ועלויות לפי WBS</div>
+  </div>
 
-  <style>
-    .elb-kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:20px; }
-    .elb-proj { background:#0f172a; border-radius:10px; padding:14px 16px; border:1px solid #1e293b; margin-bottom:10px; }
-    .elb-proj-head { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px; }
-    .elb-proj-name { font-size:14px; font-weight:600; color:#f1f5f9; }
-    .elb-proj-wbs { font-size:10px; color:#475569; margin-top:2px; }
-    .elb-proj-nums { text-align:left; }
-    .elb-hours { font-size:26px; font-weight:700; color:#60a5fa; text-align:left; line-height:1; }
-    .elb-money { font-size:11px; color:#64748b; margin-bottom:8px; }
-    .elb-money-lbl { color:#475569; }
-    .elb-money-val { color:#94a3b8; font-weight:500; }
-    .elb-vat { color:#86a872; }
-    .elb-money-sep { color:#334155; margin:0 6px; }
-    .elb-descs { margin-top:8px; padding-top:8px; border-top:1px solid #1e293b; }
-    .elb-descs-title { font-size:10px; color:#64748b; text-transform:uppercase; letter-spacing:.05em; margin-bottom:5px; }
-    .elb-desc-list { list-style:none; padding:0; margin:0; }
-    .elb-desc-list li { font-size:12px; color:#94a3b8; padding:2px 0; border-bottom:1px dotted #1e293b; line-height:1.5; }
-    .elb-desc-list li:last-child { border-bottom:none; }
-    .elb-desc-list li::before { content:"·"; color:#334155; margin-left:0; margin-right:6px; }
-    .elb-prev-note { font-size:11px; color:#475569; margin-top:4px; font-style:italic; }
-    .elb-section-label { font-size:11px; font-weight:600; color:#475569; text-transform:uppercase; letter-spacing:.07em; margin:18px 0 10px; padding-bottom:6px; border-bottom:1px solid #1e293b; }
-    .elb-totals-bar { background:#1e293b; border-radius:12px; padding:16px 20px; margin-bottom:18px; border:1px solid #334155; }
-    .elb-totals-row { display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px solid #1e293b; font-size:13px; }
-    .elb-totals-row:last-child { border:none; font-weight:700; font-size:15px; }
-    .elb-tot-lbl { color:#94a3b8; }
-    .elb-tot-val { color:#f1f5f9; font-weight:600; }
-  </style>
-
-  <div class="elb-kpis">
-    <div class="kpi b">
-      <div class="kpi-l">סה"כ שעות - March 2026</div>
-      <div class="kpi-v" style="color:#60a5fa">308h</div>
-      <div class="kpi-s">תעריף ₪211/שעה</div>
+  
+  <div style="background:#0f172a;border-radius:12px;padding:18px 20px;margin-bottom:18px;border:1px solid #1e293b;display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
+    <div>
+      <div style="font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px">שעות חודש זה</div>
+      <div style="font-size:26px;font-weight:700;color:#60a5fa">0h</div>
     </div>
-    <div class="kpi g">
-      <div class="kpi-l">סכום ללא מעמ</div>
-      <div class="kpi-v" style="color:#22c55e">₪64,882</div>
-      <div class="kpi-s">לפני מע"מ 18%</div>
+    <div>
+      <div style="font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px">סכום ללא מע"מ</div>
+      <div style="font-size:26px;font-weight:700;color:#22c55e">₪0</div>
     </div>
-    <div class="kpi p">
-      <div class="kpi-l">כולל מעמ</div>
-      <div class="kpi-v" style="color:#a3e635">₪76,561</div>
-      <div class="kpi-s">חשבונית סופית</div>
+    <div>
+      <div style="font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px">כולל מע"מ (18%)</div>
+      <div style="font-size:26px;font-weight:700;color:#a3e635">₪0</div>
     </div>
-    <div class="kpi y">
-      <div class="kpi-l">פרויקטים פעילים</div>
-      <div class="kpi-v" style="color:#eab308">9</div>
-      <div class="kpi-s">6 ללא שעות החודש</div>
+    <div>
+      <div style="font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px">פרויקטים פעילים</div>
+      <div style="font-size:26px;font-weight:700;color:#eab308">0</div>
+      <div style="font-size:10px;color:#475569">7 בסה"כ בדוח</div>
     </div>
   </div>
 
-  <div class="elb-totals-bar">
-    <div class="panel-title" style="margin-bottom:12px">💰 סיכום חיוב - March 2026</div>
-    <div class="elb-totals-row">
-      <span class="elb-tot-lbl">שעות כולל</span>
-      <span class="elb-tot-val">307.5 שעות × ₪211</span>
-    </div>
-    <div class="elb-totals-row">
-      <span class="elb-tot-lbl">סכום ללא מע"מ</span>
-      <span class="elb-tot-val" style="color:#22c55e">₪64,882</span>
-    </div>
-    <div class="elb-totals-row">
-      <span class="elb-tot-lbl">מע"מ (18%)</span>
-      <span class="elb-tot-val" style="color:#64748b">₪11,679</span>
-    </div>
-    <div class="elb-totals-row">
-      <span class="elb-tot-lbl">סה"כ לחיוב</span>
-      <span class="elb-tot-val" style="color:#a3e635;font-size:18px">₪76,561</span>
-    </div>
+  <div style="background:#1e293b;border-radius:12px;border:1px solid #334155;overflow:hidden">
+    <table style="width:100%;border-collapse:collapse;font-size:12px">
+      <thead>
+        <tr style="background:#0f172a;border-bottom:2px solid #334155">
+          <th style="padding:12px 10px;text-align:right;color:#64748b;font-size:10px;text-transform:uppercase;letter-spacing:.06em;min-width:180px">פרויקט / WBS</th>
+          <th style="padding:12px 10px;text-align:right;color:#64748b;font-size:10px;text-transform:uppercase;letter-spacing:.06em">תיאור עבודה החודש</th>
+          <th style="padding:12px 10px;text-align:center;color:#64748b;font-size:10px;text-transform:uppercase;letter-spacing:.06em;min-width:80px">שעות חודש</th>
+          <th style="padding:12px 10px;text-align:right;color:#64748b;font-size:10px;text-transform:uppercase;letter-spacing:.06em;min-width:140px">מסגרת / ניצול</th>
+          <th style="padding:12px 10px;text-align:left;color:#64748b;font-size:10px;text-transform:uppercase;letter-spacing:.06em;min-width:120px">שווי</th>
+        </tr>
+      </thead>
+      <tbody>
+    <tr style="border-bottom:1px solid #1e293b">
+      <td style="padding:12px 10px">
+        <div style="font-size:13px;font-weight:600;color:#f1f5f9">2025_366_LND_UX_IRON HAWK STAGE 3</div>
+        <div style="font-size:10px;color:#475569;margin-top:1px">K950PWP10000</div>
+        <div style="font-size:10px;color:#64748b">אביהו סיוון</div>
+      </td>
+      <td style="padding:12px 10px;font-size:12px;color:#94a3b8;max-width:220px;line-height:1.5"></td>
+      <td style="padding:12px 10px;text-align:center">
+        <div style="font-size:20px;font-weight:700;color:#60a5fa">—</div>
+        
+      </td>
+      <td style="padding:12px 10px">
+        <div style="font-size:13px;font-weight:700;color:#60a5fa">—</div>
+        <div style="font-size:11px;color:#475569">/ 2340h</div>
+        <div style="background:#334155;border-radius:3px;height:5px;overflow:hidden;margin-top:4px"><div style="width:0%;height:100%;background:#22c55e"></div></div>
+        <div style="display:flex;gap:6px;align-items:center;margin-top:4px"><span style="font-size:10px;color:#475569">—</span> <span style="font-size:10px;color:#22c55e">נותר 2340h</span></div>
+      </td>
+      <td style="padding:12px 10px;text-align:left">
+        <div style="font-size:13px;font-weight:700;color:#a855f7">₪0</div>
+        
+      </td>
+    </tr>
+    <tr style="border-bottom:1px solid #1e293b">
+      <td style="padding:12px 10px">
+        <div style="font-size:13px;font-weight:600;color:#f1f5f9">2024_280_C4I_Eitan miclol</div>
+        <div style="font-size:10px;color:#475569;margin-top:1px">K960PWP10040</div>
+        <div style="font-size:10px;color:#64748b">ערן שפיר</div>
+      </td>
+      <td style="padding:12px 10px;font-size:12px;color:#94a3b8;max-width:220px;line-height:1.5"></td>
+      <td style="padding:12px 10px;text-align:center">
+        <div style="font-size:20px;font-weight:700;color:#60a5fa">—</div>
+        
+      </td>
+      <td style="padding:12px 10px">
+        <div style="font-size:13px;font-weight:700;color:#60a5fa">—</div>
+        <div style="font-size:11px;color:#475569">/ 677h</div>
+        <div style="background:#334155;border-radius:3px;height:5px;overflow:hidden;margin-top:4px"><div style="width:0%;height:100%;background:#22c55e"></div></div>
+        <div style="display:flex;gap:6px;align-items:center;margin-top:4px"><span style="font-size:10px;color:#475569">—</span> <span style="font-size:10px;color:#22c55e">נותר 677h</span></div>
+      </td>
+      <td style="padding:12px 10px;text-align:left">
+        <div style="font-size:13px;font-weight:700;color:#a855f7">₪0</div>
+        
+      </td>
+    </tr>
+    <tr style="border-bottom:1px solid #1e293b">
+      <td style="padding:12px 10px">
+        <div style="font-size:13px;font-weight:600;color:#f1f5f9">2025_397_ASP_HF_LFD_HFE</div>
+        <div style="font-size:10px;color:#475569;margin-top:1px">K957PCA20075</div>
+        <div style="font-size:10px;color:#64748b">אתי גליקשטיין</div>
+      </td>
+      <td style="padding:12px 10px;font-size:12px;color:#94a3b8;max-width:220px;line-height:1.5"></td>
+      <td style="padding:12px 10px;text-align:center">
+        <div style="font-size:20px;font-weight:700;color:#60a5fa">—</div>
+        
+      </td>
+      <td style="padding:12px 10px">
+        <div style="font-size:13px;font-weight:700;color:#60a5fa">—</div>
+        <div style="font-size:11px;color:#475569">/ 75h</div>
+        <div style="background:#334155;border-radius:3px;height:5px;overflow:hidden;margin-top:4px"><div style="width:0%;height:100%;background:#22c55e"></div></div>
+        <div style="display:flex;gap:6px;align-items:center;margin-top:4px"><span style="font-size:10px;color:#475569">—</span> <span style="font-size:10px;color:#22c55e">נותר 75h</span></div>
+      </td>
+      <td style="padding:12px 10px;text-align:left">
+        <div style="font-size:13px;font-weight:700;color:#a855f7">₪0</div>
+        
+      </td>
+    </tr>
+    <tr style="border-bottom:1px solid #1e293b">
+      <td style="padding:12px 10px">
+        <div style="font-size:13px;font-weight:600;color:#f1f5f9">2026_422_ELO_ID_STING</div>
+        <div style="font-size:10px;color:#475569;margin-top:1px">K952PCA10008</div>
+        <div style="font-size:10px;color:#64748b">רועי לירן</div>
+      </td>
+      <td style="padding:12px 10px;font-size:12px;color:#94a3b8;max-width:220px;line-height:1.5"></td>
+      <td style="padding:12px 10px;text-align:center">
+        <div style="font-size:20px;font-weight:700;color:#60a5fa">—</div>
+        
+      </td>
+      <td style="padding:12px 10px">
+        <div style="font-size:13px;font-weight:700;color:#60a5fa">—</div>
+        <div style="font-size:11px;color:#475569">/ 970h</div>
+        <div style="background:#334155;border-radius:3px;height:5px;overflow:hidden;margin-top:4px"><div style="width:0%;height:100%;background:#22c55e"></div></div>
+        <div style="display:flex;gap:6px;align-items:center;margin-top:4px"><span style="font-size:10px;color:#475569">—</span> <span style="font-size:10px;color:#22c55e">נותר 970h</span></div>
+      </td>
+      <td style="padding:12px 10px;text-align:left">
+        <div style="font-size:13px;font-weight:700;color:#a855f7">₪0</div>
+        
+      </td>
+    </tr>
+    <tr style="border-bottom:1px solid #1e293b">
+      <td style="padding:12px 10px">
+        <div style="font-size:13px;font-weight:600;color:#f1f5f9">2025_411_ELS_UX_OFEK OGDAN</div>
+        <div style="font-size:10px;color:#475569;margin-top:1px">K953PCA10018</div>
+        <div style="font-size:10px;color:#64748b">רועי לירן</div>
+      </td>
+      <td style="padding:12px 10px;font-size:12px;color:#94a3b8;max-width:220px;line-height:1.5"></td>
+      <td style="padding:12px 10px;text-align:center">
+        <div style="font-size:20px;font-weight:700;color:#60a5fa">—</div>
+        
+      </td>
+      <td style="padding:12px 10px">
+        <div style="font-size:13px;font-weight:700;color:#60a5fa">—</div>
+        <div style="font-size:11px;color:#475569">/ 120h</div>
+        <div style="background:#334155;border-radius:3px;height:5px;overflow:hidden;margin-top:4px"><div style="width:0%;height:100%;background:#22c55e"></div></div>
+        <div style="display:flex;gap:6px;align-items:center;margin-top:4px"><span style="font-size:10px;color:#475569">—</span> <span style="font-size:10px;color:#22c55e">נותר 120h</span></div>
+      </td>
+      <td style="padding:12px 10px;text-align:left">
+        <div style="font-size:13px;font-weight:700;color:#a855f7">₪0</div>
+        
+      </td>
+    </tr>
+    <tr style="border-bottom:1px solid #1e293b">
+      <td style="padding:12px 10px">
+        <div style="font-size:13px;font-weight:600;color:#f1f5f9">2023_106_ASP_ID_Mini_Brightnight</div>
+        <div style="font-size:10px;color:#475569;margin-top:1px">K957PCA20053</div>
+        <div style="font-size:10px;color:#64748b">אתי גליקשטיין</div>
+      </td>
+      <td style="padding:12px 10px;font-size:12px;color:#94a3b8;max-width:220px;line-height:1.5"></td>
+      <td style="padding:12px 10px;text-align:center">
+        <div style="font-size:20px;font-weight:700;color:#60a5fa">—</div>
+        
+      </td>
+      <td style="padding:12px 10px">
+        <div style="font-size:13px;font-weight:700;color:#60a5fa">—</div>
+        <div style="font-size:11px;color:#475569">/ 240h</div>
+        <div style="background:#334155;border-radius:3px;height:5px;overflow:hidden;margin-top:4px"><div style="width:0%;height:100%;background:#22c55e"></div></div>
+        <div style="display:flex;gap:6px;align-items:center;margin-top:4px"><span style="font-size:10px;color:#475569">—</span> <span style="font-size:10px;color:#22c55e">נותר 240h</span></div>
+      </td>
+      <td style="padding:12px 10px;text-align:left">
+        <div style="font-size:13px;font-weight:700;color:#a855f7">₪0</div>
+        
+      </td>
+    </tr>
+    <tr style="border-bottom:1px solid #1e293b">
+      <td style="padding:12px 10px">
+        <div style="font-size:13px;font-weight:600;color:#f1f5f9">2025_402_LND_HF_NOVA SHIELD</div>
+        <div style="font-size:10px;color:#475569;margin-top:1px">K950PWP10001</div>
+        <div style="font-size:10px;color:#64748b">אביהו סיוון</div>
+      </td>
+      <td style="padding:12px 10px;font-size:12px;color:#94a3b8;max-width:220px;line-height:1.5"></td>
+      <td style="padding:12px 10px;text-align:center">
+        <div style="font-size:20px;font-weight:700;color:#60a5fa">—</div>
+        
+      </td>
+      <td style="padding:12px 10px">
+        <div style="font-size:13px;font-weight:700;color:#60a5fa">—</div>
+        <div style="font-size:11px;color:#475569">/ 180h</div>
+        <div style="background:#334155;border-radius:3px;height:5px;overflow:hidden;margin-top:4px"><div style="width:0%;height:100%;background:#22c55e"></div></div>
+        <div style="display:flex;gap:6px;align-items:center;margin-top:4px"><span style="font-size:10px;color:#475569">—</span> <span style="font-size:10px;color:#22c55e">נותר 180h</span></div>
+      </td>
+      <td style="padding:12px 10px;text-align:left">
+        <div style="font-size:13px;font-weight:700;color:#a855f7">₪0</div>
+        
+      </td>
+    </tr></tbody>
+    </table>
   </div>
 
-  <div class="elb-section-label">📋 פרויקטים פעילים - March 2026</div>
-
-    <div class="elb-proj" style="border-right: 3px solid #3b82f6;">
-      <div class="elb-proj-head">
-        <div>
-          <div class="elb-proj-name">Pulse Solan</div>
-          <div class="elb-proj-wbs">TBD &nbsp;·&nbsp; ⚠️ WBS ממתין</div>
-        </div>
-        <div class="elb-proj-nums">
-          <div class="elb-hours">135.5h</div>
-
-        </div>
+  <div style="margin-top:14px;padding:12px 16px;background:#1e293b;border-radius:10px;border:1px solid #334155;display:flex;justify-content:space-between;align-items:center">
+    <div style="font-size:13px;font-weight:700;color:#f1f5f9">💰 סה"כ לחיוב — אפריל 2026</div>
+    <div style="display:flex;gap:24px">
+      <div style="text-align:center">
+        <div style="font-size:10px;color:#64748b">ללא מע"מ</div>
+        <div style="font-size:18px;font-weight:700;color:#22c55e">₪0</div>
       </div>
-      <div class="elb-money">
-        <span class="elb-money-lbl">ללא מעמ</span> <span class="elb-money-val">₪28,590</span>
-        <span class="elb-money-sep">·</span>
-        <span class="elb-money-lbl">כולל מעמ</span> <span class="elb-money-val elb-vat">₪33,737</span>
+      <div style="text-align:center">
+        <div style="font-size:10px;color:#64748b">מע"מ 18%</div>
+        <div style="font-size:18px;font-weight:700;color:#64748b">₪0</div>
       </div>
-
-      <div class="elb-descs">
-        <div class="elb-descs-title">מה בוצע החודש:</div>
-        <ul class="elb-desc-list"><li>סקירת הנא</li><li>הכנת חומרים למצגת</li><li>חיפוש אחר דגם רובה מתאים וזום ערב</li><li>הכנת חומרים למצגת + ביקור בתעש</li><li>הכנת חומרים + ביקור בתעש</li><li>תיקון של החלקים ללייזר, הצבה סופית על הפלטה ושליחת בקשה להצעת מחיר מLASERCUT4</li></ul>
+      <div style="text-align:center">
+        <div style="font-size:10px;color:#64748b">סה"כ לחשבונית</div>
+        <div style="font-size:22px;font-weight:700;color:#a3e635">₪0</div>
       </div>
     </div>
-
-    <div class="elb-proj" style="border-right: 3px solid #22c55e;">
-      <div class="elb-proj-head">
-        <div>
-          <div class="elb-proj-name">Sting</div>
-          <div class="elb-proj-wbs">2026_422_ELO_ID_STING &nbsp;·&nbsp; K952PCA10008</div>
-        </div>
-        <div class="elb-proj-nums">
-          <div class="elb-hours">38.5h</div>
-          <span style="color:#475569;font-size:11px">· פבר' 379.5h</span>
-        </div>
-      </div>
-      <div class="elb-money">
-        <span class="elb-money-lbl">ללא מעמ</span> <span class="elb-money-val">₪8,124</span>
-        <span class="elb-money-sep">·</span>
-        <span class="elb-money-lbl">כולל מעמ</span> <span class="elb-money-val elb-vat">₪9,586</span>
-      </div>
-
-      <div class="elb-descs">
-        <div class="elb-descs-title">מה בוצע החודש:</div>
-        <ul class="elb-desc-list"><li>הוראות הרכבה והתאמת הטולרנסים להדפסת DLP</li><li>דיוק פרטי חיבור אחרונים, התאמה לתקן V-0
-(צריך עוד טיפה עבודה)
-בקשות להצעות מחיר</li><li>המשך פיתוח קפיץ+ הדפסות תיקון</li><li>ניסיונות מחבר קפיץ+ הדפסות</li><li>פיתוח קפיץ</li><li>תיקון פרטים, הערכת מסה, המשך מצגת</li></ul>
-      </div>
-    </div>
-
-    <div class="elb-proj" style="border-right: 3px solid #22c55e;">
-      <div class="elb-proj-head">
-        <div>
-          <div class="elb-proj-name">2025_378_ASP_HF_Xsight3_Helment</div>
-          <div class="elb-proj-wbs">2025_378_ASP_HF_Xsight3_Helmet &nbsp;·&nbsp; ⚠️ WBS ממתין</div>
-        </div>
-        <div class="elb-proj-nums">
-          <div class="elb-hours">33.0h</div>
-
-        </div>
-      </div>
-      <div class="elb-money">
-        <span class="elb-money-lbl">ללא מעמ</span> <span class="elb-money-val">₪6,963</span>
-        <span class="elb-money-sep">·</span>
-        <span class="elb-money-lbl">כולל מעמ</span> <span class="elb-money-val elb-vat">₪8,216</span>
-      </div>
-
-      <div class="elb-descs">
-        <div class="elb-descs-title">מה בוצע החודש:</div>
-        <ul class="elb-desc-list"><li>מידול קונספט</li></ul>
-      </div>
-    </div>
-
-    <div class="elb-proj" style="border-right: 3px solid #64748b;">
-      <div class="elb-proj-head">
-        <div>
-          <div class="elb-proj-name">Ofek Ogdan</div>
-          <div class="elb-proj-wbs">2025_411_ELS_UX_OFEK OGDAN &nbsp;·&nbsp; K953PCA10018</div>
-        </div>
-        <div class="elb-proj-nums">
-          <div class="elb-hours">26.0h</div>
-          <span style="color:#475569;font-size:11px">· פבר' 107.0h</span>
-        </div>
-      </div>
-      <div class="elb-money">
-        <span class="elb-money-lbl">ללא מעמ</span> <span class="elb-money-val">₪5,486</span>
-        <span class="elb-money-sep">·</span>
-        <span class="elb-money-lbl">כולל מעמ</span> <span class="elb-money-val elb-vat">₪6,473</span>
-      </div>
-
-      <div class="elb-descs">
-        <div class="elb-descs-title">מה בוצע החודש:</div>
-        <ul class="elb-desc-list"><li>פגישה</li><li>הדמיות</li><li>השלמות מידול</li></ul>
-      </div>
-    </div>
-
-    <div class="elb-proj" style="border-right: 3px solid #64748b;">
-      <div class="elb-proj-head">
-        <div>
-          <div class="elb-proj-name">Nova Shield</div>
-          <div class="elb-proj-wbs">2025_402_LND_HF_NOVA SHIELD &nbsp;·&nbsp; K950PWP10001</div>
-        </div>
-        <div class="elb-proj-nums">
-          <div class="elb-hours">19.0h</div>
-          <span style="color:#475569;font-size:11px">· פבר' 76.0h</span>
-        </div>
-      </div>
-      <div class="elb-money">
-        <span class="elb-money-lbl">ללא מעמ</span> <span class="elb-money-val">₪4,009</span>
-        <span class="elb-money-sep">·</span>
-        <span class="elb-money-lbl">כולל מעמ</span> <span class="elb-money-val elb-vat">₪4,731</span>
-      </div>
-
-      <div class="elb-descs">
-        <div class="elb-descs-title">מה בוצע החודש:</div>
-        <ul class="elb-desc-list"><li>המשך מחקר פלטפורמות</li><li>פגישת מחקר פלטפורמות</li><li>המשך מחקר פלטפורמות
-דגב על HUMVEE
-EITAN</li><li>מידול מוקאפ ללייזר
-JLTV FMTV המשך מחקר פלטפורמות</li><li>המשך פיתוח נוטבוק</li><li>מחקר פלטפורמות</li></ul>
-      </div>
-    </div>
-
-    <div class="elb-proj" style="border-right: 3px solid #64748b;">
-      <div class="elb-proj-head">
-        <div>
-          <div class="elb-proj-name">2022_109_ASP_HF_helios - Test flight glasses</div>
-          <div class="elb-proj-wbs">2022_109_ASP_HF_helios - Test flight glasses &nbsp;·&nbsp; K957PCA20020</div>
-        </div>
-        <div class="elb-proj-nums">
-          <div class="elb-hours">18.5h</div>
-
-        </div>
-      </div>
-      <div class="elb-money">
-        <span class="elb-money-lbl">ללא מעמ</span> <span class="elb-money-val">₪3,904</span>
-        <span class="elb-money-sep">·</span>
-        <span class="elb-money-lbl">כולל מעמ</span> <span class="elb-money-val elb-vat">₪4,606</span>
-      </div>
-
-      <div class="elb-descs">
-        <div class="elb-descs-title">מה בוצע החודש:</div>
-        <ul class="elb-desc-list"><li>תכן וויזור</li></ul>
-      </div>
-    </div>
-
-    <div class="elb-proj" style="border-right: 3px solid #64748b;">
-      <div class="elb-proj-head">
-        <div>
-          <div class="elb-proj-name">2022_109_ASP_HF_helios - case</div>
-          <div class="elb-proj-wbs">2022_109_ASP_HF_helios - case &nbsp;·&nbsp; K957PCA20020</div>
-        </div>
-        <div class="elb-proj-nums">
-          <div class="elb-hours">18.0h</div>
-
-        </div>
-      </div>
-      <div class="elb-money">
-        <span class="elb-money-lbl">ללא מעמ</span> <span class="elb-money-val">₪3,798</span>
-        <span class="elb-money-sep">·</span>
-        <span class="elb-money-lbl">כולל מעמ</span> <span class="elb-money-val elb-vat">₪4,482</span>
-      </div>
-
-      <div class="elb-descs">
-        <div class="elb-descs-title">מה בוצע החודש:</div>
-        <ul class="elb-desc-list"><li>פיתוח צורני מתקדם,, המשך מצגת, השוואות נפחים</li><li>פיתוח צורני והתחלת מצגת</li><li>פיתוח קונספ, מידול חלופות צורניות</li></ul>
-      </div>
-    </div>
-
-    <div class="elb-proj" style="border-right: 3px solid #64748b;">
-      <div class="elb-proj-head">
-        <div>
-          <div class="elb-proj-name">LFD</div>
-          <div class="elb-proj-wbs">2025_397_ASP_HF_LFD_HFE &nbsp;·&nbsp; K957PCA20075</div>
-        </div>
-        <div class="elb-proj-nums">
-          <div class="elb-hours">17.0h</div>
-          <span style="color:#475569;font-size:11px">· פבר' 7.0h</span>
-        </div>
-      </div>
-      <div class="elb-money">
-        <span class="elb-money-lbl">ללא מעמ</span> <span class="elb-money-val">₪3,587</span>
-        <span class="elb-money-sep">·</span>
-        <span class="elb-money-lbl">כולל מעמ</span> <span class="elb-money-val elb-vat">₪4,233</span>
-      </div>
-
-      <div class="elb-descs">
-        <div class="elb-descs-title">מה בוצע החודש:</div>
-        <ul class="elb-desc-list"><li>מידול צג לתכן חדש</li><li>מעברת על פקדים ובדיקה בקובץ</li></ul>
-      </div>
-    </div>
-
-    <div class="elb-proj" style="border-right: 3px solid #64748b;">
-      <div class="elb-proj-head">
-        <div>
-          <div class="elb-proj-name">MBN 2.O MOCKUP</div>
-          <div class="elb-proj-wbs">2023_106_ASP_ID_Mini_Brightnight &nbsp;·&nbsp; K957PCA20053</div>
-        </div>
-        <div class="elb-proj-nums">
-          <div class="elb-hours">2.0h</div>
-          <span style="color:#475569;font-size:11px">· פבר' 188.0h</span>
-        </div>
-      </div>
-      <div class="elb-money">
-        <span class="elb-money-lbl">ללא מעמ</span> <span class="elb-money-val">₪422</span>
-        <span class="elb-money-sep">·</span>
-        <span class="elb-money-lbl">כולל מעמ</span> <span class="elb-money-val elb-vat">₪498</span>
-      </div>
-
-      <div class="elb-descs">
-        <div class="elb-descs-title">מה בוצע החודש:</div>
-        <ul class="elb-desc-list"><li>עדכוני תכן לייצור</li></ul>
-      </div>
-    </div>
-
-  <div class="elb-section-label">⏸ ללא פעילות החודש</div>
-
-    <div class="elb-proj" style="border-right: 3px solid #334155;opacity:0.55">
-      <div class="elb-proj-head">
-        <div>
-          <div class="elb-proj-name">Iron Hawk 3.0</div>
-          <div class="elb-proj-wbs">2025_366_LND_UX_IRON HAWK STAGE 3 &nbsp;·&nbsp; K950PWP10000</div>
-        </div>
-        <div class="elb-proj-nums">
-          <div class="elb-hours">0.0h</div>
-          <div class="elb-prev-note">לא פעיל החודש · 120.0h בפברואר</div>
-        </div>
-      </div>
-      <div class="elb-money">
-        <span class="elb-money-lbl">ללא מעמ</span> <span class="elb-money-val">₪0</span>
-        <span class="elb-money-sep">·</span>
-        <span class="elb-money-lbl">כולל מעמ</span> <span class="elb-money-val elb-vat">₪0</span>
-      </div>
-
-    </div>
-
-    <div class="elb-proj" style="border-right: 3px solid #334155;opacity:0.55">
-      <div class="elb-proj-head">
-        <div>
-          <div class="elb-proj-name">Eitan Michlol</div>
-          <div class="elb-proj-wbs">2024_280_C4I_Eitan miclol &nbsp;·&nbsp; K960PWP10040</div>
-        </div>
-        <div class="elb-proj-nums">
-          <div class="elb-hours">0.0h</div>
-          <div class="elb-prev-note">לא פעיל החודש · 90.0h בפברואר</div>
-        </div>
-      </div>
-      <div class="elb-money">
-        <span class="elb-money-lbl">ללא מעמ</span> <span class="elb-money-val">₪0</span>
-        <span class="elb-money-sep">·</span>
-        <span class="elb-money-lbl">כולל מעמ</span> <span class="elb-money-val elb-vat">₪0</span>
-      </div>
-
-    </div>
-
-    <div class="elb-proj" style="border-right: 3px solid #334155;opacity:0.55">
-      <div class="elb-proj-head">
-        <div>
-          <div class="elb-proj-name">Helios</div>
-          <div class="elb-proj-wbs">2022_109_ASP_HF_helios &nbsp;·&nbsp; K957PCA20020</div>
-        </div>
-        <div class="elb-proj-nums">
-          <div class="elb-hours">0.0h</div>
-
-        </div>
-      </div>
-      <div class="elb-money">
-        <span class="elb-money-lbl">ללא מעמ</span> <span class="elb-money-val">₪0</span>
-        <span class="elb-money-sep">·</span>
-        <span class="elb-money-lbl">כולל מעמ</span> <span class="elb-money-val elb-vat">₪0</span>
-      </div>
-
-    </div>
-
-    <div class="elb-proj" style="border-right: 3px solid #334155;opacity:0.55">
-      <div class="elb-proj-head">
-        <div>
-          <div class="elb-proj-name">Wide_FOV_HMD_for_Training</div>
-          <div class="elb-proj-wbs">2025_364_ASP_HF_Wide FOV HMD for Training &nbsp;·&nbsp; ⚠️ WBS ממתין</div>
-        </div>
-        <div class="elb-proj-nums">
-          <div class="elb-hours">0.0h</div>
-
-        </div>
-      </div>
-      <div class="elb-money">
-        <span class="elb-money-lbl">ללא מעמ</span> <span class="elb-money-val">₪0</span>
-        <span class="elb-money-sep">·</span>
-        <span class="elb-money-lbl">כולל מעמ</span> <span class="elb-money-val elb-vat">₪0</span>
-      </div>
-
-    </div>
-
-    <div class="elb-proj" style="border-right: 3px solid #334155;opacity:0.55">
-      <div class="elb-proj-head">
-        <div>
-          <div class="elb-proj-name">2022_109_ASP_HF_helios - C -</div>
-          <div class="elb-proj-wbs">2022_109_ASP_HF_helios - C &nbsp;·&nbsp; K957PCA20020</div>
-        </div>
-        <div class="elb-proj-nums">
-          <div class="elb-hours">0.0h</div>
-
-        </div>
-      </div>
-      <div class="elb-money">
-        <span class="elb-money-lbl">ללא מעמ</span> <span class="elb-money-val">₪0</span>
-        <span class="elb-money-sep">·</span>
-        <span class="elb-money-lbl">כולל מעמ</span> <span class="elb-money-val elb-vat">₪0</span>
-      </div>
-
-    </div>
-
-    <div class="elb-proj" style="border-right: 3px solid #334155;opacity:0.55">
-      <div class="elb-proj-head">
-        <div>
-          <div class="elb-proj-name">2022_109_ASP_HF_helios - Stow</div>
-          <div class="elb-proj-wbs">2022_109_ASP_HF_helios - Stow &nbsp;·&nbsp; K957PCA20020</div>
-        </div>
-        <div class="elb-proj-nums">
-          <div class="elb-hours">0.0h</div>
-
-        </div>
-      </div>
-      <div class="elb-money">
-        <span class="elb-money-lbl">ללא מעמ</span> <span class="elb-money-val">₪0</span>
-        <span class="elb-money-sep">·</span>
-        <span class="elb-money-lbl">כולל מעמ</span> <span class="elb-money-val elb-vat">₪0</span>
-      </div>
-
-    </div>
-
+  </div>
 </div>
 
-
-<!-- ===== TAB: CASHFLOW ===== -->
 <div id="pane-rfq" class="pane">
   <div class="kpis kpis-4">
     <div class="kpi b"><div class="kpi-l">הצעות החודש</div><div class="kpi-v" style="color:#3b82f6">5</div><div class="kpi-s">מרץ 2026</div></div>
