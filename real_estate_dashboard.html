@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -28,12 +28,8 @@
   body { font-family: 'Heebo', sans-serif; background: var(--bg); color: var(--text); direction: rtl; }
 
   /* HEADER */
-  .header {
-    background: linear-gradient(135deg, var(--blue) 0%, var(--blue-mid) 100%);
-    color: white; padding: 32px 40px;
-    display: flex; justify-content: space-between; align-items: center;
-  }
-  .header h1 { font-size: 1.6rem; font-weight: 800; }
+  .header { background: linear-gradient(135deg, var(--blue) 0%, var(--blue-mid) 100%); color: white; padding: 20px 16px; display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: center; }
+  .header h1 { font-size: 1.15rem; font-weight: 800; }
   .header p { opacity: 0.8; margin-top: 6px; font-size: 0.95rem; }
   .header-badge {
     background: var(--gold); color: var(--blue);
@@ -43,18 +39,13 @@
 
   /* TABS */
   .tabs-wrap { background: white; border-bottom: 2px solid var(--border); position: sticky; top: 0; z-index: 10; }
-  .tabs { display: flex; padding: 0 40px; gap: 4px; overflow-x: auto; }
-  .tab {
-    padding: 16px 22px; cursor: pointer; border: none; background: none;
-    font-family: 'Heebo', sans-serif; font-size: 0.9rem; font-weight: 500;
-    color: var(--muted); border-bottom: 3px solid transparent;
-    white-space: nowrap; transition: all 0.2s;
-  }
+  .tabs { display: flex; padding: 0 12px; gap: 2px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .tab { padding: 12px 14px; cursor: pointer; border: none; background: none; font-family: "Heebo", sans-serif; font-size: 0.82rem; font-weight: 500; color: var(--muted); border-bottom: 3px solid transparent; white-space: nowrap; transition: all 0.2s; }
   .tab.active { color: var(--blue); border-bottom-color: var(--gold); font-weight: 700; }
   .tab:hover { color: var(--blue); }
 
   /* CONTENT */
-  .content { max-width: 1100px; margin: 0 auto; padding: 32px 24px; }
+  .content { max-width: 1100px; margin: 0 auto; padding: 16px 12px; }
   .tab-pane { display: none; }
   .tab-pane.active { display: block; }
 
@@ -123,6 +114,25 @@
 
   .chart-box { position: relative; height: 300px; }
   .chart-box-lg { position: relative; height: 380px; }
+
+
+  /* MOBILE */
+  @media(max-width:600px) {
+    .header { padding: 16px 12px; }
+    .header h1 { font-size: 1.05rem; }
+    .header-badge { font-size: 0.8rem; padding: 8px 14px; }
+    .tabs { padding: 0 8px; }
+    .tab { padding: 11px 12px; font-size: 0.78rem; }
+    .content { padding: 14px 10px; }
+    .card { padding: 16px 12px; }
+    .stat { padding: 14px 12px; }
+    .stat-value { font-size: 1.2rem; }
+    .tbl th, .tbl td { padding: 8px 8px; font-size: 0.78rem; }
+    .chart-box { height: 240px; }
+    .chart-box-lg { height: 280px; }
+    .highlight { padding: 16px 14px; }
+    .highlight p { font-size: 0.88rem; }
+  }
 
   /* FOOTER */
   footer {
@@ -579,3 +589,5 @@ new Chart(document.getElementById('leverageChart'), {
 </script>
 </body>
 </html>
+
+
