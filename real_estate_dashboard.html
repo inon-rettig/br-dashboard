@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ניתוח השקעת נדל"ן — ינון רטיג | אפריל 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  :root {
+    --blue: #1a3a5c;
+    --blue-mid: #2d5f8a;
+    --blue-light: #4a90c4;
+    --gold: #d4a017;
+    --gold-light: #f0c84a;
+    --green: #10b981;
+    --red: #ef4444;
+    --orange: #f59e0b;
+    --bg: #f0f4f8;
+    --card: #ffffff;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #e2e8f0;
+    --radius: 12px;
+    --shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Heebo', sans-serif; background: var(--bg); color: var(--text); direction: rtl; }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, var(--blue) 0%, var(--blue-mid) 100%);
+    color: white; padding: 32px 40px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .header h1 { font-size: 1.6rem; font-weight: 800; }
+  .header p { opacity: 0.8; margin-top: 6px; font-size: 0.95rem; }
+  .header-badge {
+    background: var(--gold); color: var(--blue);
+    padding: 10px 20px; border-radius: 50px;
+    font-weight: 700; font-size: 0.9rem; white-space: nowrap;
+  }
+
+  /* TABS */
+  .tabs-wrap { background: white; border-bottom: 2px solid var(--border); position: sticky; top: 0; z-index: 10; }
+  .tabs { display: flex; padding: 0 40px; gap: 4px; overflow-x: auto; }
+  .tab {
+    padding: 16px 22px; cursor: pointer; border: none; background: none;
+    font-family: 'Heebo', sans-serif; font-size: 0.9rem; font-weight: 500;
+    color: var(--muted); border-bottom: 3px solid transparent;
+    white-space: nowrap; transition: all 0.2s;
+  }
+  .tab.active { color: var(--blue); border-bottom-color: var(--gold); font-weight: 700; }
+  .tab:hover { color: var(--blue); }
+
+  /* CONTENT */
+  .content { max-width: 1100px; margin: 0 auto; padding: 32px 24px; }
+  .tab-pane { display: none; }
+  .tab-pane.active { display: block; }
+
+  /* CARDS */
+  .card {
+    background: var(--card); border-radius: var(--radius);
+    box-shadow: var(--shadow); padding: 24px; margin-bottom: 20px;
+  }
+  .card-title {
+    font-size: 1rem; font-weight: 700; color: var(--blue);
+    margin-bottom: 18px; display: flex; align-items: center; gap: 8px;
+  }
+  .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 20px; }
+  .grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 16px; margin-bottom: 20px; }
+  @media(max-width:700px) { .grid-3,.grid-2 { grid-template-columns: 1fr; } }
+
+  .stat {
+    background: var(--card); border-radius: var(--radius);
+    box-shadow: var(--shadow); padding: 20px 24px;
+    border-top: 4px solid var(--blue-light);
+  }
+  .stat-label { font-size: 0.8rem; color: var(--muted); margin-bottom: 6px; }
+  .stat-value { font-size: 1.5rem; font-weight: 800; color: var(--blue); }
+  .stat-value.green { color: var(--green); }
+  .stat-value.gold { color: var(--gold); }
+  .stat-value.red { color: var(--red); }
+
+  /* TABLE */
+  .tbl { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  .tbl th {
+    background: var(--blue); color: white;
+    padding: 11px 14px; text-align: right; font-weight: 600;
+  }
+  .tbl td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+  .tbl tr:nth-child(even) td { background: #f8fafc; }
+  .tbl tr:hover td { background: #eff6ff; }
+
+  .badge {
+    display: inline-block; padding: 3px 10px; border-radius: 50px;
+    font-size: 0.75rem; font-weight: 700;
+  }
+  .badge-green { background: #dcfce7; color: #15803d; }
+  .badge-red { background: #fee2e2; color: #b91c1c; }
+  .badge-orange { background: #ffedd5; color: #c2410c; }
+  .badge-blue { background: #dbeafe; color: #1d4ed8; }
+
+  .flow-pos { color: var(--green); font-weight: 700; }
+  .flow-neg { color: var(--red); font-weight: 700; }
+
+  /* HIGHLIGHT BOX */
+  .highlight {
+    background: linear-gradient(135deg, var(--blue) 0%, var(--blue-mid) 100%);
+    color: white; border-radius: var(--radius); padding: 24px 28px;
+    margin-top: 20px;
+  }
+  .highlight h3 { color: var(--gold-light); margin-bottom: 10px; font-size: 1.1rem; }
+  .highlight p { opacity: 0.9; line-height: 1.7; }
+
+  .alert-gold {
+    background: linear-gradient(135deg, #fffbeb, #fef3c7);
+    border: 2px solid var(--gold); border-radius: var(--radius);
+    padding: 18px 22px; margin-bottom: 20px;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .alert-gold .icon { font-size: 1.4rem; flex-shrink: 0; }
+
+  .chart-box { position: relative; height: 300px; }
+  .chart-box-lg { position: relative; height: 380px; }
+
+  /* FOOTER */
+  footer {
+    background: var(--blue); color: rgba(255,255,255,0.6);
+    text-align: center; padding: 16px; font-size: 0.78rem; margin-top: 20px;
+  }
+  footer strong { color: var(--gold); }
+
+  .conclusion-card {
+    background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+    border: 2px solid var(--green); border-radius: var(--radius);
+    padding: 24px; margin-top: 20px;
+  }
+  .conclusion-card h3 { color: #15803d; margin-bottom: 10px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>🏠 ניתוח השקעת נדל"ן — ינון רטיג</h1>
+    <p>מימוש דירת מוצקין ורכישת נכס חלופי | אפריל 2026</p>
+  </div>
+  <div class="header-badge">💰 הון עצמי: ~1,410,000 ₪</div>
+</div>
+
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('summary',this)">📋 סיכום מנהלים</button>
+    <button class="tab" onclick="showTab('tax',this)">🧾 מיסוי</button>
+    <button class="tab" onclick="showTab('properties',this)">🏡 נכסים ספציפיים</button>
+    <button class="tab" onclick="showTab('areas',this)">📍 השוואת אזורים</button>
+    <button class="tab" onclick="showTab('leverage',this)">📈 סימולציית מינוף</button>
+  </div>
+</div>
+
+<!-- TAB 1: SUMMARY -->
+<div id="tab-summary" class="tab-pane active">
+<div class="content">
+
+  <div class="alert-gold">
+    <span class="icon">⚡</span>
+    <div><strong>מהלך אסטרטגי:</strong> מכירת דירת מוצקין (2.4M ₪) ורכישת נכס צמוד קרקע איכותי כמשפר דיור — חיסכון של עד 250,000 ₪ במס רכישה לעומת רכישה כמשקיע.</div>
+  </div>
+
+  <div class="grid-3">
+    <div class="stat">
+      <div class="stat-label">שווי דירת מוצקין</div>
+      <div class="stat-value gold">2,400,000 ₪</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">הון עצמי נקי (לאחר פירעון)</div>
+      <div class="stat-value green">~1,410,000 ₪</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">יתרת משכנתא לפירעון</div>
+      <div class="stat-value red">942,000 ₪</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">💡 הלוגיקה הפיננסית</div>
+    <table class="tbl">
+      <thead><tr><th>פרמטר</th><th>מצב נוכחי (מוצקין)</th><th>יעד (נכס חלופי)</th></tr></thead>
+      <tbody>
+        <tr><td>שווי נכס</td><td>2,400,000 ₪</td><td>3,500,000–4,500,000 ₪</td></tr>
+        <tr><td>שכ"ד חודשי</td><td>5,350 ₪ (שוק: 6,200 ₪)</td><td>9,000–12,000 ₪</td></tr>
+        <tr><td>תשואה ברוטו</td><td>2.7%</td><td>3.0–3.2%</td></tr>
+        <tr><td>מינוף (נכס/הון)</td><td>x1.7</td><td>x2.5–x3.2 ✅</td></tr>
+        <tr><td>תזרים חודשי</td><td>-364 ₪ (גרעון)</td><td>-3,000 עד -4,500 ₪</td></tr>
+        <tr><td>פוטנציאל עליית ערך/שנה (3%)</td><td>72,000 ₪</td><td>105,000–135,000 ₪ ✅</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="highlight">
+    <h3>🎯 מסקנת הניתוח</h3>
+    <p>הנכס האופטימלי הוא <strong>בית דו-משפחתי בעתלית או פרדס חנה-כרכור</strong> בטווח <strong>3.5–4.0M ₪</strong>. הגרעון התזרימי של <strong>3,000–4,500 ₪/חודש</strong> הוא "עלות המינוף" — אתה משלם כ-40,000 ₪/שנה תמורת שליטה על נכס שצומח ב-100,000–150,000 ₪/שנה. ROI אפקטיבי: <strong>+7–8% שנתי על ההון</strong>.</p>
+  </div>
+
+</div>
+</div>
+
+<!-- TAB 2: TAX -->
+<div id="tab-tax" class="tab-pane">
+<div class="content">
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">🧾 מס רכישה — השוואת מסלולים</div>
+      <table class="tbl">
+        <thead><tr><th>מחיר נכס</th><th>משקיע (8%)</th><th>משפר דיור</th><th>חיסכון</th></tr></thead>
+        <tbody>
+          <tr><td>3,000,000 ₪</td><td class="flow-neg">240,000 ₪</td><td class="flow-pos">45,530 ₪</td><td><strong>194,470 ₪</strong></td></tr>
+          <tr><td>3,500,000 ₪</td><td class="flow-neg">280,000 ₪</td><td class="flow-pos">70,530 ₪</td><td><strong>209,470 ₪</strong></td></tr>
+          <tr><td>4,000,000 ₪</td><td class="flow-neg">320,000 ₪</td><td class="flow-pos">95,530 ₪</td><td><strong>224,470 ₪</strong></td></tr>
+          <tr><td>4,500,000 ₪</td><td class="flow-neg">360,000 ₪</td><td class="flow-pos">120,530 ₪</td><td><strong>239,470 ₪</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title">📊 חיסכון במס לפי מחיר נכס</div>
+      <div class="chart-box"><canvas id="taxChart"></canvas></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📋 מדרגות מס רכישה 2026 — משפר דיור</div>
+    <table class="tbl">
+      <thead><tr><th>חלק השווי</th><th>שיעור מס</th><th>הערה</th></tr></thead>
+      <tbody>
+        <tr><td>עד 1,978,745 ₪</td><td><span class="badge badge-green">0%</span></td><td>פטור מלא</td></tr>
+        <tr><td>1,978,745 – 2,347,040 ₪</td><td><span class="badge badge-orange">3.5%</span></td><td></td></tr>
+        <tr><td>2,347,040 – 6,055,070 ₪</td><td><span class="badge badge-orange">5%</span></td><td>רוב הנכסים כאן</td></tr>
+        <tr><td>מעל 6,055,070 ₪</td><td><span class="badge badge-red">8%</span></td><td></td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:14px; padding:12px; background:#fffbeb; border-radius:8px; font-size:0.85rem; color:#78350f;">
+      ⚠️ <strong>תנאי קריטי:</strong> הדירה הקיימת (מוצקין) חייבת להימכר תוך <strong>18 חודשים</strong> מרכישת הנכס החדש. מומלץ לאמת עם עו"ד/רו"ח לפני החתימה.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">💡 מס שבח — מכירת מוצקין</div>
+    <table class="tbl">
+      <thead><tr><th>פרמטר</th><th>נתון</th></tr></thead>
+      <tbody>
+        <tr><td>מחיר מכירה</td><td>2,400,000 ₪</td></tr>
+        <tr><td>פטור דירה יחידה (תקרה)</td><td>עד ~5,000,000 ₪ — <span class="badge badge-green">פטור מלא צפוי</span></td></tr>
+        <tr><td>מס שבח אם לא פטור</td><td>25% על הרווח הריאלי</td></tr>
+        <tr><td>המלצה</td><td>לאמת זכאות לפטור עם רו"ח</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+</div>
+
+<!-- TAB 3: PROPERTIES -->
+<div id="tab-properties" class="tab-pane">
+<div class="content">
+
+  <div class="card">
+    <div class="card-title">🏡 נכסים ספציפיים שנסרקו — אפריל 2026</div>
+    <div style="overflow-x:auto;">
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th>#</th><th>מיקום</th><th>תיאור</th><th>מחיר</th>
+          <th>שכ"ד</th><th>משכנתא</th><th>החזר/חודש</th><th>תזרים</th><th>תשואה</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td><strong>עתלית</strong><br><small>נווה משה</small></td>
+          <td>דו-משפחתי, 6 חד', 260מ"ר</td>
+          <td>3,550,000 ₪</td>
+          <td>9,500 ₪</td>
+          <td>2,140,000 ₪</td>
+          <td>12,400 ₪</td>
+          <td class="flow-neg">-2,900 ₪</td>
+          <td><span class="badge badge-blue">3.2%</span></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td><strong>עתלית</strong><br><small>נחלים</small></td>
+          <td>דו-משפחתי, 6 חד', 250מ"ר</td>
+          <td>3,950,000 ₪</td>
+          <td>10,500 ₪</td>
+          <td>2,540,000 ₪</td>
+          <td>14,730 ₪</td>
+          <td class="flow-neg">-4,230 ₪</td>
+          <td><span class="badge badge-blue">3.2%</span></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td><strong>עתלית</strong><br><small>יפה נוף</small></td>
+          <td>דו-משפחתי, 5 חד' + בריכה + נוף לים</td>
+          <td>5,900,000 ₪</td>
+          <td>14,000 ₪</td>
+          <td>4,490,000 ₪</td>
+          <td>26,000 ₪</td>
+          <td class="flow-neg">-12,000 ₪ ❌</td>
+          <td><span class="badge badge-orange">2.8%</span></td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td><strong>פרדס חנה</strong><br><small>פרחי הדר</small></td>
+          <td>דו-משפחתי, 6 חד'</td>
+          <td>3,650,000 ₪</td>
+          <td>9,000 ₪</td>
+          <td>2,240,000 ₪</td>
+          <td>13,000 ₪</td>
+          <td class="flow-neg">-4,000 ₪</td>
+          <td><span class="badge badge-blue">3.0%</span></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td><strong>פרדס חנה</strong><br><small>נווה אשר</small></td>
+          <td>חדש, 6 חד', 170מ"ר</td>
+          <td>4,100,000 ₪</td>
+          <td>9,500 ₪</td>
+          <td>2,690,000 ₪</td>
+          <td>15,600 ₪</td>
+          <td class="flow-neg">-6,100 ₪</td>
+          <td><span class="badge badge-orange">2.8%</span></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div style="margin-top:12px; font-size:0.8rem; color:var(--muted);">* משכנתא = מחיר - 1,410,000 ₪ הון עצמי | החזר מחושב ל-25 שנה, ריבית 4.8% | ~5,800 ₪ לכל מיליון</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📊 תזרים חודשי לפי נכס</div>
+    <div class="chart-box"><canvas id="flowChart"></canvas></div>
+  </div>
+
+  <div class="conclusion-card">
+    <h3>✅ הנכסים המומלצים</h3>
+    <p><strong>נכס 1 (עתלית, נווה משה)</strong> — הגרעון הנמוך ביותר (-2,900 ₪) עם נכס 260מ"ר בעתלית. ה"עלות המינוף" הזולה ביותר.<br>
+    <strong>נכס 4 (פרדס חנה, פרחי הדר)</strong> — אלטרנטיבה טובה, אזור יציב, גרעון -4,000 ₪ עם פוטנציאל עליית ערך דומה.</p>
+  </div>
+
+</div>
+</div>
+
+<!-- TAB 4: AREAS -->
+<div id="tab-areas" class="tab-pane">
+<div class="content">
+
+  <div class="card">
+    <div class="card-title">📍 השוואת אזורים — תשואה, מחירים, שכ"ד</div>
+    <div style="overflow-x:auto;">
+    <table class="tbl">
+      <thead>
+        <tr><th>אזור</th><th>סוג נכס מומלץ</th><th>מחיר ממוצע</th><th>שכ"ד</th><th>תשואה ברוטו</th><th>עליית ערך פוטנציאל</th><th>ביקוש שכירות</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>עתלית</strong></td>
+          <td>בית/דו-משפחתי</td>
+          <td>4,500,000 ₪</td>
+          <td>12,000 ₪</td>
+          <td><span class="badge badge-green">3.2%</span></td>
+          <td><span class="badge badge-green">גבוה</span></td>
+          <td><span class="badge badge-green">חזק מאוד</span></td>
+        </tr>
+        <tr>
+          <td><strong>פרדס חנה</strong></td>
+          <td>בית/דו-משפחתי</td>
+          <td>3,800,000 ₪</td>
+          <td>9,500 ₪</td>
+          <td><span class="badge badge-green">3.0%</span></td>
+          <td><span class="badge badge-green">גבוה</span></td>
+          <td><span class="badge badge-green">חזק</span></td>
+        </tr>
+        <tr>
+          <td><strong>אור עקיבא</strong></td>
+          <td>דירה 5 חד'</td>
+          <td>2,100,000 ₪</td>
+          <td>6,000 ₪</td>
+          <td><span class="badge badge-green">3.4%</span></td>
+          <td><span class="badge badge-orange">בינוני</span></td>
+          <td><span class="badge badge-orange">בינוני</span></td>
+        </tr>
+        <tr>
+          <td><strong>טירת כרמל</strong></td>
+          <td>דירה 5 חד'</td>
+          <td>2,400,000 ₪</td>
+          <td>5,800 ₪</td>
+          <td><span class="badge badge-orange">2.9%</span></td>
+          <td><span class="badge badge-orange">בינוני</span></td>
+          <td><span class="badge badge-green">חזק</span></td>
+        </tr>
+        <tr>
+          <td><strong>חריש</strong></td>
+          <td>דירה 6 חד'</td>
+          <td>3,250,000 ₪</td>
+          <td>6,800 ₪</td>
+          <td><span class="badge badge-orange">2.5%</span></td>
+          <td><span class="badge badge-orange">בינוני</span></td>
+          <td><span class="badge badge-orange">בינוני</span></td>
+        </tr>
+        <tr>
+          <td><strong>חדרה</strong></td>
+          <td>בית פרטי</td>
+          <td>3,900,000 ₪</td>
+          <td>8,500 ₪</td>
+          <td><span class="badge badge-orange">2.6%</span></td>
+          <td><span class="badge badge-blue">בינוני-גבוה</span></td>
+          <td><span class="badge badge-orange">בינוני</span></td>
+        </tr>
+        <tr>
+          <td><strong>באר שבע</strong></td>
+          <td>דירה</td>
+          <td>1,210,000 ₪</td>
+          <td>4,200 ₪</td>
+          <td><span class="badge badge-green">4.2%</span></td>
+          <td><span class="badge badge-red">נמוך</span></td>
+          <td><span class="badge badge-green">גבוה</span></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📊 תשואה ברוטו לפי אזור</div>
+    <div class="chart-box"><canvas id="areaChart"></canvas></div>
+  </div>
+
+</div>
+</div>
+
+<!-- TAB 5: LEVERAGE -->
+<div id="tab-leverage" class="tab-pane">
+<div class="content">
+
+  <div class="card">
+    <div class="card-title">📈 סימולציית מינוף — עליית ערך לאורך 10 שנים</div>
+    <div class="chart-box-lg"><canvas id="leverageChart"></canvas></div>
+    <div style="margin-top:12px; font-size:0.8rem; color:var(--muted);">* נכס ב-3.5M עם 1.41M הון עצמי | שוק הון: 1.41M ב-7% ממוצע שנתי</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📋 טבלת מינוף — נכס 3.5M לעומת שוק הון</div>
+    <table class="tbl">
+      <thead>
+        <tr><th>שנה</th><th>נכס @3%/שנה</th><th>נכס @5%/שנה</th><th>שוק הון @7%</th><th>יתרון נדל"ן @5%</th></tr>
+      </thead>
+      <tbody id="leverageTable"></tbody>
+    </table>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">⚖️ יתרונות המינוף הנדל"ני</div>
+      <ul style="list-style:none; line-height:2.2;">
+        <li>✅ שולט על נכס בשווי 3.5M עם 1.41M הון</li>
+        <li>✅ עליית ערך על הנכס כולו, לא רק על ההון</li>
+        <li>✅ שכ"ד מכסה רוב המשכנתא</li>
+        <li>✅ נכס קרקע = מוצר נדיר בישראל</li>
+        <li>✅ פטור ממס שבח בעתיד (דירה יחידה)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">⚠️ סיכונים לבדיקה</div>
+      <ul style="list-style:none; line-height:2.2;">
+        <li>⚠️ גרעון 3,000-4,500 ₪/חודש</li>
+        <li>⚠️ תקופה ללא שוכר = עול מלא</li>
+        <li>⚠️ תחזוקה גבוהה יותר מדירה</li>
+        <li>⚠️ ריבית משכנתא עשויה לעלות</li>
+        <li>⚠️ נזילות נמוכה — לא ניתן למכור מהר</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<footer>
+  <strong>הופק ע"י Bob</strong> | נתונים: מדל"ן, יד2, Gemini Deep Research | אפריל 2026<br>
+  <span style="opacity:0.6; font-size:0.72rem;">* המסמך הזה הוא לצורכי ניתוח בלבד ואינו מהווה ייעוץ השקעות. מומלץ להתייעץ עם עו"ד ורו"ח לפני קבלת החלטה.</span>
+</footer>
+
+<script>
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// TAX CHART
+new Chart(document.getElementById('taxChart'), {
+  type: 'bar',
+  data: {
+    labels: ['3.0M', '3.5M', '4.0M', '4.5M'],
+    datasets: [
+      { label: 'מס כמשקיע (8%)', data: [240000,280000,320000,360000], backgroundColor: '#ef4444' },
+      { label: 'מס כמשפר דיור', data: [45530,70530,95530,120530], backgroundColor: '#10b981' }
+    ]
+  },
+  options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{labels:{font:{family:'Heebo'}}}}, scales:{y:{ticks:{callback:v=>v.toLocaleString('he-IL')+'₪'}}} }
+});
+
+// FLOW CHART
+new Chart(document.getElementById('flowChart'), {
+  type: 'bar',
+  data: {
+    labels: ['עתלית - נווה משה', 'עתלית - נחלים', 'עתלית - יפה נוף', 'פרדס חנה - פרחי הדר', 'פרדס חנה - נווה אשר'],
+    datasets: [{
+      label: 'תזרים חודשי (₪)',
+      data: [-2900, -4230, -12000, -4000, -6100],
+      backgroundColor: ['#f59e0b','#ef4444','#b91c1c','#ef4444','#b91c1c'],
+    }]
+  },
+  options: { responsive:true, maintainAspectRatio:false, indexAxis:'y', plugins:{legend:{display:false}}, scales:{x:{ticks:{callback:v=>v.toLocaleString('he-IL')+'₪'}}} }
+});
+
+// AREA CHART
+new Chart(document.getElementById('areaChart'), {
+  type: 'bar',
+  data: {
+    labels: ['באר שבע','אור עקיבא','עתלית','פרדס חנה','טירת כרמל','חדרה','חריש'],
+    datasets: [{
+      label: 'תשואה ברוטו %',
+      data: [4.2, 3.4, 3.2, 3.0, 2.9, 2.6, 2.5],
+      backgroundColor: ['#10b981','#10b981','#4a90c4','#4a90c4','#f59e0b','#f59e0b','#ef4444']
+    }]
+  },
+  options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{y:{min:0, max:5, ticks:{callback:v=>v+'%'}}} }
+});
+
+// LEVERAGE CHART & TABLE
+const capital = 1410000;
+const propertyVal = 3500000;
+const stockData = [], prop3Data = [], prop5Data = [];
+const tableBody = document.getElementById('leverageTable');
+
+for (let y=0; y<=10; y++) {
+  const stock = capital * Math.pow(1.07, y);
+  const p3 = propertyVal * Math.pow(1.03, y);
+  const p5 = propertyVal * Math.pow(1.05, y);
+  stockData.push(Math.round(stock));
+  prop3Data.push(Math.round(p3));
+  prop5Data.push(Math.round(p5));
+  if (y > 0) {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${y}</td><td>${p3.toLocaleString('he-IL')} ₪</td><td>${p5.toLocaleString('he-IL')} ₪</td><td>${stock.toLocaleString('he-IL')} ₪</td><td class="${p5>stock?'flow-pos':'flow-neg'}">${(p5-stock>0?'+':'')}${(p5-stock).toLocaleString('he-IL')} ₪</td>`;
+    tableBody.appendChild(tr);
+  }
+}
+
+const labels = Array.from({length:11},(_,i)=>i==0?'היום':'שנה '+i);
+new Chart(document.getElementById('leverageChart'), {
+  type: 'line',
+  data: {
+    labels,
+    datasets: [
+      { label: 'נכס @3%/שנה', data: prop3Data, borderColor: '#4a90c4', backgroundColor: 'rgba(74,144,196,0.1)', tension:0.4, fill:false },
+      { label: 'נכס @5%/שנה', data: prop5Data, borderColor: '#10b981', backgroundColor: 'rgba(16,185,129,0.1)', tension:0.4, fill:false, borderWidth:3 },
+      { label: 'שוק הון @7%', data: stockData, borderColor: '#d4a017', backgroundColor: 'rgba(212,160,23,0.1)', tension:0.4, borderDash:[6,3], fill:false }
+    ]
+  },
+  options: {
+    responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{labels:{font:{family:'Heebo'}}}},
+    scales:{y:{ticks:{callback:v=>(v/1000000).toFixed(1)+'M ₪'}}}
+  }
+});
+</script>
+</body>
+</html>
