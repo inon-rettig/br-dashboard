@@ -38,11 +38,14 @@
   }
 
   /* TABS */
-  .tabs-wrap { background: white; border-bottom: 2px solid var(--border); position: sticky; top: 0; z-index: 10; }
-  .tabs { display: flex; padding: 0 12px; gap: 2px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
-  .tab { padding: 12px 14px; cursor: pointer; border: none; background: none; font-family: "Heebo", sans-serif; font-size: 0.82rem; font-weight: 500; color: var(--muted); border-bottom: 3px solid transparent; white-space: nowrap; transition: all 0.2s; }
-  .tab.active { color: var(--blue); border-bottom-color: var(--gold); font-weight: 700; }
-  .tab:hover { color: var(--blue); }
+  .tabs-wrap { background: white; border-bottom: 2px solid var(--border); position: sticky; top: 0; z-index: 10; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  .tabs { display: flex; padding: 0 16px; gap: 2px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab { padding: 15px 16px; cursor: pointer; border: none; background: none; font-family: "Heebo", sans-serif; font-size: 0.88rem; font-weight: 600; color: var(--muted); border-bottom: 4px solid transparent; white-space: nowrap; transition: all 0.18s; display: flex; align-items: center; gap: 6px; }
+  .tab.active { color: var(--blue); border-bottom-color: var(--gold); font-weight: 800; background: linear-gradient(to bottom, transparent, #eef5ff); }
+  .tab:hover:not(.active) { color: var(--blue-mid); background: #f8fafc; }
+  .tab-num { background: #e2e8f0; color: var(--muted); width: 22px; height: 22px; border-radius: 50%; font-size: 0.7rem; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.18s; }
+  .tab.active .tab-num { background: var(--gold); color: white; }
 
   /* CONTENT */
   .content { max-width: 1100px; margin: 0 auto; padding: 16px 12px; }
@@ -161,11 +164,12 @@
 
 <div class="tabs-wrap">
   <div class="tabs">
-    <button class="tab active" onclick="showTab('summary',this)">📋 סיכום מנהלים</button>
-    <button class="tab" onclick="showTab('tax',this)">🧾 מיסוי</button>
-    <button class="tab" onclick="showTab('properties',this)">🏡 נכסים ספציפיים</button>
-    <button class="tab" onclick="showTab('areas',this)">📍 השוואת אזורים</button>
-    <button class="tab" onclick="showTab('leverage',this)">📈 סימולציית מינוף</button>
+    <button class="tab active" onclick="showTab('summary',this)"><span class="tab-num">1</span> 📋 סיכום מנהלים</button>
+    <button class="tab" onclick="showTab('tax',this)"><span class="tab-num">2</span> 🧾 מיסוי</button>
+    <button class="tab" onclick="showTab('properties',this)"><span class="tab-num">3</span> 🏡 נכסים</button>
+    <button class="tab" onclick="showTab('areas',this)"><span class="tab-num">4</span> 📍 אזורים</button>
+    <button class="tab" onclick="showTab('leverage',this)"><span class="tab-num">5</span> 📈 מינוף</button>
+    <button class="tab" onclick="showTab('mortgage',this)"><span class="tab-num">6</span> 🏦 משכנתא</button>
   </div>
 </div>
 
@@ -495,18 +499,160 @@
 </div>
 </div>
 
+<!-- TAB 6: MORTGAGE -->
+<div id="tab-mortgage" class="tab-pane">
+<div class="content">
+
+  <div class="alert-gold">
+    <span class="icon">🏦</span>
+    <div>שנה את הנתונים כדי לסמלץ תרחישים שונים — כמה תצטרך לשלם בחודש ובאיזה גיל תסיים לשלם.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⚙️ הגדרות הסימולציה</div>
+    <div class="grid-3" style="margin-bottom:0;">
+      <div>
+        <label style="font-size:0.82rem; color:var(--muted); display:block; margin-bottom:4px;">מחיר הנכס (₪)</label>
+        <input id="m-price" type="number" value="3500000" step="50000" oninput="calcMortgage()" style="width:100%; padding:10px 12px; border:2px solid var(--border); border-radius:8px; font-family:Heebo; font-size:0.95rem; text-align:right;">
+      </div>
+      <div>
+        <label style="font-size:0.82rem; color:var(--muted); display:block; margin-bottom:4px;">הון עצמי (₪)</label>
+        <input id="m-equity" type="number" value="1410000" step="10000" oninput="calcMortgage()" style="width:100%; padding:10px 12px; border:2px solid var(--border); border-radius:8px; font-family:Heebo; font-size:0.95rem; text-align:right;">
+      </div>
+      <div>
+        <label style="font-size:0.82rem; color:var(--muted); display:block; margin-bottom:4px;">ריבית שנתית (%)</label>
+        <input id="m-rate" type="number" value="4.8" step="0.1" min="1" max="10" oninput="calcMortgage()" style="width:100%; padding:10px 12px; border:2px solid var(--border); border-radius:8px; font-family:Heebo; font-size:0.95rem; text-align:right;">
+      </div>
+      <div>
+        <label style="font-size:0.82rem; color:var(--muted); display:block; margin-bottom:4px;">תקופה (שנים)</label>
+        <input id="m-years" type="number" value="25" step="5" min="5" max="30" oninput="calcMortgage()" style="width:100%; padding:10px 12px; border:2px solid var(--border); border-radius:8px; font-family:Heebo; font-size:0.95rem; text-align:right;">
+      </div>
+      <div>
+        <label style="font-size:0.82rem; color:var(--muted); display:block; margin-bottom:4px;">שכ"ד צפוי (₪)</label>
+        <input id="m-rent" type="number" value="9500" step="500" oninput="calcMortgage()" style="width:100%; padding:10px 12px; border:2px solid var(--border); border-radius:8px; font-family:Heebo; font-size:0.95rem; text-align:right;">
+      </div>
+      <div>
+        <label style="font-size:0.82rem; color:var(--muted); display:block; margin-bottom:4px;">גיל נוכחי</label>
+        <input id="m-age" type="number" value="45" step="1" min="25" max="60" oninput="calcMortgage()" style="width:100%; padding:10px 12px; border:2px solid var(--border); border-radius:8px; font-family:Heebo; font-size:0.95rem; text-align:right;">
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-3" id="m-stats">
+    <div class="stat"><div class="stat-label">גובה משכנתא</div><div class="stat-value gold" id="m-loan">—</div></div>
+    <div class="stat"><div class="stat-label">החזר חודשי</div><div class="stat-value red" id="m-monthly">—</div></div>
+    <div class="stat"><div class="stat-label">תזרים חודשי</div><div class="stat-value" id="m-flow">—</div></div>
+    <div class="stat"><div class="stat-label">סה"כ ריבית שתשלם</div><div class="stat-value red" id="m-total-interest">—</div></div>
+    <div class="stat"><div class="stat-label">עלות כוללת (קרן + ריבית)</div><div class="stat-value" id="m-total-cost">—</div></div>
+    <div class="stat"><div class="stat-label">גיל סיום תשלומים</div><div class="stat-value blue" id="m-end-age">—</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📊 פירוק החזר לאורך הזמן — קרן מול ריבית</div>
+    <div class="chart-box"><canvas id="mortgageChart"></canvas></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📋 השוואת תרחישים</div>
+    <table class="tbl">
+      <thead><tr><th>תרחיש</th><th>מחיר</th><th>משכנתא</th><th>החזר/חודש</th><th>תזרים</th><th>ריבית כוללת</th></tr></thead>
+      <tbody>
+        <tr><td>🟢 עתלית — נווה משה</td><td>3,550,000 ₪</td><td>2,140,000 ₪</td><td>12,400 ₪</td><td class="flow-neg">-2,900 ₪</td><td>1,580,000 ₪</td></tr>
+        <tr><td>🟡 עתלית — נחלים</td><td>3,950,000 ₪</td><td>2,540,000 ₪</td><td>14,730 ₪</td><td class="flow-neg">-4,230 ₪</td><td>1,875,000 ₪</td></tr>
+        <tr><td>🟡 פרדס חנה — פרחי הדר</td><td>3,650,000 ₪</td><td>2,240,000 ₪</td><td>13,000 ₪</td><td class="flow-neg">-4,000 ₪</td><td>1,655,000 ₪</td></tr>
+        <tr><td>🔴 פרדס חנה — נווה אשר</td><td>4,100,000 ₪</td><td>2,690,000 ₪</td><td>15,600 ₪</td><td class="flow-neg">-6,100 ₪</td><td>1,986,000 ₪</td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:10px; font-size:0.78rem; color:var(--muted);">* ריבית כוללת מחושבת ל-25 שנה, 4.8%</div>
+  </div>
+
+</div>
+</div>
+
 <footer>
   <strong>הופק ע"י Bob</strong> | נתונים: מדל"ן, יד2, Gemini Deep Research | אפריל 2026<br>
   <span style="opacity:0.6; font-size:0.72rem;">* המסמך הזה הוא לצורכי ניתוח בלבד ואינו מהווה ייעוץ השקעות. מומלץ להתייעץ עם עו"ד ורו"ח לפני קבלת החלטה.</span>
 </footer>
 
 <script>
+let mortgageChartInst = null;
+
+function calcMortgage() {
+  const price = parseFloat(document.getElementById('m-price').value) || 0;
+  const equity = parseFloat(document.getElementById('m-equity').value) || 0;
+  const rate = parseFloat(document.getElementById('m-rate').value) || 4.8;
+  const years = parseInt(document.getElementById('m-years').value) || 25;
+  const rent = parseFloat(document.getElementById('m-rent').value) || 0;
+  const age = parseInt(document.getElementById('m-age').value) || 45;
+
+  const loan = Math.max(0, price - equity);
+  const n = years * 12;
+  const r = (rate / 100) / 12;
+  const monthly = loan > 0 ? (loan * r * Math.pow(1+r, n)) / (Math.pow(1+r, n) - 1) : 0;
+  const totalCost = monthly * n;
+  const totalInterest = totalCost - loan;
+  const flow = rent - monthly;
+  const endAge = age + years;
+
+  document.getElementById('m-loan').textContent = loan.toLocaleString('he-IL') + ' ₪';
+  document.getElementById('m-monthly').textContent = Math.round(monthly).toLocaleString('he-IL') + ' ₪';
+  const flowEl = document.getElementById('m-flow');
+  flowEl.textContent = (flow >= 0 ? '+' : '') + Math.round(flow).toLocaleString('he-IL') + ' ₪';
+  flowEl.className = 'stat-value ' + (flow >= 0 ? 'green' : 'red');
+  document.getElementById('m-total-interest').textContent = Math.round(totalInterest).toLocaleString('he-IL') + ' ₪';
+  document.getElementById('m-total-cost').textContent = Math.round(totalCost).toLocaleString('he-IL') + ' ₪';
+  document.getElementById('m-end-age').textContent = endAge + ' שנה';
+
+  // Build yearly chart data
+  const labels = [], principalData = [], interestData = [];
+  let balance = loan;
+  for (let y = 1; y <= years; y++) {
+    let yearInterest = 0, yearPrincipal = 0;
+    for (let m = 0; m < 12; m++) {
+      const intPayment = balance * r;
+      const prinPayment = monthly - intPayment;
+      yearInterest += intPayment;
+      yearPrincipal += prinPayment;
+      balance -= prinPayment;
+    }
+    labels.push('שנה ' + y);
+    interestData.push(Math.round(yearInterest));
+    principalData.push(Math.round(yearPrincipal));
+  }
+
+  if (mortgageChartInst) mortgageChartInst.destroy();
+  const ctx = document.getElementById('mortgageChart');
+  if (ctx) {
+    mortgageChartInst = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [
+          { label: 'קרן', data: principalData, backgroundColor: '#10b981', stack: 'a' },
+          { label: 'ריבית', data: interestData, backgroundColor: '#ef4444', stack: 'a' }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { labels: { font: { family: 'Heebo' } } } },
+        scales: {
+          x: { stacked: true },
+          y: { stacked: true, ticks: { callback: v => (v/1000)+'K ₪' } }
+        }
+      }
+    });
+  }
+}
+
 function showTab(id, btn) {
   document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.getElementById('tab-'+id).classList.add('active');
   btn.classList.add('active');
 }
+
+// Init mortgage
+calcMortgage();
 
 // TAX CHART
 new Chart(document.getElementById('taxChart'), {
