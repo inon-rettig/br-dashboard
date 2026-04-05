@@ -24,6 +24,14 @@ body { font-family: 'Segoe UI', Arial, sans-serif; background: #0a0e1a; color: #
 .pane { display: none; padding: 24px 28px; }
 .pane.active { display: block; }
 
+/* Refresh button */
+.refresh-bar { display:flex; justify-content:flex-end; margin-bottom:14px; }
+.refresh-btn { display:flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;border:1px solid #334155;background:#1e293b;color:#64748b;font-size:12px;cursor:pointer;transition:all .15s; }
+.refresh-btn:hover { border-color:#3b82f6;color:#60a5fa; }
+.refresh-btn.loading { border-color:#eab308;color:#fbbf24;animation:spin .8s linear infinite; }
+.refresh-btn.done { border-color:#22c55e;color:#86efac; }
+@keyframes spin-icon { 100%{transform:rotate(360deg)} }
+
 /* KPIs */
 .kpis { display: grid; gap: 12px; margin-bottom: 20px; }
 .kpis-4 { grid-template-columns: repeat(4,1fr); }
@@ -140,7 +148,12 @@ tr:hover td { background:rgba(255,255,255,.02); }
 
 <!-- ===== TAB 1: FINANCE ===== -->
 <div id="pane-finance" class="pane active">
-
+  <div class="refresh-bar">
+    <button class="refresh-btn" id="refresh-finance" onclick="refreshTab('finance')" title="מקור: בנק + Excel">
+      🔄 רענן 💰 פיננסי
+    </button>
+  </div>
+  
   <!-- ══ 5 KPI Cards ══ -->
   <div class="kpis kpis-5" style="margin-bottom:20px">
 
@@ -313,6 +326,12 @@ tr:hover td { background:rgba(255,255,255,.02); }
 </div>
 
 <div id="pane-projects" class="pane">
+  <div class="refresh-bar">
+    <button class="refresh-btn" id="refresh-projects" onclick="refreshTab('projects')" title="מקור: Clockify + Monday + Timeless">
+      🔄 רענן 📋 פרויקטים
+    </button>
+  </div>
+  
 <style>.sec-label{font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:#64748b;margin-bottom:3px}</style>
   <div class="kpis kpis-5" style="margin-bottom:20px">
     <div class="kpi g"><div class="kpi-l">פעילים</div><div class="kpi-v" style="color:#22c55e">7</div></div>
@@ -874,7 +893,12 @@ tr:hover td { background:rgba(255,255,255,.02); }
 </div>
 
 <div id="pane-crm" class="pane">
-
+  <div class="refresh-bar">
+    <button class="refresh-btn" id="refresh-crm" onclick="refreshTab('crm')" title="מקור: Monday CRM">
+      🔄 רענן 🤝 CRM
+    </button>
+  </div>
+  
   <div class="kpis kpis-4">
     <div class="kpi b"><div class="kpi-l">סה"כ לידים</div><div class="kpi-v" style="color:#3b82f6">69</div><div class="kpi-s">ב-Monday CRM (כולל חדשים)</div></div>
     <div class="kpi r"><div class="kpi-l">דורשים Follow-Up</div><div class="kpi-v" style="color:#ef4444">67</div><div class="kpi-s">חרגו מסף הזמן</div></div>
@@ -1018,7 +1042,12 @@ tr:hover td { background:rgba(255,255,255,.02); }
 
 <!-- ===== TAB 6: LINKEDIN ===== -->
 <div id="pane-linkedin" class="pane">
-
+  <div class="refresh-bar">
+    <button class="refresh-btn" id="refresh-linkedin" onclick="refreshTab('linkedin')" title="מקור: heartbeat state">
+      🔄 רענן 💼 LinkedIn
+    </button>
+  </div>
+  
   <!-- KPIs -->
   <div class="kpis kpis-4">
     <div class="kpi b"><div class="kpi-l">פורסם השנה</div><div class="kpi-v" style="color:#3b82f6">4</div><div class="kpi-s">כולל רחפנים 25.3</div></div>
@@ -1110,6 +1139,12 @@ tr:hover td { background:rgba(255,255,255,.02); }
 
 <!-- ===== TAB: ELBIT ===== -->
 <div id="pane-elbit" class="pane">
+  <div class="refresh-bar">
+    <button class="refresh-btn" id="refresh-elbit" onclick="refreshTab('elbit')" title="מקור: Excel">
+      🔄 רענן 🛡️ דו"ח אלביט
+    </button>
+  </div>
+  
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
     <div>
       <div style="font-size:18px;font-weight:700;color:#f1f5f9">🛡️ דו"ח אלביט — אפריל 2026</div>
@@ -1328,6 +1363,12 @@ tr:hover td { background:rgba(255,255,255,.02); }
 </div>
 
 <div id="pane-rfq" class="pane">
+  <div class="refresh-bar">
+    <button class="refresh-btn" id="refresh-rfq" onclick="refreshTab('rfq')" title="מקור: Google Sheets">
+      🔄 רענן 📋 הצעות מחיר
+    </button>
+  </div>
+  
 <div class="kpis kpis-4">
 <div class="kpi y"><div class="kpi-l">ממתין לאישור — אפריל</div><div class="kpi-v" style="color:#eab308">4</div><div class="kpi-s">כולל NB2.0 חדש</div></div>
 <div class="kpi g"><div class="kpi-l">אושר אפריל</div><div class="kpi-v" style="color:#22c55e">1</div><div class="kpi-s">Helios — ₪12,296</div></div>
@@ -1360,7 +1401,12 @@ tr:hover td { background:rgba(255,255,255,.02); }
 </div>
 <!-- ===== TAB: BOB AUTOMATIONS ===== -->
 <div id="pane-bob" class="pane">
-
+  <div class="refresh-bar">
+    <button class="refresh-btn" id="refresh-bob" onclick="refreshTab('bob')" title="מקור: heartbeat state">
+      🔄 רענן 🤖 אוטומציות
+    </button>
+  </div>
+  
   <div class="kpis kpis-4">
     <div class="kpi g"><div class="kpi-l">משימות מוגדרות</div><div class="kpi-v" style="color:#22c55e">9</div><div class="kpi-s">heartbeat + scheduled tasks</div></div>
     <div class="kpi b"><div class="kpi-l">Scheduled Tasks</div><div class="kpi-v" style="color:#3b82f6">2</div><div class="kpi-s">Task Scheduler — Windows</div></div>
@@ -1505,6 +1551,71 @@ function sw(name, btn) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('pane-' + name).classList.add('active');
   btn.classList.add('active');
+}
+
+// ── Refresh logic ──
+const TAB_LABELS = {
+  finance:  'פיננסי — בנק + Excel',
+  projects: 'פרויקטים — Clockify + Monday + Timeless',
+  elbit:    'דוח אלביט — Excel',
+  crm:      'CRM — Monday',
+  rfq:      'הצעות מחיר — Google Sheets',
+  linkedin: 'LinkedIn',
+  bob:      'אוטומציות — Heartbeat state',
+};
+
+let pollIntervals = {};
+
+async function refreshTab(tab) {
+  const btn = document.getElementById('refresh-' + tab);
+  if (!btn) return;
+  btn.className = 'refresh-btn loading';
+  btn.innerHTML = '<span style="display:inline-block;animation:spin-icon .8s linear infinite">🔄</span> מרענן...';
+
+  try {
+    const r = await fetch(`http://localhost:5678/refresh/${tab}`);
+    if (!r.ok) throw new Error('Server error');
+
+    // Poll for completion
+    if (pollIntervals[tab]) clearInterval(pollIntervals[tab]);
+    pollIntervals[tab] = setInterval(async () => {
+      try {
+        const p = await fetch(`http://localhost:5678/refresh-status/${tab}`);
+        const data = await p.json();
+        if (data.status === 'done') {
+          clearInterval(pollIntervals[tab]);
+          // Inject new HTML if returned
+          if (data.html) {
+            const pane = document.getElementById('pane-' + tab);
+            if (pane) {
+              const tmp = document.createElement('div');
+              tmp.innerHTML = data.html;
+              const newPane = tmp.querySelector('#pane-' + tab);
+              if (newPane) {
+                pane.innerHTML = newPane.innerHTML;
+              }
+            }
+          }
+          btn.className = 'refresh-btn done';
+          btn.innerHTML = '✅ עודכן';
+          setTimeout(() => {
+            btn.className = 'refresh-btn';
+            btn.innerHTML = '🔄 רענן';
+          }, 3000);
+        } else if (data.status && data.status.startsWith('error')) {
+          clearInterval(pollIntervals[tab]);
+          btn.className = 'refresh-btn';
+          btn.innerHTML = '❌ שגיאה';
+          setTimeout(() => { btn.innerHTML = '🔄 רענן'; }, 3000);
+        }
+      } catch(e) {}
+    }, 2000);
+
+  } catch(e) {
+    btn.className = 'refresh-btn';
+    btn.innerHTML = '⚠️ שרת לא פעיל';
+    setTimeout(() => { btn.innerHTML = '🔄 רענן'; }, 3000);
+  }
 }
 </script>
 </body>
