@@ -139,603 +139,177 @@ tr:hover td { background:rgba(255,255,255,.02); }
 </div>
 
 <!-- ===== TAB 1: FINANCE ===== -->
-<div id="pane-finance" class="pane">
+<div id="pane-finance" class="pane active">
 
-  <div class="panel" style="margin-bottom:18px;padding:14px 20px">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-      <div style="font-size:13px;font-weight:600;color:#f1f5f9">💰 תמונת שנה — 2026</div>
-      <div style="font-size:11px;color:#64748b">YTD + Pipeline</div>
-    </div>
-    <div style="display:flex;gap:0;height:22px;border-radius:6px;overflow:hidden;margin-bottom:8px">
-      <div style="width:42%;background:#22c55e;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff" title="נכנס בפועל">₪908,852</div>
-      <div style="width:57%;background:#a855f7;opacity:.7;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff" title="Pipeline">+₪1,233,765</div>
-      <div style="flex:1;background:#1e293b"></div>
-    </div>
-    <div style="display:flex;gap:20px;font-size:11px">
-      <span><span style="display:inline-block;width:8px;height:8px;background:#22c55e;border-radius:2px;margin-left:4px"></span>נכנס YTD <strong style="color:#22c55e">₪908,852</strong></span>
-      <span><span style="display:inline-block;width:8px;height:8px;background:#a855f7;border-radius:2px;margin-left:4px"></span>Pipeline <strong style="color:#a855f7">₪1,233,765</strong></span>
-    </div>
-  </div>
+  <!-- ══ 5 KPI Cards ══ -->
+  <div class="kpis kpis-5" style="margin-bottom:20px">
 
-  <div class="kpis kpis-4" style="margin-bottom:18px">
-    <div class="kpi g">
+    <div class="kpi y">
       <div class="kpi-l">יתרת בנק</div>
-      <div class="kpi-v" style="color:#22c55e">₪41,464</div>
-      <div class="kpi-s">נכון ל-27.03</div>
+      <div class="kpi-v" style="color:#eab308">₪41,464</div>
+      <div class="kpi-s">נכון ל-29.3.2026</div>
     </div>
-    <div class="kpi g">
-      <div class="kpi-l">הכנסות אפריל</div>
-      <div class="kpi-v" style="color:#22c55e">₪224,028</div>
-      <div class="kpi-s">✅ בפועל לפי תזרים</div>
-    </div>
+
     <div class="kpi r">
-      <div class="kpi-l">הוצאות אפריל</div>
-      <div class="kpi-v" style="color:#ef4444">₪260,341</div>
-      <div class="kpi-s">✅ בפועל לפי תזרים</div>
+      <div class="kpi-l">הוצאות מרץ</div>
+      <div class="kpi-v" style="color:#ef4444">-₪234,078</div>
+      <div class="kpi-s">✅ בפועל (כולל אפריל ראשוני)</div>
     </div>
+
     <div class="kpi g">
+      <div class="kpi-l">הכנסות מרץ</div>
+      <div class="kpi-v" style="color:#22c55e">₪212,628</div>
+      <div class="kpi-s">✅ בפועל</div>
+    </div>
+
+    <div class="kpi b">
+      <div class="kpi-l">הכנסות צפויות — אפריל</div>
+      <div class="kpi-v" style="color:#60a5fa">₪264,028</div>
+      <div class="kpi-s">🔵 תחזית | Line 5 + AMAN + Visonic</div>
+    </div>
+
+    <div class="kpi y">
       <div class="kpi-l">יתרה צפויה — סוף אפריל</div>
-      <div class="kpi-v" style="color:#22c55e">₪72,728</div>
-      <div class="kpi-s">✅ חיובי</div>
+      <div class="kpi-v" style="color:#eab308">₪45,151</div>
+      <div class="kpi-s">🔵 תחזית מהמודל</div>
     </div>
+
   </div>
 
-  <details style="margin-bottom:14px">
-    <summary style="cursor:pointer;padding:14px 20px;background:#1e293b;border-radius:10px;border:1px solid #334155;font-size:14px;font-weight:600;color:#f1f5f9;list-style:none;display:flex;justify-content:space-between;align-items:center">
-      <span>📥 הכנסות</span>
-      <span style="font-size:12px;color:#22c55e;font-weight:400">אפריל: ₪224,028 &nbsp;▼</span>
-    </summary>
-    <div style="background:#1e293b;border:1px solid #334155;border-top:none;border-radius:0 0 10px 10px;padding:16px 20px">
-      <table style="width:100%;border-collapse:collapse;font-size:12px">
-        <thead><tr style="border-bottom:1px solid #334155"><th style="text-align:right">לקוח</th><th style="text-align:center;min-width:90px">✅ אפריל</th><th style="text-align:center;min-width:90px">🔵 מאי</th><th style="text-align:center;min-width:90px">🔵 יוני</th><th style="text-align:center;min-width:90px">🔵 יולי</th></tr></thead>
-        <tbody><tr><td style="font-weight:600;color:#f1f5f9">אלביט</td><td style="text-align:center;font-weight:600;">—</td><td style="text-align:center;opacity:.7;">—</td><td style="text-align:center;opacity:.7;">—</td><td style="text-align:center;opacity:.7;">—</td></tr><tr><td style="font-weight:600;color:#f1f5f9">Line 5</td><td style="text-align:center;font-weight:600;">₪110,271</td><td style="text-align:center;opacity:.7;">₪80,535</td><td style="text-align:center;opacity:.7;">—</td><td style="text-align:center;opacity:.7;">—</td></tr><tr><td style="font-weight:600;color:#f1f5f9">LiteBC</td><td style="text-align:center;font-weight:600;">—</td><td style="text-align:center;opacity:.7;">—</td><td style="text-align:center;opacity:.7;">—</td><td style="text-align:center;opacity:.7;">—</td></tr><tr><td style="font-weight:600;color:#f1f5f9">Visonic</td><td style="text-align:center;font-weight:600;">—</td><td style="text-align:center;opacity:.7;">—</td><td style="text-align:center;opacity:.7;">₪30,208</td><td style="text-align:center;opacity:.7;">—</td></tr><tr><td style="font-weight:600;color:#f1f5f9">Rafael</td><td style="text-align:center;font-weight:600;">—</td><td style="text-align:center;opacity:.7;">—</td><td style="text-align:center;opacity:.7;">₪14,455</td><td style="text-align:center;opacity:.7;">—</td></tr><tr><td style="font-weight:600;color:#f1f5f9">AMAN (ישיר)</td><td style="text-align:center;font-weight:600;">₪17,900</td><td style="text-align:center;opacity:.7;">—</td><td style="text-align:center;opacity:.7;">—</td><td style="text-align:center;opacity:.7;">—</td></tr><tr style="border-top:2px solid #334155"><td style="font-weight:700;color:#f1f5f9">סה"כ</td><td style="text-align:center;font-weight:700;color:#22c55e;">₪224,028</td><td style="text-align:center;font-weight:700;color:#22c55e;opacity:.8;">₪205,025</td><td style="text-align:center;font-weight:700;color:#22c55e;opacity:.8;">₪292,398</td><td style="text-align:center;font-weight:700;color:#22c55e;opacity:.8;">₪268,400</td></tr></tbody>
-      </table>
-    </div>
-  </details>
-
-  <details style="margin-bottom:14px">
-    <summary style="cursor:pointer;padding:14px 20px;background:#1e293b;border-radius:10px;border:1px solid #334155;font-size:14px;font-weight:600;color:#f1f5f9;list-style:none;display:flex;justify-content:space-between;align-items:center">
-      <span>📤 הוצאות</span>
-      <span style="font-size:12px;color:#ef4444;font-weight:400">אפריל: ₪260,341 &nbsp;▼</span>
-    </summary>
-    <div style="background:#1e293b;border:1px solid #334155;border-top:none;border-radius:0 0 10px 10px;padding:16px 20px">
-      <table style="width:100%;border-collapse:collapse;font-size:12px">
-        <thead><tr style="border-bottom:1px solid #334155"><th style="text-align:right">פריט</th><th style="text-align:center;min-width:80px">✅ אפריל</th><th style="text-align:center;min-width:80px">🔵 מאי</th><th style="text-align:center;min-width:80px">🔵 יוני</th><th style="text-align:center;min-width:80px">🔵 יולי</th></tr></thead>
-        <tbody><tr style="background:#0a0e1a"><td colspan="5" style="padding:8px 6px 4px;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.06em">🏗 AMAN — קבלני משנה</td></tr><tr><td style="color:#94a3b8;padding-right:12px">Iron Hawk (אלביט)</td><td style="text-align:center;font-weight:600;">₪23,789</td><td style="text-align:center;opacity:.75;">₪30,975</td><td style="text-align:center;opacity:.75;">₪26,019</td><td style="text-align:center;opacity:.75;">—</td></tr><tr><td style="color:#94a3b8;padding-right:12px">Nova Shield (אלביט)</td><td style="text-align:center;font-weight:600;">—</td><td style="text-align:center;opacity:.75;">₪17,346</td><td style="text-align:center;opacity:.75;">₪22,178</td><td style="text-align:center;opacity:.75;">—</td></tr><tr><td style="color:#94a3b8;padding-right:12px">Multi Channel</td><td style="text-align:center;font-weight:600;">—</td><td style="text-align:center;opacity:.75;">—</td><td style="text-align:center;opacity:.75;">₪7,434</td><td style="text-align:center;opacity:.75;">—</td></tr><tr><td style="color:#94a3b8;padding-right:12px">LiteBC</td><td style="text-align:center;font-weight:600;">—</td><td style="text-align:center;opacity:.75;">—</td><td style="text-align:center;opacity:.75;">—</td><td style="text-align:center;opacity:.75;">—</td></tr><tr><td style="color:#94a3b8;padding-right:12px">Elbit (כללי)</td><td style="text-align:center;font-weight:600;">—</td><td style="text-align:center;opacity:.75;">—</td><td style="text-align:center;opacity:.75;">—</td><td style="text-align:center;opacity:.75;">—</td></tr><tr><td style="color:#94a3b8;padding-right:12px">Line 5 UX/UI</td><td style="text-align:center;font-weight:600;">₪25,606</td><td style="text-align:center;opacity:.75;">₪56,581</td><td style="text-align:center;opacity:.75;">—</td><td style="text-align:center;opacity:.75;">—</td></tr><tr style="border-top:1px solid #334155;background:#0f172a"><td style="font-weight:700;color:#fbbf24;font-size:11px">סה"כ AMAN — קבלני משנה</td><td style="text-align:center;font-weight:700;color:#fbbf24">₪49,395</td><td style="text-align:center;font-weight:700;color:#fbbf24">₪104,902</td><td style="text-align:center;font-weight:700;color:#fbbf24">₪55,631</td><td style="text-align:center;font-weight:700;color:#fbbf24">—</td></tr><tr style="background:#0a0e1a"><td colspan="5" style="padding:8px 6px 4px;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.06em">👷 קבלני משנה אחרים</td></tr><tr><td style="color:#94a3b8;padding-right:12px">Doobi</td><td style="text-align:center;font-weight:600;">—</td><td style="text-align:center;opacity:.75;">—</td><td style="text-align:center;opacity:.75;">—</td><td style="text-align:center;opacity:.75;">—</td></tr><tr><td style="color:#94a3b8;padding-right:12px">עופר שפיר</td><td style="text-align:center;font-weight:600;">—</td><td style="text-align:center;opacity:.75;">—</td><td style="text-align:center;opacity:.75;">—</td><td style="text-align:center;opacity:.75;">—</td></tr><tr><td style="color:#94a3b8;padding-right:12px">TINK</td><td style="text-align:center;font-weight:600;">—</td><td style="text-align:center;opacity:.75;">—</td><td style="text-align:center;opacity:.75;">—</td><td style="text-align:center;opacity:.75;">—</td></tr><tr><td style="color:#94a3b8;padding-right:12px">לוגו רפאל</td><td style="text-align:center;font-weight:600;">—</td><td style="text-align:center;opacity:.75;">—</td><td style="text-align:center;opacity:.75;">—</td><td style="text-align:center;opacity:.75;">—</td></tr><tr><td style="color:#94a3b8;padding-right:12px">Hirsh</td><td style="text-align:center;font-weight:600;">—</td><td style="text-align:center;opacity:.75;">—</td><td style="text-align:center;opacity:.75;">—</td><td style="text-align:center;opacity:.75;">—</td></tr><tr><td style="color:#94a3b8;padding-right:12px">Sunguy</td><td style="text-align:center;font-weight:600;">—</td><td style="text-align:center;opacity:.75;">—</td><td style="text-align:center;opacity:.75;">—</td><td style="text-align:center;opacity:.75;">—</td></tr><tr><td style="color:#94a3b8;padding-right:12px">Din7</td><td style="text-align:center;font-weight:600;">—</td><td style="text-align:center;opacity:.75;">—</td><td style="text-align:center;opacity:.75;">—</td><td style="text-align:center;opacity:.75;">—</td></tr><tr><td style="color:#94a3b8;padding-right:12px">מחוש</td><td style="text-align:center;font-weight:600;">—</td><td style="text-align:center;opacity:.75;">—</td><td style="text-align:center;opacity:.75;">—</td><td style="text-align:center;opacity:.75;">—</td></tr><tr style="border-top:1px solid #334155;background:#0f172a"><td style="font-weight:700;color:#fbbf24;font-size:11px">סה"כ קבלני משנה אחרים</td><td style="text-align:center;font-weight:700;color:#fbbf24">—</td><td style="text-align:center;font-weight:700;color:#fbbf24">—</td><td style="text-align:center;font-weight:700;color:#fbbf24">—</td><td style="text-align:center;font-weight:700;color:#fbbf24">—</td></tr><tr style="background:#0a0e1a"><td colspan="5" style="padding:8px 6px 4px;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.06em">👥 שכר עובדים</td></tr><tr><td style="color:#94a3b8;padding-right:12px">אורי רבגד</td><td style="text-align:center;font-weight:600;">₪19,679</td><td style="text-align:center;opacity:.75;">₪19,679</td><td style="text-align:center;opacity:.75;">₪19,679</td><td style="text-align:center;opacity:.75;">—</td></tr><tr><td style="color:#94a3b8;padding-right:12px">דן גרינצוויג</td><td style="text-align:center;font-weight:600;">₪13,300</td><td style="text-align:center;opacity:.75;">₪13,300</td><td style="text-align:center;opacity:.75;">₪13,300</td><td style="text-align:center;opacity:.75;">—</td></tr><tr><td style="color:#94a3b8;padding-right:12px">שגיא שהף</td><td style="text-align:center;font-weight:600;">₪6,000</td><td style="text-align:center;opacity:.75;">₪6,000</td><td style="text-align:center;opacity:.75;">₪6,000</td><td style="text-align:center;opacity:.75;">—</td></tr><tr><td style="color:#94a3b8;padding-right:12px">נתי פינחסוב</td><td style="text-align:center;font-weight:600;">₪13,300</td><td style="text-align:center;opacity:.75;">₪13,300</td><td style="text-align:center;opacity:.75;">₪13,300</td><td style="text-align:center;opacity:.75;">—</td></tr><tr><td style="color:#94a3b8;padding-right:12px">ביטוח לאומי (מעסיק)</td><td style="text-align:center;font-weight:600;">₪9,419</td><td style="text-align:center;opacity:.75;">₪9,419</td><td style="text-align:center;opacity:.75;">₪9,419</td><td style="text-align:center;opacity:.75;">—</td></tr><tr style="border-top:1px solid #334155;background:#0f172a"><td style="font-weight:700;color:#fbbf24;font-size:11px">סה"כ שכר עובדים</td><td style="text-align:center;font-weight:700;color:#fbbf24">₪61,698</td><td style="text-align:center;font-weight:700;color:#fbbf24">₪61,698</td><td style="text-align:center;font-weight:700;color:#fbbf24">₪61,698</td><td style="text-align:center;font-weight:700;color:#fbbf24">—</td></tr><tr style="background:#0a0e1a"><td colspan="5" style="padding:8px 6px 4px;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.06em">💰 משיכות שותפים</td></tr><tr><td style="color:#94a3b8;padding-right:12px">ינון</td><td style="text-align:center;font-weight:600;">₪40,000</td><td style="text-align:center;opacity:.75;">₪40,000</td><td style="text-align:center;opacity:.75;">₪40,000</td><td style="text-align:center;opacity:.75;">—</td></tr><tr><td style="color:#94a3b8;padding-right:12px">אלעד</td><td style="text-align:center;font-weight:600;">₪40,000</td><td style="text-align:center;opacity:.75;">₪40,000</td><td style="text-align:center;opacity:.75;">₪40,000</td><td style="text-align:center;opacity:.75;">—</td></tr><tr style="border-top:1px solid #334155;background:#0f172a"><td style="font-weight:700;color:#fbbf24;font-size:11px">סה"כ משיכות שותפים</td><td style="text-align:center;font-weight:700;color:#fbbf24">₪80,000</td><td style="text-align:center;font-weight:700;color:#fbbf24">₪80,000</td><td style="text-align:center;font-weight:700;color:#fbbf24">₪80,000</td><td style="text-align:center;font-weight:700;color:#fbbf24">—</td></tr><tr style="background:#0a0e1a"><td colspan="5" style="padding:8px 6px 4px;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.06em">🏢 הוצאות קבועות</td></tr><tr><td style="color:#94a3b8;padding-right:12px">שכירות</td><td style="text-align:center;font-weight:600;">₪10,197</td><td style="text-align:center;opacity:.75;">₪10,197</td><td style="text-align:center;opacity:.75;">₪10,197</td><td style="text-align:center;opacity:.75;">—</td></tr><tr><td style="color:#94a3b8;padding-right:12px">ארנונה</td><td style="text-align:center;font-weight:600;">₪1,875</td><td style="text-align:center;opacity:.75;">₪1,875</td><td style="text-align:center;opacity:.75;">₪1,875</td><td style="text-align:center;opacity:.75;">—</td></tr><tr><td style="color:#94a3b8;padding-right:12px">החזר הלוואה</td><td style="text-align:center;font-weight:600;">₪6,187</td><td style="text-align:center;opacity:.75;">₪6,187</td><td style="text-align:center;opacity:.75;">₪6,187</td><td style="text-align:center;opacity:.75;">—</td></tr><tr><td style="color:#94a3b8;padding-right:12px">Solidworks</td><td style="text-align:center;font-weight:600;">—</td><td style="text-align:center;opacity:.75;">—</td><td style="text-align:center;opacity:.75;">—</td><td style="text-align:center;opacity:.75;">—</td></tr><tr><td style="color:#94a3b8;padding-right:12px">רואה חשבון</td><td style="text-align:center;font-weight:600;">₪1,750</td><td style="text-align:center;opacity:.75;">₪1,750</td><td style="text-align:center;opacity:.75;">₪1,750</td><td style="text-align:center;opacity:.75;">—</td></tr><tr><td style="color:#94a3b8;padding-right:12px">כרטיס אשראי</td><td style="text-align:center;font-weight:600;">₪18,000</td><td style="text-align:center;opacity:.75;">₪18,000</td><td style="text-align:center;opacity:.75;">₪18,000</td><td style="text-align:center;opacity:.75;">—</td></tr><tr><td style="color:#94a3b8;padding-right:12px">מע"מ</td><td style="text-align:center;font-weight:600;">—</td><td style="text-align:center;opacity:.75;">₪14,000</td><td style="text-align:center;opacity:.75;">—</td><td style="text-align:center;opacity:.75;">—</td></tr><tr><td style="color:#94a3b8;padding-right:12px">עמלות בנק</td><td style="text-align:center;font-weight:600;">₪300</td><td style="text-align:center;opacity:.75;">₪300</td><td style="text-align:center;opacity:.75;">₪300</td><td style="text-align:center;opacity:.75;">—</td></tr><tr style="border-top:1px solid #334155;background:#0f172a"><td style="font-weight:700;color:#fbbf24;font-size:11px">סה"כ הוצאות קבועות</td><td style="text-align:center;font-weight:700;color:#fbbf24">₪38,309</td><td style="text-align:center;font-weight:700;color:#fbbf24">₪52,309</td><td style="text-align:center;font-weight:700;color:#fbbf24">₪38,309</td><td style="text-align:center;font-weight:700;color:#fbbf24">—</td></tr><tr style="border-top:2px solid #ef4444;background:#0f172a"><td style="font-weight:700;color:#ef4444;font-size:13px">💸 סה"כ הוצאות</td><td style="text-align:center;font-weight:700;color:#ef4444">₪260,341</td><td style="text-align:center;font-weight:700;color:#ef4444">₪300,448</td><td style="text-align:center;font-weight:700;color:#ef4444">₪237,177</td><td style="text-align:center;font-weight:700;color:#ef4444">₪246,593</td></tr></tbody>
-      </table>
-    </div>
-  </details>
-
+  <!-- ══ גרף 6 חודשים ══ -->
   <div class="panel" style="margin-bottom:18px">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
-      <div class="panel-title" style="margin:0">📊 תחזית — 3 חודשים קדימה</div>
-      <div style="display:flex;gap:12px;font-size:11px;color:#64748b">
-        <span><span style="display:inline-block;width:8px;height:8px;background:#22c55e;border-radius:2px;opacity:.75;margin-left:4px"></span>הכנסות</span>
-        <span><span style="display:inline-block;width:8px;height:8px;background:#ef4444;border-radius:2px;opacity:.75;margin-left:4px"></span>הוצאות</span>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <div class="panel-title" style="margin:0">📊 תזרים — 3 חודשים אחורה · 3 חודשים קדימה</div>
+      <div style="display:flex;gap:14px;font-size:11px;color:#64748b">
+        <span><span style="display:inline-block;width:9px;height:9px;background:#22c55e;border-radius:2px;opacity:.75;margin-left:4px"></span>הכנסות</span>
+        <span><span style="display:inline-block;width:9px;height:9px;background:#ef4444;border-radius:2px;opacity:.75;margin-left:4px"></span>הוצאות</span>
+        <span>יתרה = סוף חודש</span>
+        <span>✅ בפועל &nbsp;🔵 תחזית</span>
       </div>
     </div>
-    <div style="display:flex;gap:16px;padding:0 8px">
-      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
-        <div style="width:100%;display:flex;gap:4px;align-items:flex-end;height:90px">
-          <div style="flex:1;background:#22c55e;opacity:.75;height:61%;border-radius:3px 3px 0 0" title="₪205,025"></div>
-          <div style="flex:1;background:#ef4444;opacity:.75;height:90%;border-radius:3px 3px 0 0" title="₪300,448"></div>
-        </div>
-        <div style="font-size:12px;font-weight:600;color:#94a3b8">מאי</div>
-        <div style="font-size:10px;color:#22c55e">₪205,025</div>
-        <div style="font-size:10px;color:#ef4444">₪300,448</div>
-        <div style="font-size:11px;font-weight:700;color:#ef4444">יתרה: -₪22,695</div>
+    <div style="display:flex;gap:10px;padding:0 4px">
+      
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;border-radius:6px;padding:4px 2px">
+      <div style="font-size:10px;color:#64748b;line-height:1">✅</div>
+      <div style="width:100%;display:flex;gap:2px;align-items:flex-end;height:70px">
+        <div style="flex:1;background:#22c55e;opacity:.75;height:100%;border-radius:2px 2px 0 0" title="הכנסות ₪437,371"></div>
+        <div style="flex:1;background:#ef4444;opacity:.75;height:93%;border-radius:2px 2px 0 0" title="הוצאות ₪408,125"></div>
       </div>
-      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
-        <div style="width:100%;display:flex;gap:4px;align-items:flex-end;height:90px">
-          <div style="flex:1;background:#22c55e;opacity:.75;height:87%;border-radius:3px 3px 0 0" title="₪292,398"></div>
-          <div style="flex:1;background:#ef4444;opacity:.75;height:71%;border-radius:3px 3px 0 0" title="₪237,177"></div>
-        </div>
-        <div style="font-size:12px;font-weight:600;color:#94a3b8">יוני</div>
-        <div style="font-size:10px;color:#22c55e">₪292,398</div>
-        <div style="font-size:10px;color:#ef4444">₪237,177</div>
-        <div style="font-size:11px;font-weight:700;color:#22c55e">יתרה: ₪32,526</div>
+      <div style="font-size:11px;font-weight:600;color:#94a3b8">ינו</div>
+      <div style="font-size:10px;font-weight:700;color:#22c55e">₪235K</div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;border-radius:6px;padding:4px 2px">
+      <div style="font-size:10px;color:#64748b;line-height:1">✅</div>
+      <div style="width:100%;display:flex;gap:2px;align-items:flex-end;height:70px">
+        <div style="flex:1;background:#22c55e;opacity:.75;height:59%;border-radius:2px 2px 0 0" title="הכנסות ₪258,853"></div>
+        <div style="flex:1;background:#ef4444;opacity:.75;height:83%;border-radius:2px 2px 0 0" title="הוצאות ₪367,120"></div>
       </div>
-      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
-        <div style="width:100%;display:flex;gap:4px;align-items:flex-end;height:90px">
-          <div style="flex:1;background:#22c55e;opacity:.75;height:80%;border-radius:3px 3px 0 0" title="₪268,400"></div>
-          <div style="flex:1;background:#ef4444;opacity:.75;height:73%;border-radius:3px 3px 0 0" title="₪246,593"></div>
-        </div>
-        <div style="font-size:12px;font-weight:600;color:#94a3b8">יולי</div>
-        <div style="font-size:10px;color:#22c55e">₪268,400</div>
-        <div style="font-size:10px;color:#ef4444">₪246,593</div>
-        <div style="font-size:11px;font-weight:700;color:#22c55e">יתרה: ₪54,333</div>
-      </div></div>
+      <div style="font-size:11px;font-weight:600;color:#94a3b8">פבר</div>
+      <div style="font-size:10px;font-weight:700;color:#22c55e">₪137K</div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;box-shadow:0 0 0 2px #60a5fa;border-radius:6px;padding:4px 2px">
+      <div style="font-size:10px;color:#64748b;line-height:1">✅</div>
+      <div style="width:100%;display:flex;gap:2px;align-items:flex-end;height:70px">
+        <div style="flex:1;background:#22c55e;opacity:.75;height:48%;border-radius:2px 2px 0 0" title="הכנסות ₪212,628"></div>
+        <div style="flex:1;background:#ef4444;opacity:.75;height:53%;border-radius:2px 2px 0 0" title="הוצאות ₪234,078"></div>
+      </div>
+      <div style="font-size:11px;font-weight:600;color:#94a3b8">מרץ</div>
+      <div style="font-size:10px;font-weight:700;color:#eab308">₪41K</div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;border-radius:6px;padding:4px 2px">
+      <div style="font-size:10px;color:#64748b;line-height:1">🔵</div>
+      <div style="width:100%;display:flex;gap:2px;align-items:flex-end;height:70px">
+        <div style="flex:1;background:#22c55e;opacity:.75;height:60%;border-radius:2px 2px 0 0" title="הכנסות ₪264,028"></div>
+        <div style="flex:1;background:#ef4444;opacity:.75;height:59%;border-radius:2px 2px 0 0" title="הוצאות ₪260,341"></div>
+      </div>
+      <div style="font-size:11px;font-weight:600;color:#94a3b8">אפר</div>
+      <div style="font-size:10px;font-weight:700;color:#eab308">₪45K</div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;border-radius:6px;padding:4px 2px">
+      <div style="font-size:10px;color:#64748b;line-height:1">🔵</div>
+      <div style="width:100%;display:flex;gap:2px;align-items:flex-end;height:70px">
+        <div style="flex:1;background:#22c55e;opacity:.75;height:28%;border-radius:2px 2px 0 0" title="הכנסות ₪124,490"></div>
+        <div style="flex:1;background:#ef4444;opacity:.75;height:55%;border-radius:2px 2px 0 0" title="הוצאות ₪243,867"></div>
+      </div>
+      <div style="font-size:11px;font-weight:600;color:#94a3b8">מאי</div>
+      <div style="font-size:10px;font-weight:700;color:#ef4444">-₪74K</div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;border-radius:6px;padding:4px 2px">
+      <div style="font-size:10px;color:#64748b;line-height:1">🔵</div>
+      <div style="width:100%;display:flex;gap:2px;align-items:flex-end;height:70px">
+        <div style="flex:1;background:#22c55e;opacity:.75;height:59%;border-radius:2px 2px 0 0" title="הכנסות ₪262,190"></div>
+        <div style="flex:1;background:#ef4444;opacity:.75;height:54%;border-radius:2px 2px 0 0" title="הוצאות ₪237,177"></div>
+      </div>
+      <div style="font-size:11px;font-weight:600;color:#94a3b8">יונ</div>
+      <div style="font-size:10px;font-weight:700;color:#ef4444">-₪49K</div>
+    </div>
+    </div>
   </div>
 
-  <details style="margin-bottom:14px">
-    <summary style="cursor:pointer;padding:14px 20px;background:#1e293b;border-radius:10px;border:1px solid #334155;font-size:14px;font-weight:600;color:#f1f5f9;list-style:none;display:flex;justify-content:space-between;align-items:center">
-      <span>🔮 Pipeline — שעות ושווי פוטנציאלי</span>
-      <span style="font-size:12px;color:#a855f7;font-weight:400">סה"כ: ₪1,233,765 &nbsp;▼</span>
-    </summary>
-    <div style="background:#1e293b;border:1px solid #334155;border-top:none;border-radius:0 0 10px 10px;padding:16px 20px">
-      <table style="width:100%;border-collapse:collapse;font-size:12px">
-        <thead><tr style="border-bottom:1px solid #334155"><th>פרויקט</th><th style="text-align:center">שעות נותרות</th><th style="text-align:center">תעריף</th><th style="text-align:center">שווי</th><th>סטטוס</th></tr></thead>
-        <tbody><tr>
-          <td style="font-weight:600;color:#f1f5f9">Nova Shield</td>
-          <td style="text-align:center;color:#60a5fa">2912h</td>
-          <td style="text-align:center;color:#64748b">₪211</td>
-          <td style="text-align:center;font-weight:700;color:#22c55e">₪614,537</td>
-          <td><span class="bdg bdg-g">מאושר</span></td>
-        </tr><tr>
-          <td style="font-weight:600;color:#f1f5f9">Sting</td>
-          <td style="text-align:center;color:#60a5fa">433h</td>
-          <td style="text-align:center;color:#64748b">₪211</td>
-          <td style="text-align:center;font-weight:700;color:#eab308">₪91,468</td>
-          <td><span class="bdg bdg-g">מאושר</span></td>
-        </tr><tr>
-          <td style="font-weight:600;color:#f1f5f9">Pulse Solan</td>
-          <td style="text-align:center;color:#60a5fa">973h</td>
-          <td style="text-align:center;color:#64748b">₪211</td>
-          <td style="text-align:center;font-weight:700;color:#22c55e">₪205,303</td>
-          <td><span class="bdg bdg-g">מאושר</span></td>
-        </tr><tr>
-          <td style="font-weight:600;color:#f1f5f9">Iron Hawk 3.0</td>
-          <td style="text-align:center;color:#60a5fa">484h</td>
-          <td style="text-align:center;color:#64748b">₪211</td>
-          <td style="text-align:center;font-weight:700;color:#22c55e">₪102,124</td>
-          <td><span class="bdg bdg-g">מאושר</span></td>
-        </tr><tr>
-          <td style="font-weight:600;color:#f1f5f9">Wide FOV HMD</td>
-          <td style="text-align:center;color:#60a5fa">340h</td>
-          <td style="text-align:center;color:#64748b">₪211</td>
-          <td style="text-align:center;font-weight:700;color:#eab308">₪71,740</td>
-          <td><span class="bdg bdg-g">מאושר</span></td>
-        </tr><tr>
-          <td style="font-weight:600;color:#f1f5f9">Xsight 3.0</td>
-          <td style="text-align:center;color:#60a5fa">200h</td>
-          <td style="text-align:center;color:#64748b">₪211</td>
-          <td style="text-align:center;font-weight:700;color:#eab308">₪42,200</td>
-          <td><span class="bdg bdg-g">מאושר</span></td>
-        </tr><tr>
-          <td style="font-weight:600;color:#f1f5f9">Frontier 2.0</td>
-          <td style="text-align:center;color:#60a5fa">91h</td>
-          <td style="text-align:center;color:#64748b">₪211</td>
-          <td style="text-align:center;font-weight:700;color:#eab308">₪19,201</td>
-          <td><span class="bdg bdg-g">מאושר</span></td>
-        </tr><tr>
-          <td style="font-weight:600;color:#f1f5f9">Multi-Channel E-Lynx</td>
-          <td style="text-align:center;color:#60a5fa">10h</td>
-          <td style="text-align:center;color:#64748b">₪211</td>
-          <td style="text-align:center;font-weight:700;color:#eab308">₪2,110</td>
-          <td><span class="bdg bdg-g">מאושר</span></td>
-        </tr><tr>
-          <td style="font-weight:600;color:#f1f5f9">Helios</td>
-          <td style="text-align:center;color:#60a5fa">71h</td>
-          <td style="text-align:center;color:#64748b">₪211</td>
-          <td style="text-align:center;font-weight:700;color:#eab308">₪14,981</td>
-          <td><span class="bdg bdg-g">מאושר</span></td>
-        </tr><tr>
-          <td style="font-weight:600;color:#f1f5f9">Ofek Ogdan</td>
-          <td style="text-align:center;color:#60a5fa">100h</td>
-          <td style="text-align:center;color:#64748b">₪211</td>
-          <td style="text-align:center;font-weight:700;color:#eab308">₪21,100</td>
-          <td><span class="bdg bdg-b">בתהליך</span></td>
-        </tr><tr>
-          <td style="font-weight:600;color:#f1f5f9">Optiluv</td>
-          <td style="text-align:center;color:#60a5fa">30h</td>
-          <td style="text-align:center;color:#64748b">₪300</td>
-          <td style="text-align:center;font-weight:700;color:#eab308">₪9,000</td>
-          <td><span class="bdg bdg-b">בתהליך</span></td>
-        </tr><tr>
-          <td style="font-weight:600;color:#f1f5f9">Outdoor Camera</td>
-          <td style="text-align:center;color:#60a5fa">100h</td>
-          <td style="text-align:center;color:#64748b">₪400</td>
-          <td style="text-align:center;font-weight:700;color:#eab308">₪40,000</td>
-          <td><span class="bdg bdg-b">בתהליך</span></td>
-        </tr></tbody>
-      </table>
+  <!-- ══ טבלת תזרים מפורטת ══ -->
+  <div class="panel" style="margin-bottom:18px">
+    <div class="panel-title">💳 תזרים מפורט</div>
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align:right">חודש</th>
+          <th style="text-align:left">הכנסות</th>
+          <th style="text-align:left">הוצאות</th>
+          <th style="text-align:left">נטו</th>
+          <th style="text-align:left">יתרת בנק</th>
+        </tr>
+      </thead>
+      <tbody>
+    <tr>
+      <td style="font-weight:600;white-space:nowrap">✅ ינואר</td>
+      <td style="color:#22c55e;text-align:left">₪437,371</td>
+      <td style="color:#ef4444;text-align:left">-₪408,125</td>
+      <td style="color:#22c55e;text-align:left;font-weight:600">+₪29,246</td>
+      <td style="color:#22c55e;text-align:left;font-weight:700">₪235,691</td>
+    </tr>
+    <tr>
+      <td style="font-weight:600;white-space:nowrap">✅ פברואר</td>
+      <td style="color:#22c55e;text-align:left">₪258,853</td>
+      <td style="color:#ef4444;text-align:left">-₪367,120</td>
+      <td style="color:#ef4444;text-align:left;font-weight:600">-₪108,267</td>
+      <td style="color:#22c55e;text-align:left;font-weight:700">₪137,623</td>
+    </tr>
+    <tr style="background:rgba(96,165,250,.06)">
+      <td style="font-weight:600;white-space:nowrap">✅ מרץ</td>
+      <td style="color:#22c55e;text-align:left">₪212,628</td>
+      <td style="color:#ef4444;text-align:left">-₪234,078</td>
+      <td style="color:#ef4444;text-align:left;font-weight:600">-₪21,450</td>
+      <td style="color:#eab308;text-align:left;font-weight:700">₪41,464</td>
+    </tr>
+    <tr>
+      <td style="font-weight:600;white-space:nowrap">🔵 אפריל</td>
+      <td style="color:#22c55e;text-align:left">₪264,028</td>
+      <td style="color:#ef4444;text-align:left">-₪260,341</td>
+      <td style="color:#22c55e;text-align:left;font-weight:600">+₪3,687</td>
+      <td style="color:#eab308;text-align:left;font-weight:700">₪45,151</td>
+    </tr>
+    <tr>
+      <td style="font-weight:600;white-space:nowrap">🔵 מאי</td>
+      <td style="color:#22c55e;text-align:left">₪124,490</td>
+      <td style="color:#ef4444;text-align:left">-₪243,867</td>
+      <td style="color:#ef4444;text-align:left;font-weight:600">-₪119,377</td>
+      <td style="color:#ef4444;text-align:left;font-weight:700">-₪74,226</td>
+    </tr>
+    <tr>
+      <td style="font-weight:600;white-space:nowrap">🔵 יוני</td>
+      <td style="color:#22c55e;text-align:left">₪262,190</td>
+      <td style="color:#ef4444;text-align:left">-₪237,177</td>
+      <td style="color:#22c55e;text-align:left;font-weight:600">+₪25,013</td>
+      <td style="color:#ef4444;text-align:left;font-weight:700">-₪49,213</td>
+    </tr></tbody>
+    </table>
+    <div style="margin-top:10px;font-size:11px;color:#64748b;display:flex;gap:18px;flex-wrap:wrap">
+      <span>✅ ינואר–מרץ = בפועל מדפי חשבון</span>
+      <span>🔵 אפריל–יוני = תחזית מהמודל הפיננסי</span>
+      <span style="color:#fbbf24">⚠️ מאי שלילי = lag גביית אלביט 90 יום</span>
     </div>
-  </details>
+  </div>
 
-  <details style="margin-bottom:14px">
-    <summary style="cursor:pointer;padding:14px 20px;background:#1e293b;border-radius:10px;border:1px solid #334155;font-size:14px;font-weight:600;color:#f1f5f9;list-style:none;display:flex;justify-content:space-between;align-items:center">
-      <span>💳 מעקב תשלומים</span>
-      <span style="font-size:12px;color:#64748b;font-weight:400">אפריל + 2 חודשים &nbsp;▼</span>
-    </summary>
-    <div style="background:#1e293b;border:1px solid #334155;border-top:none;border-radius:0 0 10px 10px;padding:16px 20px">
-      
-        <div style="margin-bottom:12px">
-          <div style="font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.06em;padding:6px 0;border-bottom:1px solid #1e293b;margin-bottom:6px">AMAN — קבלני משנה פרויקטליים</div>
-          <table style="width:100%;border-collapse:collapse;font-size:12px">
-            <thead><tr><th style="text-align:right">פריט</th><th style="text-align:center">✅ אפריל</th><th style="text-align:center">🔵 מאי</th><th style="text-align:center">🔵 יוני</th></tr></thead>
-            <tbody><tr><td style="color:#94a3b8;font-size:12px;padding:8px 4px">Iron Hawk (אלביט)</td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪23,789</div>
-                      <button onclick="togglePayment(4,12,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪30,975</div>
-                      <button onclick="togglePayment(4,15,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪26,019</div>
-                      <button onclick="togglePayment(4,18,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td></tr><tr><td style="color:#94a3b8;font-size:12px;padding:8px 4px">Nova Shield (אלביט)</td><td style="text-align:center;color:#334155;font-size:11px">—</td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪17,346</div>
-                      <button onclick="togglePayment(5,15,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪22,178</div>
-                      <button onclick="togglePayment(5,18,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td></tr><tr><td style="color:#94a3b8;font-size:12px;padding:8px 4px">Multi Channel</td><td style="text-align:center;color:#334155;font-size:11px">—</td><td style="text-align:center;color:#334155;font-size:11px">—</td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪7,434</div>
-                      <button onclick="togglePayment(6,18,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td></tr><tr><td style="color:#94a3b8;font-size:12px;padding:8px 4px">LiteBC</td><td style="text-align:center;color:#334155;font-size:11px">—</td><td style="text-align:center;color:#334155;font-size:11px">—</td><td style="text-align:center;color:#334155;font-size:11px">—</td></tr><tr><td style="color:#94a3b8;font-size:12px;padding:8px 4px">Elbit (כללי)</td><td style="text-align:center;color:#334155;font-size:11px">—</td><td style="text-align:center;color:#334155;font-size:11px">—</td><td style="text-align:center;color:#334155;font-size:11px">—</td></tr><tr><td style="color:#94a3b8;font-size:12px;padding:8px 4px">Line 5 UX/UI</td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪25,606</div>
-                      <button onclick="togglePayment(10,12,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪56,581</div>
-                      <button onclick="togglePayment(10,15,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td><td style="text-align:center;color:#334155;font-size:11px">—</td></tr></tbody>
-          </table>
-        </div>
-        <div style="margin-bottom:12px">
-          <div style="font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.06em;padding:6px 0;border-bottom:1px solid #1e293b;margin-bottom:6px">קבלני משנה אחרים</div>
-          <table style="width:100%;border-collapse:collapse;font-size:12px">
-            <thead><tr><th style="text-align:right">פריט</th><th style="text-align:center">✅ אפריל</th><th style="text-align:center">🔵 מאי</th><th style="text-align:center">🔵 יוני</th></tr></thead>
-            <tbody><tr><td style="color:#94a3b8;font-size:12px;padding:8px 4px">Doobi</td><td style="text-align:center;color:#334155;font-size:11px">—</td><td style="text-align:center;color:#334155;font-size:11px">—</td><td style="text-align:center;color:#334155;font-size:11px">—</td></tr><tr><td style="color:#94a3b8;font-size:12px;padding:8px 4px">עופר שפיר</td><td style="text-align:center;color:#334155;font-size:11px">—</td><td style="text-align:center;color:#334155;font-size:11px">—</td><td style="text-align:center;color:#334155;font-size:11px">—</td></tr><tr><td style="color:#94a3b8;font-size:12px;padding:8px 4px">TINK</td><td style="text-align:center;color:#334155;font-size:11px">—</td><td style="text-align:center;color:#334155;font-size:11px">—</td><td style="text-align:center;color:#334155;font-size:11px">—</td></tr><tr><td style="color:#94a3b8;font-size:12px;padding:8px 4px">לוגו רפאל</td><td style="text-align:center;color:#334155;font-size:11px">—</td><td style="text-align:center;color:#334155;font-size:11px">—</td><td style="text-align:center;color:#334155;font-size:11px">—</td></tr><tr><td style="color:#94a3b8;font-size:12px;padding:8px 4px">Hirsh</td><td style="text-align:center;color:#334155;font-size:11px">—</td><td style="text-align:center;color:#334155;font-size:11px">—</td><td style="text-align:center;color:#334155;font-size:11px">—</td></tr><tr><td style="color:#94a3b8;font-size:12px;padding:8px 4px">Sunguy</td><td style="text-align:center;color:#334155;font-size:11px">—</td><td style="text-align:center;color:#334155;font-size:11px">—</td><td style="text-align:center;color:#334155;font-size:11px">—</td></tr><tr><td style="color:#94a3b8;font-size:12px;padding:8px 4px">Din7</td><td style="text-align:center;color:#334155;font-size:11px">—</td><td style="text-align:center;color:#334155;font-size:11px">—</td><td style="text-align:center;color:#334155;font-size:11px">—</td></tr><tr><td style="color:#94a3b8;font-size:12px;padding:8px 4px">מחוש</td><td style="text-align:center;color:#334155;font-size:11px">—</td><td style="text-align:center;color:#334155;font-size:11px">—</td><td style="text-align:center;color:#334155;font-size:11px">—</td></tr></tbody>
-          </table>
-        </div>
-        <div style="margin-bottom:12px">
-          <div style="font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.06em;padding:6px 0;border-bottom:1px solid #1e293b;margin-bottom:6px">שכר עובדים</div>
-          <table style="width:100%;border-collapse:collapse;font-size:12px">
-            <thead><tr><th style="text-align:right">פריט</th><th style="text-align:center">✅ אפריל</th><th style="text-align:center">🔵 מאי</th><th style="text-align:center">🔵 יוני</th></tr></thead>
-            <tbody><tr><td style="color:#94a3b8;font-size:12px;padding:8px 4px">אורי רבגד</td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪19,679</div>
-                      <button onclick="togglePayment(22,12,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪19,679</div>
-                      <button onclick="togglePayment(22,15,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪19,679</div>
-                      <button onclick="togglePayment(22,18,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td></tr><tr><td style="color:#94a3b8;font-size:12px;padding:8px 4px">דן גרינצוויג</td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪13,300</div>
-                      <button onclick="togglePayment(23,12,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪13,300</div>
-                      <button onclick="togglePayment(23,15,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪13,300</div>
-                      <button onclick="togglePayment(23,18,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td></tr><tr><td style="color:#94a3b8;font-size:12px;padding:8px 4px">שגיא שהף</td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪6,000</div>
-                      <button onclick="togglePayment(24,12,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪6,000</div>
-                      <button onclick="togglePayment(24,15,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪6,000</div>
-                      <button onclick="togglePayment(24,18,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td></tr><tr><td style="color:#94a3b8;font-size:12px;padding:8px 4px">נתי פינחסוב</td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪13,300</div>
-                      <button onclick="togglePayment(25,12,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪13,300</div>
-                      <button onclick="togglePayment(25,15,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪13,300</div>
-                      <button onclick="togglePayment(25,18,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td></tr><tr><td style="color:#94a3b8;font-size:12px;padding:8px 4px">ביטוח לאומי (מעסיק)</td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪9,419</div>
-                      <button onclick="togglePayment(26,12,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪9,419</div>
-                      <button onclick="togglePayment(26,15,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪9,419</div>
-                      <button onclick="togglePayment(26,18,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td></tr></tbody>
-          </table>
-        </div>
-        <div style="margin-bottom:12px">
-          <div style="font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.06em;padding:6px 0;border-bottom:1px solid #1e293b;margin-bottom:6px">משיכות שותפים</div>
-          <table style="width:100%;border-collapse:collapse;font-size:12px">
-            <thead><tr><th style="text-align:right">פריט</th><th style="text-align:center">✅ אפריל</th><th style="text-align:center">🔵 מאי</th><th style="text-align:center">🔵 יוני</th></tr></thead>
-            <tbody><tr><td style="color:#94a3b8;font-size:12px;padding:8px 4px">ינון</td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪40,000</div>
-                      <button onclick="togglePayment(28,12,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪40,000</div>
-                      <button onclick="togglePayment(28,15,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪40,000</div>
-                      <button onclick="togglePayment(28,18,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td></tr><tr><td style="color:#94a3b8;font-size:12px;padding:8px 4px">אלעד</td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪40,000</div>
-                      <button onclick="togglePayment(29,12,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪40,000</div>
-                      <button onclick="togglePayment(29,15,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪40,000</div>
-                      <button onclick="togglePayment(29,18,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td></tr></tbody>
-          </table>
-        </div>
-        <div style="margin-bottom:12px">
-          <div style="font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.06em;padding:6px 0;border-bottom:1px solid #1e293b;margin-bottom:6px">הוצאות קבועות ומשתנות</div>
-          <table style="width:100%;border-collapse:collapse;font-size:12px">
-            <thead><tr><th style="text-align:right">פריט</th><th style="text-align:center">✅ אפריל</th><th style="text-align:center">🔵 מאי</th><th style="text-align:center">🔵 יוני</th></tr></thead>
-            <tbody><tr><td style="color:#94a3b8;font-size:12px;padding:8px 4px">שכירות</td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪10,197</div>
-                      <button onclick="togglePayment(31,12,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪10,197</div>
-                      <button onclick="togglePayment(31,15,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪10,197</div>
-                      <button onclick="togglePayment(31,18,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td></tr><tr><td style="color:#94a3b8;font-size:12px;padding:8px 4px">ארנונה</td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪1,875</div>
-                      <button onclick="togglePayment(32,12,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪1,875</div>
-                      <button onclick="togglePayment(32,15,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪1,875</div>
-                      <button onclick="togglePayment(32,18,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td></tr><tr><td style="color:#94a3b8;font-size:12px;padding:8px 4px">החזר הלוואה</td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪6,187</div>
-                      <button onclick="togglePayment(33,12,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪6,187</div>
-                      <button onclick="togglePayment(33,15,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪6,187</div>
-                      <button onclick="togglePayment(33,18,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td></tr><tr><td style="color:#94a3b8;font-size:12px;padding:8px 4px">Solidworks</td><td style="text-align:center;color:#334155;font-size:11px">—</td><td style="text-align:center;color:#334155;font-size:11px">—</td><td style="text-align:center;color:#334155;font-size:11px">—</td></tr><tr><td style="color:#94a3b8;font-size:12px;padding:8px 4px">רואה חשבון</td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪1,750</div>
-                      <button onclick="togglePayment(35,12,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪1,750</div>
-                      <button onclick="togglePayment(35,15,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪1,750</div>
-                      <button onclick="togglePayment(35,18,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td></tr><tr><td style="color:#94a3b8;font-size:12px;padding:8px 4px">כרטיס אשראי</td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪18,000</div>
-                      <button onclick="togglePayment(36,12,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪18,000</div>
-                      <button onclick="togglePayment(36,15,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪18,000</div>
-                      <button onclick="togglePayment(36,18,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td></tr><tr><td style="color:#94a3b8;font-size:12px;padding:8px 4px">מע"מ</td><td style="text-align:center;color:#334155;font-size:11px">—</td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪14,000</div>
-                      <button onclick="togglePayment(37,15,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td><td style="text-align:center;color:#334155;font-size:11px">—</td></tr><tr><td style="color:#94a3b8;font-size:12px;padding:8px 4px">עמלות בנק</td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪300</div>
-                      <button onclick="togglePayment(38,12,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪300</div>
-                      <button onclick="togglePayment(38,15,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td><td style="text-align:center;padding:6px 4px">
-                      <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">₪300</div>
-                      <button onclick="togglePayment(38,18,this)"
-                        data-paid="0"
-                        style="cursor:pointer;border:none;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;background:#1e293b;color:#64748b;border:1px solid #334155;">
-                        ⬜ שלם
-                      </button>
-                    </td></tr></tbody>
-          </table>
-        </div>
-      <div style="font-size:11px;color:#475569;margin-top:8px">לחיצה על "שלם" מעדכנת את האקסל אוטומטית דרך שרת מקומי (port 5678)</div>
-    </div>
-  </details>
-
-  <script>
-  async function togglePayment(row, col, btn) {
-    const paid = btn.dataset.paid === '1';
-    const newStatus = paid ? '' : '✅';
-    try {
-      const r = await fetch('http://localhost:5678/payment', {
-        method: 'POST',
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({row, col, status: newStatus})
-      });
-      if (r.ok) {
-        btn.dataset.paid = paid ? '0' : '1';
-        btn.textContent = paid ? '⬜ שלם' : '✅ שולם';
-        btn.style.background = paid ? '#1e293b' : '#22c55e';
-        btn.style.color = paid ? '#64748b' : '#fff';
-        btn.style.border = paid ? '1px solid #334155' : 'none';
-      }
-    } catch(e) {
-      alert('שגיאה: שרת מקומי לא פעיל. הרץ payment_server.py');
-    }
-  }
-  </script>
 </div>
 
 <div id="pane-projects" class="pane">
