@@ -148,12 +148,6 @@ tr:hover td { background:rgba(255,255,255,.02); }
 
 <!-- ===== TAB 1: FINANCE ===== -->
 <div id="pane-finance" class="pane active">
-  <div class="refresh-bar">
-    <button class="refresh-btn" id="refresh-finance" onclick="refreshTab('finance')" title="מקור: בנק + Excel">
-      🔄 רענן 💰 פיננסי
-    </button>
-  </div>
-  
   <!-- ══ 5 KPI Cards ══ -->
   <div class="kpis kpis-5" style="margin-bottom:20px">
 
@@ -326,12 +320,6 @@ tr:hover td { background:rgba(255,255,255,.02); }
 </div>
 
 <div id="pane-projects" class="pane">
-  <div class="refresh-bar">
-    <button class="refresh-btn" id="refresh-projects" onclick="refreshTab('projects')" title="מקור: Clockify + Monday + Timeless">
-      🔄 רענן 📋 פרויקטים
-    </button>
-  </div>
-  
 <style>.sec-label{font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:#64748b;margin-bottom:3px}</style>
   <div class="kpis kpis-5" style="margin-bottom:20px">
     <div class="kpi g"><div class="kpi-l">פעילים</div><div class="kpi-v" style="color:#22c55e">7</div></div>
@@ -893,12 +881,6 @@ tr:hover td { background:rgba(255,255,255,.02); }
 </div>
 
 <div id="pane-crm" class="pane">
-  <div class="refresh-bar">
-    <button class="refresh-btn" id="refresh-crm" onclick="refreshTab('crm')" title="מקור: Monday CRM">
-      🔄 רענן 🤝 CRM
-    </button>
-  </div>
-  
   <div class="kpis kpis-4">
     <div class="kpi b"><div class="kpi-l">סה"כ לידים</div><div class="kpi-v" style="color:#3b82f6">69</div><div class="kpi-s">ב-Monday CRM (כולל חדשים)</div></div>
     <div class="kpi r"><div class="kpi-l">דורשים Follow-Up</div><div class="kpi-v" style="color:#ef4444">67</div><div class="kpi-s">חרגו מסף הזמן</div></div>
@@ -1042,12 +1024,6 @@ tr:hover td { background:rgba(255,255,255,.02); }
 
 <!-- ===== TAB 6: LINKEDIN ===== -->
 <div id="pane-linkedin" class="pane">
-  <div class="refresh-bar">
-    <button class="refresh-btn" id="refresh-linkedin" onclick="refreshTab('linkedin')" title="מקור: heartbeat state">
-      🔄 רענן 💼 LinkedIn
-    </button>
-  </div>
-  
   <!-- KPIs -->
   <div class="kpis kpis-4">
     <div class="kpi b"><div class="kpi-l">פורסם השנה</div><div class="kpi-v" style="color:#3b82f6">4</div><div class="kpi-s">כולל רחפנים 25.3</div></div>
@@ -1147,12 +1123,6 @@ tr:hover td { background:rgba(255,255,255,.02); }
 
 <!-- ===== TAB: ELBIT ===== -->
 <div id="pane-elbit" class="pane">
-  <div class="refresh-bar">
-    <button class="refresh-btn" id="refresh-elbit" onclick="refreshTab('elbit')" title="מקור: Excel">
-      🔄 רענן 🛡️ דו"ח אלביט
-    </button>
-  </div>
-  
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
     <div>
       <div style="font-size:18px;font-weight:700;color:#f1f5f9">🛡️ דו"ח אלביט — אפריל 2026</div>
@@ -1371,12 +1341,6 @@ tr:hover td { background:rgba(255,255,255,.02); }
 </div>
 
 <div id="pane-rfq" class="pane">
-  <div class="refresh-bar">
-    <button class="refresh-btn" id="refresh-rfq" onclick="refreshTab('rfq')" title="מקור: Google Sheets">
-      🔄 רענן 📋 הצעות מחיר
-    </button>
-  </div>
-  
 <div class="kpis kpis-4">
 <div class="kpi y"><div class="kpi-l">ממתין לאישור — אפריל</div><div class="kpi-v" style="color:#eab308">4</div><div class="kpi-s">כולל NB2.0 חדש</div></div>
 <div class="kpi g"><div class="kpi-l">אושר אפריל</div><div class="kpi-v" style="color:#22c55e">1</div><div class="kpi-s">Helios — ₪12,296</div></div>
@@ -1409,12 +1373,6 @@ tr:hover td { background:rgba(255,255,255,.02); }
 </div>
 <!-- ===== TAB: BOB AUTOMATIONS ===== -->
 <div id="pane-bob" class="pane">
-  <div class="refresh-bar">
-    <button class="refresh-btn" id="refresh-bob" onclick="refreshTab('bob')" title="מקור: heartbeat state">
-      🔄 רענן 🤖 אוטומציות
-    </button>
-  </div>
-  
   <div class="kpis kpis-4">
     <div class="kpi g"><div class="kpi-l">משימות מוגדרות</div><div class="kpi-v" style="color:#22c55e">9</div><div class="kpi-s">heartbeat + scheduled tasks</div></div>
     <div class="kpi b"><div class="kpi-l">Scheduled Tasks</div><div class="kpi-v" style="color:#3b82f6">2</div><div class="kpi-s">Task Scheduler — Windows</div></div>
@@ -1554,11 +1512,17 @@ tr:hover td { background:rgba(255,255,255,.02); }
 </div>
 
 <script>
+let currentTab = 'finance';
 function sw(name, btn) {
   document.querySelectorAll('.pane').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('pane-' + name).classList.add('active');
   btn.classList.add('active');
+  currentTab = name;
+}
+
+function refreshCurrentTab() {
+  refreshTab(currentTab);
 }
 
 // ── Refresh logic ──
@@ -1575,10 +1539,12 @@ const TAB_LABELS = {
 let pollIntervals = {};
 
 async function refreshTab(tab) {
-  const btn = document.getElementById('refresh-' + tab);
+  const btn = document.getElementById('global-refresh-btn');
   if (!btn) return;
-  btn.className = 'refresh-btn loading';
-  btn.innerHTML = '<span style="display:inline-block;animation:spin-icon .8s linear infinite">🔄</span> מרענן...';
+  btn.style.borderColor = '#eab308';
+  btn.style.color = '#fbbf24';
+  btn.innerHTML = '⏳ מרענן...';
+  btn.disabled = true;
 
   try {
     const r = await fetch(`http://localhost:5678/refresh/${tab}`);
@@ -1596,36 +1562,67 @@ async function refreshTab(tab) {
           if (data.html) {
             const pane = document.getElementById('pane-' + tab);
             if (pane) {
+              // Parse new HTML and get inner content only (not the pane div itself)
               const tmp = document.createElement('div');
               tmp.innerHTML = data.html;
               const newPane = tmp.querySelector('#pane-' + tab);
               if (newPane) {
+                // Replace only the inner content, keeping the pane div
                 pane.innerHTML = newPane.innerHTML;
+                // Re-execute any scripts
+                Array.from(pane.querySelectorAll('script')).forEach(s => {
+                  const ns = document.createElement('script');
+                  ns.textContent = s.textContent;
+                  s.parentNode.replaceChild(ns, s);
+                });
               }
             }
           }
-          btn.className = 'refresh-btn done';
+          btn.style.borderColor = '#22c55e';
+          btn.style.color = '#86efac';
           btn.innerHTML = '✅ עודכן';
+          btn.disabled = false;
           setTimeout(() => {
-            btn.className = 'refresh-btn';
-            btn.innerHTML = '🔄 רענן';
+            btn.style.borderColor = '#334155';
+            btn.style.color = '#64748b';
+            btn.innerHTML = '🔄 רענן טאב';
           }, 3000);
         } else if (data.status && data.status.startsWith('error')) {
           clearInterval(pollIntervals[tab]);
-          btn.className = 'refresh-btn';
+          btn.style.borderColor = '#ef4444';
+          btn.style.color = '#fca5a5';
           btn.innerHTML = '❌ שגיאה';
-          setTimeout(() => { btn.innerHTML = '🔄 רענן'; }, 3000);
+          btn.disabled = false;
+          setTimeout(() => {
+            btn.style.borderColor = '#334155';
+            btn.style.color = '#64748b';
+            btn.innerHTML = '🔄 רענן טאב';
+          }, 3000);
         }
       } catch(e) {}
     }, 2000);
 
   } catch(e) {
-    btn.className = 'refresh-btn';
+    btn.style.borderColor = '#ef4444';
+    btn.style.color = '#fca5a5';
     btn.innerHTML = '⚠️ שרת לא פעיל';
-    setTimeout(() => { btn.innerHTML = '🔄 רענן'; }, 3000);
+    btn.disabled = false;
+    setTimeout(() => {
+      btn.style.borderColor = '#334155';
+      btn.style.color = '#64748b';
+      btn.innerHTML = '🔄 רענן טאב';
+    }, 3000);
   }
 }
 </script>
+<div id="refresh-container" style="position:fixed;bottom:20px;left:20px;z-index:1000">
+  <button id="global-refresh-btn" onclick="refreshCurrentTab()"
+    style="display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:10px;border:1px solid #334155;background:#1e293b;color:#64748b;font-size:13px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.4);transition:all .15s"
+    onmouseover="this.style.borderColor='#3b82f6';this.style.color='#60a5fa'"
+    onmouseout="this.style.borderColor='#334155';this.style.color='#64748b'">
+    🔄 רענן טאב
+  </button>
+</div>
 </body>
 </html>
 
